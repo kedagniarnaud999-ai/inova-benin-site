@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+import '@fontsource-variable/archivo/standard.css';
+import '@fontsource-variable/instrument-sans';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
+
+import Seo from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { t } from '../i18n/ui';
+import type { Locale, Pole, RouteKey } from '../i18n/config';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  /** absent sur une page hors `ROUTES` : ni canonical, ni hreflang, ni index */
+  route?: RouteKey;
+  /** Le pôle dont on hérite la couleur. Sans lui, l'accent reste cobalt. */
+  pole?: Pole;
+}
+
+const { title, description, locale, route, pole } = Astro.props;
+const strings = t(locale);
+---
+
+<!doctype html>
+<html lang={locale} data-pole={pole}>
+  <head>
+    <meta charset="utf-8" />
+    <Seo title={title} description={description} locale={locale} route={route} />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <a class="skip-link label" href="#contenu">{strings.nav.skip}</a>
+    <Header {locale} {route} />
+    <main id="contenu" class="flex-1">
+      <slot />
+    </main>
+    <Footer {locale} />
+  </body>
+</html>

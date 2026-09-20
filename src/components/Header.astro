@@ -1,0 +1,105 @@
+---
+import { url, type Locale, type Pole, type RouteKey } from '../i18n/config';
+import { t } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  /** absent sur une page sans équivalent dans l'autre langue (404) */
+  route?: RouteKey;
+}
+
+const { locale, route } = Astro.props;
+const s = t(locale);
+const other: Locale = locale === 'fr' ? 'en' : 'fr';
+const otherHref = url(other, route ?? 'home');
+
+const items: { key: RouteKey; label: string; accent?: Pole }[] = [
+  { key: 'consulting', label: s.nav.consulting, accent: 'consulting' },
+  { key: 'lab', label: s.nav.lab, accent: 'lab' },
+  { key: 'studio', label: s.nav.studio, accent: 'studio' },
+  { key: 'about', label: s.nav.about },
+  { key: 'contact', label: s.nav.contact },
+];
+---
+
+<header class="border-b border-rule bg-chalk">
+  <div class="mx-auto flex max-w-[88rem] items-center gap-6 px-5 py-4 sm:px-8">
+    <a
+      href={url(locale, 'home')}
+      class="display shrink-0 text-[1.15rem] leading-none"
+      aria-label={s.brand}
+    >
+      iNOVA<span class="text-accent-ink">·</span>BENIN
+    </a>
+
+    <nav aria-label={s.nav.main} class="ml-auto hidden lg:block">
+      <ul class="flex items-baseline gap-7">
+        {
+          items.map((item) => {
+            const active = item.key === route;
+            return (
+              <li>
+                <a
+                  href={url(locale, item.key)}
+                  aria-current={active ? 'page' : undefined}
+                  class:list={[
+                    'label inline-flex items-center gap-2 py-1 text-ink transition-colors hover:text-accent-ink',
+                    active && 'text-accent-ink',
+                  ]}
+                >
+                  {item.accent && (
+                    <span
+                      aria-hidden="true"
+                      class:list={[
+                        'size-[5px] rounded-full',
+                        item.accent === 'consulting' && 'bg-cobalt',
+                        item.accent === 'lab' && 'bg-verdigris',
+                        item.accent === 'studio' && 'bg-ocre',
+                      ]}
+                    />
+                  )}
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-3 lg:ml-0">
+      <a
+        href={otherHref}
+        hreflang={other}
+        lang={other}
+        class="label border border-rule px-2.5 py-1.5 text-ink transition-colors hover:border-accent-ink hover:text-accent-ink"
+      >
+        {other.toUpperCase()}
+        <span class="sr-only">· {s.nav.language}</span>
+      </a>
+
+      <details class="relative lg:hidden">
+        <summary
+          class="label flex cursor-pointer list-none items-center gap-2 border border-rule px-3 py-2 select-none"
+        >
+          {s.nav.menu}
+        </summary>
+        <ul class="absolute right-0 z-50 mt-1 w-56 border border-rule bg-chalk p-2 shadow-lg">
+          {
+            items.map((item) => (
+              <li>
+                <a
+                  href={url(locale, item.key)}
+                  aria-current={item.key === route ? 'page' : undefined}
+                  class="label block px-3 py-2 text-ink hover:bg-accent-wash"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </div>
+  </div>
+</header>

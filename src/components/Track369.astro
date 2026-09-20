@@ -1,0 +1,135 @@
+---
+import type { Locale } from '../i18n/config';
+import type { MethodStep } from '../i18n/method';
+
+interface Props {
+  locale: Locale;
+  steps: MethodStep[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="track">
+  {
+    steps.map((step) => (
+      <li class="track-step">
+        <span class="track-node" aria-hidden="true">
+          <span class="display track-weeks">{step.weeks}</span>
+        </span>
+        <div class="track-body">
+          <p class="label track-unit">{step.unit}</p>
+          <h3 class="track-title">{step.title}</h3>
+          <p class="track-text">{step.body}</p>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .track {
+    display: grid;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 52rem) {
+    .track {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .track-step {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 0 1.15rem;
+    padding-bottom: 2.25rem;
+  }
+
+  @media (min-width: 52rem) {
+    .track-step {
+      display: block;
+      padding: 0 1.6rem 0 0;
+    }
+  }
+
+  /* Le rail vertical (mobile) devient le filet horizontal (desktop) : le même
+     objet, deux lectures, parce que 3-6-9 est un enchaînement. */
+  .track-step::before {
+    content: '';
+    position: absolute;
+    left: 1.72rem;
+    top: 3.1rem;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-rule);
+  }
+
+  @media (min-width: 52rem) {
+    .track-step::before {
+      left: 0;
+      right: 0;
+      top: 1.72rem;
+      bottom: auto;
+      height: 1px;
+      width: auto;
+    }
+  }
+
+  .track-step:last-child::before {
+    display: none;
+  }
+
+  .track-node {
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 1px solid var(--accent-ink);
+    border-radius: 2px;
+    background: var(--color-chalk);
+    color: var(--accent-ink);
+  }
+
+  .track-weeks {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  @media (min-width: 52rem) {
+    .track-node {
+      margin-bottom: 1.4rem;
+    }
+  }
+
+  .track-body {
+    grid-column: 2;
+  }
+
+  @media (min-width: 52rem) {
+    .track-body {
+      grid-column: auto;
+    }
+  }
+
+  .track-unit {
+    color: var(--color-muted);
+  }
+
+  .track-title {
+    font-size: var(--text-h3);
+    margin-top: 0.35rem;
+  }
+
+  .track-text {
+    margin-top: 0.6rem;
+    color: var(--color-muted);
+    max-width: 34ch;
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+</style>

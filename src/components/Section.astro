@@ -1,0 +1,46 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  /** ancre locale, pour les liens « voir la méthode » */
+  id?: string;
+  /** variante sombre : `ink` en fond, texte en blanc de craie */
+  tone?: 'chalk' | 'ink';
+  size?: 'default' | 'wide';
+  class?: string;
+}
+
+const { eyebrow, title, id, tone = 'chalk', size = 'default', class: className } = Astro.props;
+---
+
+<section
+ {id}
+ class:list={[
+   'px-5 py-16 sm:px-8 sm:py-20',
+   tone === 'ink' ? 'bg-ink text-chalk' : 'text-ink',
+   className,
+ ]}
+>
+  <div class:list={['mx-auto', size === 'wide' ? 'max-w-[88rem]' : 'max-w-[68rem]']}>
+    {
+      (eyebrow || title) && (
+        <header class="mb-10">
+          {eyebrow && (
+            <p class:list={['label', tone === 'ink' ? 'text-chalk/55' : 'text-muted']}>{eyebrow}</p>
+          )}
+          {title && (
+            <h2
+              class:list={[
+                'mt-3 max-w-[26ch] text-h2',
+                tone === 'ink' ? 'text-chalk' : 'text-ink',
+              ]}
+            >
+              {title}
+            </h2>
+          )}
+        </header>
+      )
+    }
+    <slot />
+  </div>
+</section>

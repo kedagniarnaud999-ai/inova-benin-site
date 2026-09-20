@@ -1,0 +1,218 @@
+---
+import { EXPERIMENTS, LIVE_COUNT, type Experiment } from '../content/experiments';
+import { t } from '../i18n/ui';
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+  /** Restreint l'affichage sur l'accueil ; la page du Lab montre tout. */
+  limit?: number;
+}
+
+const { locale, limit } = Astro.props;
+const s = t(locale);
+const labels = s.labels;
+
+const rows: Experiment[] = typeof limit === 'number' ? EXPERIMENTS.slice(0, limit) : EXPERIMENTS;
+---
+
+<table class="ledger">
+  <caption class="sr-only">
+    {labels.portfolio} — {EXPERIMENTS.length} {labels.experiments}, {LIVE_COUNT}
+    {labels.status_live.toLowerCase()}
+  </caption>
+  <thead>
+    <tr>
+      <th scope="col" class="label">{labels.file}</th>
+      <th scope="col" class="label">{labels.experiment}</th>
+      <th scope="col" class="label">{labels.sector}</th>
+      <th scope="col" class="label">{labels.stage}</th>
+      <th scope="col" class="label">{labels.access}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      rows.map((row) => (
+        <tr>
+          <td data-label={labels.file} class="ledger-id label">
+            {row.id}
+          </td>
+          <td data-label={labels.experiment}>
+            <span class="ledger-name">{row.name}</span>
+            <p class="ledger-tag">{row.tagline[locale]}</p>
+          </td>
+          <td data-label={labels.sector} class="ledger-sector">
+            {row.sector[locale]}
+          </td>
+          <td data-label={labels.stage}>
+            <span class:list={['badge', row.status === 'live' ? 'badge-live' : 'badge-built']}>
+              {row.status === 'live' ? labels.status_live : labels.status_built}
+            </span>
+          </td>
+          <td data-label={labels.access} class="ledger-links">
+            {row.live && (
+              <a href={row.live} target="_blank" rel="noopener" class="label link-underline">
+                {s.cta.seeProduct}
+              </a>
+            )}
+            {row.repo && (
+              <a href={row.repo} target="_blank" rel="noopener" class="label link-underline">
+                GitHub
+              </a>
+            )}
+            {!row.live && !row.repo && (
+              <span class="ledger-private label">{labels.status_private}</span>
+            )}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  .ledger {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .ledger thead {
+    display: none;
+  }
+
+  @media (min-width: 62rem) {
+    .ledger thead {
+      display: table-header-group;
+    }
+    .ledger thead th {
+      padding: 0 1rem 0.8rem 0;
+      color: var(--color-muted);
+      font-weight: 500;
+      border-bottom: 1px solid var(--color-rule);
+    }
+  }
+
+  .ledger tbody tr {
+    display: block;
+    border-bottom: 1px solid var(--color-rule);
+    padding: 1.15rem 0;
+  }
+
+  @media (min-width: 62rem) {
+    .ledger tbody tr {
+      display: table-row;
+    }
+    .ledger td {
+      padding: 1.3rem 1rem 1.3rem 0;
+      vertical-align: top;
+      border-bottom: 1px solid var(--color-rule);
+    }
+  }
+
+  .ledger td {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+  }
+
+  @media (min-width: 62rem) {
+    .ledger td {
+      display: table-cell;
+    }
+  }
+
+  /* Sur mobile, chaque cellule reprend son intitulé : le tableau se lit
+     toujours comme un tableau, il est juste empilé. */
+  @media (max-width: 61.99rem) {
+    .ledger td::before {
+      content: attr(data-label);
+      font-family: var(--font-mono);
+      font-size: var(--text-eyebrow);
+      letter-spacing: var(--tracking-label);
+      text-transform: uppercase;
+      color: var(--color-muted);
+    }
+  }
+
+  .ledger-id {
+    color: var(--accent-ink);
+  }
+
+  @media (min-width: 62rem) {
+    .ledger-id {
+      width: 5.5rem;
+    }
+  }
+
+  .ledger-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 108;
+    font-size: 1.35rem;
+    letter-spacing: -0.015em;
+    display: block;
+  }
+
+  .ledger-tag {
+    margin-top: 0.35rem;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    max-width: 46ch;
+  }
+
+  .ledger-sector {
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 62rem) {
+    .ledger-sector {
+      width: 10rem;
+    }
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--accent-ink);
+  }
+
+  .badge-live::before {
+    background: var(--accent);
+  }
+
+  .ledger-links {
+    gap: 0.9rem;
+  }
+
+  @media (min-width: 62rem) {
+    .ledger-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+
+  .ledger-links a {
+    color: var(--accent-ink);
+  }
+
+  .ledger-private {
+    color: var(--color-muted);
+  }
+</style>

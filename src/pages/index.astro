@@ -1,0 +1,20 @@
+---
+import { DEFAULT_LOCALE, absoluteUrl, url } from '../i18n/config';
+
+// `vercel.json` fait mieux, par une vraie 301. Cette page est le repli pour un
+// autre hébergeur statique : une sortie `static` ne peut écrire qu'une page.
+const dest = url(DEFAULT_LOCALE, 'home');
+---
+<!doctype html>
+<html lang={DEFAULT_LOCALE}>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${dest}`} />
+    <link rel="canonical" href={absoluteUrl(DEFAULT_LOCALE, 'home')} />
+    <meta name="robots" content="noindex" />
+    <title>iNOVA BENIN</title>
+  </head>
+  <body>
+    <p><a href={dest}>iNOVA BENIN</a></p>
+  </body>
+</html>

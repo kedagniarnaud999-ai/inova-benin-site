@@ -1,0 +1,55 @@
+---
+import { LOCALES, absolutePath, absoluteUrl, type Locale, type RouteKey } from '../i18n/config';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: Locale;
+  /** absent pour une page hors `ROUTES` (racine, 404) : elle ne se référence pas */
+  route?: RouteKey;
+  /** true pour les pages sans équivalent dans l'autre langue */
+  noIndex?: boolean;
+}
+
+const { title, description, locale, route, noIndex = false } = Astro.props;
+
+const canonical = route ? absoluteUrl(locale, route) : undefined;
+
+// hreflang : une entrée par langue + x-default vers le français, qui porte
+// le trafic non francophone entrant par erreur sur l'accueil.
+const alternates = route ? LOCALES.map((l) => ({ locale: l, href: absoluteUrl(l, route) })) : [];
+
+const hide = noIndex || !route;
+const ogImage = absolutePath(`/og/${locale}.png`);
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+{hide && <meta name="robots" content="noindex" />}
+
+{canonical && <link rel="canonical" href={canonical} />}
+{alternates.map((a) => <link rel="alternate" hreflang={a.locale} href={a.href} />)}
+{route && <link rel="alternate" hreflang="x-default" href={absoluteUrl('fr', route)} />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="iNOVA BENIN" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical ?? absolutePath('/')} />
+<meta property="og:locale" content={locale === 'fr' ? 'fr_FR' : 'en_US'} />
+{
+  alternates
+    .filter((a) => a.locale !== locale)
+    .map((a) => <meta property="og:locale:alternate" content={a.locale === 'fr' ? 'fr_FR' : 'en_US'} />)
+}
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="theme-color" content="#0b1e2d" />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="sitemap" href="/sitemap-index.xml" />

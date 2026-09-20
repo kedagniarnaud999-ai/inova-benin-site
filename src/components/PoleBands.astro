@@ -1,0 +1,196 @@
+---
+import { url, type Locale, type Pole } from '../i18n/config';
+import { poles } from '../i18n/poles';
+import { t } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  /** phrase d'accroche au-dessus des bandes, propre à la page */
+  hint: string;
+}
+
+const { locale, hint } = Astro.props;
+const s = t(locale);
+const p = poles[locale];
+
+const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
+  { key: 'consulting', route: 'consulting' },
+  { key: 'lab', route: 'lab' },
+  { key: 'studio', route: 'studio' },
+];
+---
+
+<div class="bands" data-bands>
+  <p class="label bands-hint">{hint}</p>
+  <ul class="bands-list">
+    {
+      items.map(({ key, route }) => (
+        <li class="band-item">
+          <a href={url(locale, route)} class="band" data-p={key}>
+            <span class="band-side label" aria-hidden="true">
+              {p[key].name}
+            </span>
+            <span class="band-body">
+              <span class="display band-name">{s.nav[key]}</span>
+              <span class="band-role">{p[key].role}</span>
+              <span class="label band-go" aria-hidden="true">
+                {s.cta.discover}
+                <svg viewBox="0 0 16 10" class="band-arrow" fill="none" aria-hidden="true">
+                  <path d="M0 5h14M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" />
+                </svg>
+              </span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .bands {
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .bands-hint {
+    color: var(--color-muted);
+    margin-bottom: 1rem;
+  }
+
+  .bands-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  @media (min-width: 60rem) {
+    .bands-list {
+      grid-template-columns: repeat(3, 1fr);
+      transition: grid-template-columns 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+  }
+
+  .band-item {
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  @media (min-width: 60rem) {
+    .band-item {
+      border-bottom: 0;
+      border-right: 1px solid var(--color-rule);
+    }
+    .band-item:last-child {
+      border-right: 0;
+    }
+    /* La bande survolée prend de la place : le trio reste à égalité au repos,
+       et l'une d'elles seulement s'impose le temps du regard. */
+    .bands-list:has(.band-item:nth-child(1):hover) {
+      grid-template-columns: 1.45fr 0.78fr 0.78fr;
+    }
+    .bands-list:has(.band-item:nth-child(2):hover) {
+      grid-template-columns: 0.78fr 1.45fr 0.78fr;
+    }
+    .bands-list:has(.band-item:nth-child(3):hover) {
+      grid-template-columns: 0.78fr 0.78fr 1.45fr;
+    }
+  }
+
+  .band {
+    --band: var(--color-cobalt);
+    --band-ink: var(--color-cobalt);
+    display: flex;
+    align-items: stretch;
+    min-height: 12rem;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    background: transparent;
+    transition: background-color 260ms ease-out;
+  }
+
+  .band[data-p='lab'] {
+    --band: var(--color-verdigris);
+    --band-ink: var(--color-verdigris);
+  }
+
+  /* L'ocre plein ne contraste que 2,7:1 sur craie : il reste réservé aux
+     aplats, et le texte prend son jumeau foncé. */
+  .band[data-p='studio'] {
+    --band: var(--color-ocre);
+    --band-ink: var(--color-ocre-ink);
+  }
+
+  .band:hover,
+  .band:focus-visible {
+    background: color-mix(in oklab, var(--band) 9%, var(--color-chalk));
+  }
+
+  .band-side {
+    display: none;
+    writing-mode: vertical-rl;
+    /* lecture bas -> haut, comme une tranche de reliure */
+    transform: rotate(180deg);
+    padding: 1.1rem 0.45rem;
+    border-right: 1px solid var(--color-rule);
+    color: var(--band-ink);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 60rem) {
+    .band-side {
+      display: block;
+    }
+  }
+
+  .band-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1.4rem 1.5rem 1.6rem;
+    min-width: 0;
+  }
+
+  @media (min-width: 60rem) {
+    .band-body {
+      padding: 1.8rem 1.9rem 2rem;
+    }
+  }
+
+  .band-name {
+    font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+    color: var(--color-ink);
+  }
+
+  .band-role {
+    font-size: 0.98rem;
+    line-height: 1.45;
+    color: var(--color-muted);
+    max-width: 30ch;
+  }
+
+  .band-go {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--band-ink);
+  }
+
+  .band-arrow {
+    width: 16px;
+    height: 10px;
+    transition: transform 240ms ease-out;
+  }
+
+  .band:hover .band-arrow,
+  .band:focus-visible .band-arrow {
+    transform: translateX(5px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .band-arrow,
+    .bands-list {
+      transition: none;
+    }
+  }
+</style>

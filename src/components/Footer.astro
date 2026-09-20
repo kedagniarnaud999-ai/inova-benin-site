@@ -1,0 +1,91 @@
+---
+import { url, type Locale } from '../i18n/config';
+import { poles } from '../i18n/poles';
+import { t } from '../i18n/ui';
+import { SOCIAL } from '../social';
+
+const { locale } = Astro.props as { locale: Locale };
+const s = t(locale);
+const p = poles[locale];
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 bg-ink text-chalk">
+  <div class="mx-auto max-w-[88rem] px-5 py-14 sm:px-8">
+    <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div>
+        <p class="display text-[1.35rem]">iNOVA BENIN</p>
+        <p class="label mt-3 text-chalk/60">{s.tagline}</p>
+        <p class="mt-5 max-w-[34ch] text-[0.95rem] text-chalk/70">{s.status}</p>
+      </div>
+
+      <nav aria-labelledby="f-poles">
+        <h2 id="f-poles" class="label text-chalk/50">{s.footer.poles}</h2>
+        <ul class="mt-4 space-y-2.5">
+          {
+            (['consulting', 'lab', 'studio'] as const).map((key) => (
+              <li>
+                <a href={url(locale, key)} class="text-chalk/90 hover:text-chalk hover:underline">
+                  {p[key].name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="f-company">
+        <h2 id="f-company" class="label text-chalk/50">{s.footer.company}</h2>
+        <ul class="mt-4 space-y-2.5">
+          <li>
+            <a href={url(locale, 'about')} class="text-chalk/90 hover:text-chalk hover:underline">
+              {s.nav.about}
+            </a>
+          </li>
+          <li>
+            <a href={url(locale, 'contact')} class="text-chalk/90 hover:text-chalk hover:underline">
+              {s.nav.contact}
+            </a>
+          </li>
+          {
+            SOCIAL.map((profile) => (
+              <li>
+                <a
+                  href={profile.href}
+                  rel="me noopener"
+                  target="_blank"
+                  class="text-chalk/90 hover:text-chalk hover:underline"
+                >
+                  {profile.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav aria-labelledby="f-legal">
+        <h2 id="f-legal" class="label text-chalk/50">{s.footer.legalTitle}</h2>
+        <ul class="mt-4 space-y-2.5">
+          <li>
+            <a href={url(locale, 'legal')} class="text-chalk/90 hover:text-chalk hover:underline">
+              {s.footer.legal}
+            </a>
+          </li>
+          <li>
+            <a href={url(locale, 'privacy')} class="text-chalk/90 hover:text-chalk hover:underline">
+              {s.footer.privacy}
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="mt-14 flex flex-wrap items-baseline justify-between gap-3 border-t border-chalk/15 pt-6">
+      <p class="label text-chalk/45">
+        © {year} iNOVA BENIN — {s.footer.rights}
+      </p>
+      <p class="label text-chalk/45">{s.footer.built}</p>
+    </div>
+  </div>
+</footer>

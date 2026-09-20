@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import PoleBands from '../components/PoleBands.astro';
+import Track369 from '../components/Track369.astro';
+import LedgerTable from '../components/LedgerTable.astro';
+import { home } from '../i18n/pages/home';
+import { METHOD_STEPS } from '../i18n/method';
+import { EXPERIMENTS, LIVE_COUNT } from '../content/experiments';
+import { url, type Locale } from '../i18n/config';
+import { t } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = home[locale];
+const s = t(locale);
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} {locale} route="home">
+  <section class="hero mx-auto max-w-[88rem] px-5 pt-12 pb-4 sm:px-8 sm:pt-16">
+    <p class="label text-muted">{c.hero.eyebrow}</p>
+    <h1 class="display mt-5 text-hero">
+      <span class="block">{c.hero.line1}</span>
+      <span class="block">{c.hero.line2}</span>
+      <span class="block">{c.hero.line3}</span>
+    </h1>
+    <div class="hero-bar" aria-hidden="true"></div>
+
+    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+      <p class="max-w-[52ch] text-lede text-ink">{c.hero.lede}</p>
+      <a
+        href={url(locale, 'contact')}
+        class="btn btn-solid justify-self-start lg:justify-self-end"
+      >
+        {s.cta.contact}
+      </a>
+    </div>
+
+    <PoleBands {locale} hint={c.hero.bandsHint} />
+  </section>
+
+  <Section tone="ink" size="wide" class="mt-8">
+    <div class="grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+      <p class="display text-[clamp(1.6rem,3.1vw,2.5rem)]">{c.statement.body}</p>
+      <div>
+        <p class="label text-chalk/55">{c.statement.eyebrow}</p>
+        <p class="mt-4 max-w-[52ch] text-chalk/80">{c.statement.note}</p>
+      </div>
+    </div>
+  </Section>
+
+  <div data-pole="lab">
+    <Section id="methode" eyebrow={c.method.eyebrow} title={c.method.title} size="wide">
+      <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.method.intro}</p>
+      <Track369 {locale} steps={METHOD_STEPS[locale]} />
+      <p class="mt-10">
+        <a href={url(locale, 'lab')} class="btn btn-line">{c.method.link}</a>
+      </p>
+    </Section>
+
+    <Section id="carnet" eyebrow={c.ledger.eyebrow} title={c.ledger.title} size="wide">
+      <p class="mb-4 max-w-[62ch] text-lede text-muted">{c.ledger.intro}</p>
+      <p class="label mb-10 text-accent-ink">
+        {c.ledger.countLabel(EXPERIMENTS.length)} · {c.ledger.liveLabel(LIVE_COUNT)}
+      </p>
+      <LedgerTable {locale} limit={3} />
+      <p class="mt-10">
+        <a href={url(locale, 'lab')} class="btn btn-line">{c.ledger.link}</a>
+      </p>
+    </Section>
+  </div>
+
+  <div data-pole="studio">
+    <Section id="studio" eyebrow={c.studio.eyebrow} title={c.studio.title} size="wide">
+      <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.studio.intro}</p>
+      <ul class="grid gap-px bg-rule sm:grid-cols-3">
+        {
+          c.studio.formats.map((f) => (
+            <li class="bg-chalk py-7 pr-6 pl-0">
+              <p class="label text-accent-ink">{f.name}</p>
+              <h3 class="mt-3 text-h3">{f.what}</h3>
+              <p class="mt-3 max-w-[34ch] text-[0.98rem] text-muted">{f.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-14 grid gap-6 border-t border-rule pt-10 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+        <div>
+          <p class="label text-muted">{c.partners.eyebrow}</p>
+          <h3 class="mt-3 max-w-[24ch] text-h3">{c.partners.title}</h3>
+          <p class="mt-4 max-w-[62ch] text-[0.98rem] text-muted">{c.partners.body}</p>
+        </div>
+        <div class="flex flex-wrap gap-4 lg:justify-end">
+          <a href={url(locale, 'studio')} class="btn btn-line">{c.studio.link}</a>
+          <a href={url(locale, 'contact')} class="btn btn-solid">{c.partners.cta}</a>
+        </div>
+      </div>
+    </Section>
+  </div>
+
+  <Section id="contact" eyebrow={c.closing.eyebrow} title={c.closing.title} size="wide">
+    <p class="mb-10 max-w-[52ch] text-lede text-muted">{c.closing.body}</p>
+    <div class="flex flex-wrap gap-4">
+      <a href={url(locale, 'contact')} class="btn btn-solid">{c.closing.cta}</a>
+      <a href={url(locale, 'about')} class="btn btn-line">{c.closing.secondary}</a>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  /* Le héros ne prend la couleur d'aucun pôle au repos : les trois sont à
+     égalité tant qu'aucun n'est visé. En revanche, survoler ou tabuler une
+     bande propage sa couleur au filet et aux libellés — la couleur répond
+     à l'intention, jamais elle ne la devance. */
+  .hero {
+    --accent: var(--color-ink);
+    --accent-ink: var(--color-ink);
+  }
+
+  .hero:has([data-p='consulting']:hover),
+  .hero:has([data-p='consulting']:focus-within) {
+    --accent: var(--color-cobalt);
+    --accent-ink: var(--color-cobalt);
+  }
+
+  .hero:has([data-p='lab']:hover),
+  .hero:has([data-p='lab']:focus-within) {
+    --accent: var(--color-verdigris);
+    --accent-ink: var(--color-verdigris);
+  }
+
+  .hero:has([data-p='studio']:hover),
+  .hero:has([data-p='studio']:focus-within) {
+    --accent: var(--color-ocre);
+    --accent-ink: var(--color-ocre-ink);
+  }
+
+  .hero-bar {
+    margin-top: 1.6rem;
+    height: 3px;
+    width: 100%;
+    background: var(--accent);
+    transition: background-color 260ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bar {
+      transition: none;
+    }
+  }
+</style>
