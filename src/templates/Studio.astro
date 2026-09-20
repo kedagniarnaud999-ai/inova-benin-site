@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PoleHero from '../components/PoleHero.astro';
+import Section from '../components/Section.astro';
+import { studio } from '../i18n/pages/studio';
+import { url, type Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = studio[locale];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} {locale} route="studio" pole="studio">
+  <PoleHero eyebrow={c.hero.eyebrow} title={c.hero.title} lede={c.hero.lede}>
+    <a href={url(locale, 'contact')} class="btn btn-solid">{c.hero.primary}</a>
+    <a href="#formats" class="btn btn-line">{c.hero.secondary}</a>
+  </PoleHero>
+
+  <Section id="formats" eyebrow={c.formats.eyebrow} title={c.formats.title} size="wide" class="mt-8">
+    <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.formats.intro}</p>
+    <ul class="grid gap-px bg-rule lg:grid-cols-3">
+      {
+        c.formats.items.map((f) => (
+          <li class="bg-chalk">
+            <p class="label pl-6 text-accent-ink">{f.name}</p>
+            <h3 class="mt-3 pl-6 text-h3">{f.what}</h3>
+            <p class="label mt-4 pl-6 text-muted">{f.where}</p>
+            <p class="mt-4 max-w-[38ch] pl-6 pb-8 text-[0.98rem] text-muted">{f.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section id="chaine" eyebrow={c.pipeline.eyebrow} title={c.pipeline.title} size="wide">
+    <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.pipeline.intro}</p>
+    <ol class="chain">
+      {
+        c.pipeline.steps.map((step, i) => (
+          <li class="chain-step">
+            <span class="label chain-n" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="chain-t">{step}</span>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="mt-10 max-w-[62ch] border-l border-rule pl-5 text-[0.95rem] text-muted">
+      {c.pipeline.note}
+    </p>
+  </Section>
+
+  <Section tone="ink" size="wide">
+    <div class="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+      <div>
+        <p class="label text-chalk/55">{c.funding.eyebrow}</p>
+        <h2 class="mt-3 max-w-[24ch] text-h2 text-chalk">{c.funding.title}</h2>
+        <p class="mt-6 max-w-[58ch] text-chalk/80">{c.funding.body}</p>
+        <p class="mt-6 max-w-[58ch] border-l border-chalk/25 pl-5 text-[0.95rem] text-chalk/65">
+          {c.funding.risk}
+        </p>
+      </div>
+      <p class="lg:pt-2 lg:text-right">
+        <a href={url(locale, 'contact')} class="btn btn-solid">{c.funding.cta}</a>
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .chain {
+    display: grid;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .chain-step {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    align-items: baseline;
+    gap: 0 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .chain-n {
+    color: var(--accent-ink);
+  }
+
+  .chain-t {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 108;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  @media (min-width: 62rem) {
+    .chain {
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0 1.2rem;
+    }
+
+    .chain-step {
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-bottom: 0;
+      padding-bottom: 0.9rem;
+    }
+
+    .chain-n {
+      margin-bottom: 0.9rem;
+    }
+  }
+</style>

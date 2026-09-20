@@ -1,0 +1,27 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede: string;
+}
+
+const { eyebrow, title, lede } = Astro.props;
+---
+
+<div class="mx-auto max-w-[88rem] px-5 pt-14 pb-4 sm:px-8 sm:pt-20">
+  <p class="label text-muted">{eyebrow}</p>
+  <h1 class="display mt-5 max-w-[18ch] text-h2">{title}</h1>
+  <div class="bar mt-7" aria-hidden="true"></div>
+  <p class="mt-7 max-w-[56ch] text-lede text-ink">{lede}</p>
+  <div class="mt-10 flex flex-wrap gap-4">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .bar {
+    height: 3px;
+    width: min(100%, 12rem);
+    background: var(--accent);
+  }
+</style>

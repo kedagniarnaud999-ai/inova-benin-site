@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PoleHero from '../components/PoleHero.astro';
+import Section from '../components/Section.astro';
+import Track369 from '../components/Track369.astro';
+import LedgerTable from '../components/LedgerTable.astro';
+import { EXPERIMENTS, LIVE_COUNT } from '../content/experiments';
+import { METHOD_STEPS } from '../i18n/method';
+import { lab } from '../i18n/pages/lab';
+import { url, type Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = lab[locale];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} {locale} route="lab" pole="lab">
+  <PoleHero eyebrow={c.hero.eyebrow} title={c.hero.title} lede={c.hero.lede}>
+    <a href="#methode" class="btn btn-solid">{c.hero.method}</a>
+    <a href="#carnet" class="btn btn-line">{c.hero.ledger}</a>
+  </PoleHero>
+
+  <Section id="methode" eyebrow={c.method.eyebrow} title={c.method.title} size="wide" class="mt-8">
+    <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.method.intro}</p>
+    <Track369 {locale} steps={METHOD_STEPS[locale]} />
+    <div class="mt-14 grid gap-6 border-t border-rule pt-8 lg:grid-cols-[auto_1fr] lg:gap-14">
+      <p class="label pt-1 text-muted">{c.method.out}</p>
+      <p class="max-w-[62ch] text-[0.98rem] text-muted">{c.method.outBody}</p>
+    </div>
+  </Section>
+
+  <Section id="carnet" eyebrow={c.ledger.eyebrow} title={c.ledger.title} size="wide">
+    <p class="mb-10 max-w-[62ch] text-lede text-muted">
+      {c.ledger.intro(EXPERIMENTS.length, LIVE_COUNT)}
+    </p>
+    <LedgerTable {locale} />
+  </Section>
+
+  <Section tone="ink" size="wide">
+    <div class="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end lg:gap-16">
+      <div>
+        <p class="label text-chalk/55">{c.seekers.eyebrow}</p>
+        <h2 class="mt-3 max-w-[22ch] text-h2 text-chalk">{c.seekers.title}</h2>
+        <p class="mt-6 max-w-[58ch] text-chalk/80">{c.seekers.body}</p>
+      </div>
+      <p class="lg:pb-2 lg:text-right">
+        <a href={url(locale, 'contact')} class="btn btn-solid">{c.seekers.cta}</a>
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
