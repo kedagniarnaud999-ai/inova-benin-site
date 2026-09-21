@@ -2,7 +2,6 @@ import type { Locale } from './config';
 
 // Chaînes d'interface partagées. Le français fait foi, l'anglais est typé dessus.
 const fr = {
-  brand: 'iNOVA BENIN',
   tagline: 'Building Africa’s Next Ventures',
   status: 'SASU en cours de constitution · Cotonou, Bénin',
 
@@ -81,7 +80,6 @@ const fr = {
 };
 
 const en: typeof fr = {
-  brand: 'iNOVA BENIN',
   tagline: 'Building Africa’s Next Ventures',
   status: 'SASU being incorporated · Cotonou, Benin',
 

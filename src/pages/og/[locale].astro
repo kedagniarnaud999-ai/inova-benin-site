@@ -1,0 +1,136 @@
+---
+import '../../styles/global.css';
+import '@fontsource-variable/archivo/standard.css';
+import '@fontsource-variable/instrument-sans';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-mono/600.css';
+
+import { LOCALES, type Locale } from '../../i18n/config';
+import { poles } from '../../i18n/poles';
+import { t } from '../../i18n/ui';
+
+/**
+ * gabarit de 1200×630 capturé en PNG par le harnais CDP et servi comme
+ * `public/og/{fr,en}.png`. Les trois pôles y portent leur propre portée
+ * `data-pole` : la cascade d'accent fonctionne sur n'importe quel élément,
+ * pas seulement sur `<html>`.
+ */
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const locale = Astro.params.locale as Locale;
+const s = t(locale);
+const p = poles[locale];
+---
+
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>iNOVA BENIN</title>
+  </head>
+  <body class="card">
+    <div class="frame">
+      <p class="kicker">{s.status}</p>
+      <div>
+        <h1 class="brand">iNOVA BENIN</h1>
+        <p class="tagline">{s.tagline}</p>
+        <div class="bar" aria-hidden="true"></div>
+      </div>
+      <ul class="poles">
+        {
+          (['consulting', 'lab', 'studio'] as const).map((key) => (
+            <li data-pole={key}>
+              <p class="name">{p[key].name}</p>
+              <p class="role">{p[key].role}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </body>
+</html>
+
+<style>
+  .card {
+    background: #0b1e2d;
+    color: #f2f0ea;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  /* Le canevas est une dimension d'export, pas une réponse au conteneur. */
+  .frame {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 630px;
+    justify-content: space-between;
+    padding: 64px 72px 56px;
+    width: 1200px;
+  }
+
+  .kicker {
+    color: rgb(242 240 234 / 0.52);
+    font-family: var(--font-mono);
+    font-size: 17px;
+    letter-spacing: 0.16em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .brand {
+    font-family: var(--font-display);
+    font-size: 108px;
+    font-variation-settings: 'wdth' 112;
+    letter-spacing: -0.03em;
+    line-height: 0.92;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .tagline {
+    color: rgb(242 240 234 / 0.72);
+    font-family: var(--font-mono);
+    font-size: 21px;
+    letter-spacing: 0.06em;
+    margin: 22px 0 0;
+  }
+
+  .bar {
+    background: var(--accent);
+    height: 6px;
+    margin-top: 30px;
+    width: 210px;
+  }
+
+  .poles {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(3, 1fr);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .poles li {
+    border-top: 3px solid var(--accent);
+    padding-top: 24px;
+  }
+
+  .name {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  .role {
+    color: rgb(242 240 234 / 0.6);
+    font-size: 16px;
+    line-height: 1.45;
+    margin: 10px 0 0;
+  }
+</style>

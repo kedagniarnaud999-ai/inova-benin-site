@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PoleHero from '../components/PoleHero.astro';
+import Section from '../components/Section.astro';
+import { EXPERIMENTS, LIVE_COUNT } from '../content/experiments';
+import { url, type Locale } from '../i18n/config';
+import { about } from '../i18n/pages/about';
+import { FOUNDER, SOCIAL } from '../social';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = about[locale];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} {locale} route="about">
+  <PoleHero
+    eyebrow={c.hero.eyebrow}
+    title={c.hero.title}
+    lede={c.hero.lede(EXPERIMENTS.length, LIVE_COUNT)}
+  >
+    <a href="#etapes" class="btn btn-solid">{c.hero.steps}</a>
+    <a href="#reseau" class="btn btn-line">{c.hero.network}</a>
+  </PoleHero>
+
+  <Section eyebrow={c.intent.eyebrow} title={c.intent.title} size="wide" class="mt-8">
+    <blockquote class="quote">
+      <p class="text-h3">{c.intent.quote}</p>
+    </blockquote>
+    <p class="mt-9 max-w-[62ch] text-lede text-muted">{c.intent.body}</p>
+    <p class="mt-14">
+      <span class="label text-muted">{c.founder.eyebrow}</span>
+      <span class="mt-3 block text-h3">{FOUNDER}</span>
+      <span class="mt-2 block font-mono text-[0.8rem] text-muted">{c.founder.role}</span>
+      <span class="mt-5 block max-w-[58ch] text-[0.98rem]">{c.founder.body}</span>
+      <span class="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+        {
+          SOCIAL.map((profile) => (
+            <a
+              href={profile.href}
+              rel="me noopener"
+              target="_blank"
+              class="link-underline font-mono text-[0.8rem] text-accent-ink"
+            >
+              {profile.label}
+            </a>
+          ))
+        }
+      </span>
+    </p>
+  </Section>
+
+  <Section id="statut" eyebrow={c.legal.eyebrow} title={c.legal.title} size="wide">
+    <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.legal.intro}</p>
+    <dl class="grid gap-x-14 gap-y-9 sm:grid-cols-2">
+      {
+        c.legal.rows.map((row) => (
+          <div>
+            <dt class="label text-accent-ink">{row.label}</dt>
+            <dd class="mt-3 max-w-[46ch] text-[0.98rem]">{row.body}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </Section>
+
+  <Section id="reseau" eyebrow={c.network.eyebrow} title={c.network.title} size="wide">
+    <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.network.intro}</p>
+    <div class="grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
+      <p class="label pt-1 text-muted">{c.network.skillsTitle}</p>
+      <ul class="grid gap-x-10 gap-y-3 sm:grid-cols-2">
+        {
+          c.network.skills.map((skill) => (
+            <li class="flex items-baseline gap-3 border-b border-rule pb-3">
+              <span class="h-1.5 w-1.5 shrink-0 translate-y-[-2px] bg-accent" aria-hidden="true"></span>
+              <span>{skill}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <p class="mt-10 max-w-[62ch] border-t border-rule pt-8 text-[0.98rem] text-muted">
+      {c.network.formalisation}
+    </p>
+  </Section>
+
+  <Section id="etapes" tone="ink" size="wide">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+      <div>
+        <p class="label text-chalk/55">{c.steps.eyebrow}</p>
+        <h2 class="mt-3 max-w-[22ch] text-h2 text-chalk">{c.steps.title}</h2>
+        <p class="mt-6 max-w-[46ch] text-chalk/80">{c.steps.intro}</p>
+      </div>
+      <ol class="space-y-5">
+        {
+          c.steps.items.map((item, i) => (
+            <li class="grid grid-cols-[auto_1fr] gap-x-5 border-t border-chalk/15 pt-5">
+              <span class="font-mono text-[0.8rem] text-chalk/60">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span class="max-w-[58ch] text-chalk/90">{item}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </Section>
+
+  <Section eyebrow={c.elsewhere.eyebrow} title={c.elsewhere.title} size="wide">
+    <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-16">
+      <p class="max-w-[58ch] text-lede text-muted">{c.elsewhere.body}</p>
+      <p class="lg:pb-2 lg:text-right">
+        <a href={url(locale, 'contact')} class="btn btn-solid">{c.elsewhere.cta}</a>
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  /* Le filet de citation porte l'accent courant : sur cette page il reste
+     cobalt, la page n'étant rattachée à aucun pôle. */
+  .quote {
+    border-left: 3px solid var(--accent);
+    max-width: 46ch;
+    padding-left: 1.6rem;
+  }
+</style>

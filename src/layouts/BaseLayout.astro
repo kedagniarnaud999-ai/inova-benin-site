@@ -35,7 +35,7 @@ const strings = t(locale);
   <body class="flex min-h-screen flex-col">
     <a class="skip-link label" href="#contenu">{strings.nav.skip}</a>
     <Header {locale} {route} />
-    <main id="contenu" class="flex-1">
+    <main id="contenu" class="flex-1" tabindex="-1">
       <slot />
     </main>
     <Footer {locale} />

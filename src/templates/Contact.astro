@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import PoleHero from '../components/PoleHero.astro';
+import Section from '../components/Section.astro';
+import { contact } from '../i18n/pages/contact';
+import { url, type Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const c = contact[locale];
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} {locale} route="contact">
+  <PoleHero eyebrow={c.hero.eyebrow} title={c.hero.title} lede={c.hero.lede} />
+
+  <Section size="wide" class="mt-6">
+    <div class="grid gap-14 lg:grid-cols-[1.5fr_1fr] lg:items-start lg:gap-16">
+      <div>
+        <p class="label text-muted">{c.form.eyebrow}</p>
+        <h2 class="mt-3 max-w-[20ch] text-h2">{c.form.title}</h2>
+        <p class="mt-5 max-w-[56ch] text-lede text-muted">{c.form.intro}</p>
+        <div class="mt-10">
+          <ContactForm {locale} />
+        </div>
+      </div>
+
+      <aside class="space-y-9 border-t border-rule pt-8 lg:border-t-0 lg:border-l lg:pl-12">
+        <div>
+          <p class="label text-accent-ink">{c.destination.eyebrow}</p>
+          <p class="mt-3 max-w-[42ch] text-[0.98rem] text-muted">{c.destination.body}</p>
+        </div>
+        <div>
+          <p class="label text-accent-ink">{c.data.eyebrow}</p>
+          <p class="mt-3 max-w-[42ch] text-[0.98rem] text-muted">{c.data.body}</p>
+          <p class="mt-3">
+            <a href={url(locale, 'privacy')} class="link-underline">{c.data.more}</a>
+          </p>
+        </div>
+        <div>
+          <p class="label text-accent-ink">{c.limits.eyebrow}</p>
+          <p class="mt-3 max-w-[42ch] text-[0.98rem] text-muted">{c.limits.body}</p>
+        </div>
+        <div>
+          <p class="label text-accent-ink">{c.elsewhere.eyebrow}</p>
+          <p class="mt-3 max-w-[42ch] text-[0.98rem] text-muted">{c.elsewhere.body}</p>
+        </div>
+      </aside>
+    </div>
+  </Section>
+</BaseLayout>

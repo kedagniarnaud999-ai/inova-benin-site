@@ -22,11 +22,12 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      // La racine n'est qu'un repli de redirection et le 404 n'a pas de sens
-      // à être indexé : l'un et l'autre sont `noindex` dans leur balisage.
+      // La racine n'est qu'un repli de redirection, le 404 n'a pas de sens à
+      // être indexé, et `/og/*` ne sert qu'à capturer les cartes sociales :
+      // les trois sont `noindex` dans leur balisage.
       filter: (page) => {
         const path = new URL(page).pathname;
-        return path !== '/' && !path.endsWith('/404');
+        return path !== '/' && !path.endsWith('/404') && !path.startsWith('/og/');
       },
       i18n: {
         defaultLocale: 'fr',

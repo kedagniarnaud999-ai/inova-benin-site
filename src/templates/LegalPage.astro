@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PoleHero from '../components/PoleHero.astro';
+import Prose from '../components/Prose.astro';
+import Section from '../components/Section.astro';
+import type { Locale, RouteKey } from '../i18n/config';
+import type { LegalContent } from '../i18n/pages/legal';
+
+interface Props {
+  locale: Locale;
+  route: RouteKey;
+  content: LegalContent;
+}
+
+const { locale, route, content: c } = Astro.props;
+---
+
+<BaseLayout title={c.meta.title} description={c.meta.description} {locale} {route}>
+  <PoleHero eyebrow={c.hero.eyebrow} title={c.hero.title} lede={c.hero.lede} />
+
+  <Section size="default" class="mt-10">
+    <div class="space-y-12">
+      {
+        c.blocks.map((block, i) => (
+          <section class="border-t border-rule pt-9" aria-labelledby={`${route}-${i}`}>
+            <h2 id={`${route}-${i}`} class="label text-accent-ink">
+              {block.label}
+            </h2>
+            <Prose class="mt-4">
+              {block.body && <p>{block.body}</p>}
+              {block.items && (
+                <ul class="space-y-3">
+                  {block.items.map((item) => (
+                    <li class="grid grid-cols-[auto_1fr] gap-x-4">
+                      <span class="mt-2.5 h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true"></span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {block.link && (
+                <p class="font-mono text-[0.85rem]">
+                  <a
+                    href={block.link.href}
+                    target="_blank"
+                    rel="noopener"
+                    class="link-underline text-accent-ink"
+                  >
+                    {block.link.label}
+                  </a>
+                </p>
+              )}
+            </Prose>
+          </section>
+        ))
+      }
+    </div>
+  </Section>
+</BaseLayout>

@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
       </div>
 
       <nav aria-labelledby="f-poles">
-        <h2 id="f-poles" class="label text-chalk/50">{s.footer.poles}</h2>
+        <h2 id="f-poles" class="label text-chalk/60">{s.footer.poles}</h2>
         <ul class="mt-4 space-y-2.5">
           {
             (['consulting', 'lab', 'studio'] as const).map((key) => (
@@ -35,7 +35,7 @@ const year = new Date().getFullYear();
       </nav>
 
       <nav aria-labelledby="f-company">
-        <h2 id="f-company" class="label text-chalk/50">{s.footer.company}</h2>
+        <h2 id="f-company" class="label text-chalk/60">{s.footer.company}</h2>
         <ul class="mt-4 space-y-2.5">
           <li>
             <a href={url(locale, 'about')} class="text-chalk/90 hover:text-chalk hover:underline">
@@ -65,7 +65,7 @@ const year = new Date().getFullYear();
       </nav>
 
       <nav aria-labelledby="f-legal">
-        <h2 id="f-legal" class="label text-chalk/50">{s.footer.legalTitle}</h2>
+        <h2 id="f-legal" class="label text-chalk/60">{s.footer.legalTitle}</h2>
         <ul class="mt-4 space-y-2.5">
           <li>
             <a href={url(locale, 'legal')} class="text-chalk/90 hover:text-chalk hover:underline">
@@ -82,10 +82,10 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="mt-14 flex flex-wrap items-baseline justify-between gap-3 border-t border-chalk/15 pt-6">
-      <p class="label text-chalk/45">
+      <p class="label text-chalk/60">
         © {year} iNOVA BENIN — {s.footer.rights}
       </p>
-      <p class="label text-chalk/45">{s.footer.built}</p>
+      <p class="label text-chalk/60">{s.footer.built}</p>
     </div>
   </div>
 </footer>

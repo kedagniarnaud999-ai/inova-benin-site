@@ -1,0 +1,244 @@
+---
+import { contact } from '../i18n/pages/contact';
+import { poles } from '../i18n/poles';
+import { t } from '../i18n/ui';
+import type { Locale } from '../i18n/config';
+
+const ENDPOINT = 'https://api.web3forms.com/submit';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale).form;
+const c = contact[locale].form;
+const p = poles[locale];
+
+// La clé est publique par conception : Web3Forms l'attend dans le HTML. Sans
+// elle le site n'a aucun canal, d'où le build rouge plutôt qu'un formulaire muet.
+const key = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
+if (!key) {
+  throw new Error(
+    'PUBLIC_WEB3FORMS_ACCESS_KEY absente. Copiez .env.example en .env, puis créez la clé sur web3forms.com ; côté Vercel, ajoutez la même variable.',
+  );
+}
+
+// Les libellés d'état voyagent jusqu'au script par le DOM : une seule source,
+// pas de copie en dur dans le JS.
+const copy = JSON.stringify({
+  idle: s.send,
+  sending: s.sending,
+  sentTitle: s.sentTitle,
+  sentBody: s.sentBody,
+  errorTitle: s.errorTitle,
+  errorBody: s.errorBody,
+});
+---
+
+<form id="demande" class="demande" action={ENDPOINT} method="post">
+  <input type="hidden" name="access_key" value={key} />
+  <input type="hidden" name="subject" value={c.subject} />
+  <input type="hidden" name="from_name" value="iNOVA BENIN" />
+  <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    <p class="field">
+      <label class="label" for="nom">
+        {s.name}
+        <span class="req">{s.required}</span>
+      </label>
+      <input id="nom" name="name" type="text" autocomplete="name" required />
+    </p>
+
+    <p class="field">
+      <label class="label" for="courriel">
+        {s.email}
+        <span class="req">{s.required}</span>
+      </label>
+      <input id="courriel" name="email" type="email" autocomplete="email" required />
+    </p>
+
+    <p class="field">
+      <label class="label" for="structure">
+        {s.org}
+        <span class="opt">{s.optional}</span>
+      </label>
+      <input id="structure" name="org" type="text" autocomplete="organization" />
+      <span class="hint">{s.orgHint}</span>
+    </p>
+
+    <p class="field">
+      <label class="label" for="pole">
+        {s.pole}
+        <span class="opt">{s.optional}</span>
+      </label>
+      <select id="pole" name="pole">
+        <option value="">{c.unknown}</option>
+        <option value={p.consulting.name}>{p.consulting.name}</option>
+        <option value={p.lab.name}>{p.lab.name}</option>
+        <option value={p.studio.name}>{p.studio.name}</option>
+      </select>
+    </p>
+  </div>
+
+  <p class="field mt-5">
+    <label class="label" for="besoin">
+      {s.message}
+      <span class="req">{s.required}</span>
+    </label>
+    <textarea id="besoin" name="message" rows="6" required placeholder={s.messageHint}></textarea>
+  </p>
+
+  <p class="mt-4 max-w-[54ch] text-[0.9rem] text-muted">{s.consent}</p>
+
+  <div class="mt-8">
+    <button type="submit" class="btn btn-solid">
+      <span>{s.send}</span>
+    </button>
+  </div>
+
+  <div
+    id="retour"
+    class="panel"
+    data-copy={copy}
+    role="status"
+    aria-live="polite"
+    tabindex="-1"
+    hidden
+  >
+    <h3 class="label"></h3>
+    <p></p>
+  </div>
+</form>
+
+<style>
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .field .label {
+    color: var(--color-ink);
+    letter-spacing: 0.1em;
+  }
+
+  .req,
+  .opt {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
+  .req {
+    color: var(--accent-ink);
+  }
+
+  .opt {
+    color: var(--color-muted);
+  }
+
+  .hint {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-ink);
+    background: transparent;
+    border: 1px solid var(--color-rule);
+    border-radius: 2px;
+    padding: 0.75rem 0.85rem;
+  }
+
+  textarea {
+    resize: vertical;
+    max-width: 62ch;
+  }
+
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: var(--accent-ink);
+  }
+
+  .panel {
+    margin-top: 1.5rem;
+    max-width: 56ch;
+    border-left: 3px solid var(--accent-ink);
+    padding: 0.25rem 0 0.25rem 1.1rem;
+  }
+
+  .panel h3 {
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+
+  .panel p {
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  .panel:focus-visible {
+    outline-offset: 6px;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('demande') as HTMLFormElement | null;
+  const panel = document.getElementById('retour') as HTMLElement | null;
+
+  if (form && panel) {
+    const copy = JSON.parse(panel.dataset.copy || '{}');
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const caption = button.querySelector('span');
+    const title = panel.querySelector('h3');
+    const body = panel.querySelector('p');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      // Sans ça, deux `Entrée` consécutives partent deux fois.
+      if (form.dataset.busy) return;
+      form.dataset.busy = '1';
+      button.disabled = true;
+      if (caption) caption.textContent = copy.sending;
+
+      let ok = false;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        const data = await res.json().catch(() => null);
+        ok = res.ok && data?.success === true;
+      } catch {
+        ok = false;
+      }
+
+      panel.hidden = false;
+      if (title) title.textContent = ok ? copy.sentTitle : copy.errorTitle;
+      if (body) body.textContent = ok ? copy.sentBody : copy.errorBody;
+      if (ok) form.reset();
+      delete form.dataset.busy;
+      button.disabled = false;
+      if (caption) caption.textContent = copy.idle;
+      panel.focus();
+    });
+  }
+</script>

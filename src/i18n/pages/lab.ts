@@ -35,8 +35,6 @@ const fr = {
     title: 'Le carnet',
     intro: (n: number, live: number) =>
       `${n} expérimentations construites sur les onze du portefeuille, dont ${live} accessibles en ligne. Les autres sont publiées au fur et à mesure qu’elles produisent quelque chose de consultable.`,
-    built: 'construites',
-    live: 'en ligne',
   },
 
   seekers: {
@@ -77,8 +75,6 @@ const en: typeof fr = {
     title: 'The ledger',
     intro: (n: number, live: number) =>
       `${n} experiments built out of the portfolio’s eleven, ${live} of them live online. The others appear here as soon as they produce something worth looking at.`,
-    built: 'built',
-    live: 'online',
   },
 
   seekers: {
