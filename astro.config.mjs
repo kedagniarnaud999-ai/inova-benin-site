@@ -5,9 +5,11 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 // L'URL de production réelle, sinon chaque canonical, og:url et entrée de sitemap
-// pointerait sur un hôte mort. À remplacer par le nom de domaine définitif dès
-// qu'il est acheté : `site` alimente l'URL canonique, les hreflang et le sitemap.
-const SITE = 'https://inova-benin-site-kedagniarnaud999-ais-projects.vercel.app';
+// pointerait sur un hôte mort. Le nom court est celui à publier : l'alias long
+// suffixé par l'équipe sert le même contenu, et sans canonical qui tranche les
+// deux sont des doublons aux yeux d'un crawler. À remplacer par le domaine
+// définitif dès qu'il est acheté : `site` alimente canonical, hreflang et sitemap.
+const SITE = 'https://inova-benin-site.vercel.app';
 
 // https://astro.build/config
 export default defineConfig({
