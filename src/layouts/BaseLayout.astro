@@ -30,6 +30,7 @@ const strings = t(locale);
 <html lang={locale} data-pole={pole}>
   <head>
     <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <Seo title={title} description={description} locale={locale} route={route} />
   </head>
   <body class="flex min-h-screen flex-col">
@@ -41,3 +42,24 @@ const strings = t(locale);
     <Footer {locale} />
   </body>
 </html>
+
+<script>
+  // Un seul observateur pour tout le site : les blocs [data-reveal] s'allument
+  // à leur entrée dans le champ, puis se retirent de l'observation.
+  const targets = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.08 },
+    );
+    targets.forEach((el) => io.observe(el));
+  } else {
+    targets.forEach((el) => el.classList.add('is-in'));
+  }
+</script>

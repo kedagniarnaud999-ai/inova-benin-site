@@ -1,0 +1,101 @@
+---
+/**
+ * Les trois principes (§8) en systèmes reliés, pas en cartes : le même filet
+ * et les mêmes nœuds que la marque du site, parce qu'ils décrivent la même
+ * chaîne — ancrer, expérimenter, collaborer.
+ */
+interface Item {
+  name: string;
+  body: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="pillars">
+  <div class="pillars-rail" aria-hidden="true"></div>
+  <ul class="pillar-list">
+    {
+      items.map((item, i) => (
+        <li class="pillar" data-reveal style={`--d: ${i * 120}ms`}>
+          <span class="pillar-node" aria-hidden="true"></span>
+          <h3 class="pillar-name">{item.name}</h3>
+          <p class="pillar-body">{item.body}</p>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .pillars {
+    position: relative;
+  }
+
+  .pillars-rail {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: color-mix(in oklab, var(--color-chalk) 26%, transparent);
+  }
+
+  .pillar-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    list-style: none;
+  }
+
+  @media (max-width: 47.99rem) {
+    .pillars-rail {
+      display: none;
+    }
+    .pillar-list {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .pillar {
+    display: grid;
+    gap: 0.9rem;
+    align-content: start;
+    padding-top: 0;
+  }
+
+  .pillar-node {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-ink);
+    border: 1px solid var(--color-chalk);
+    margin-bottom: 1.2rem;
+  }
+
+  .pillar-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 118;
+    font-size: clamp(1.5rem, 2.8vw, 2.15rem);
+    line-height: 0.98;
+    letter-spacing: -0.015em;
+    text-transform: uppercase;
+    color: var(--color-chalk);
+  }
+
+  .pillar-body {
+    font-size: 1rem;
+    line-height: 1.62;
+    color: color-mix(in oklab, var(--color-chalk) 74%, transparent);
+    max-width: 30ch;
+  }
+
+  .pillar:hover .pillar-node {
+    background: var(--accent);
+  }
+</style>

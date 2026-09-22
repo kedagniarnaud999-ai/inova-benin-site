@@ -49,7 +49,7 @@ Après toute retouche de contenu ou de composant, rejouer au minimum l'anti-fuit
 
 ## Ce qui ne doit jamais revenir sur le site
 
-- Une adresse e-mail affichée, où que ce soit — y compris en `mailto:`.
+- L'adresse personnelle du fondateur (`kedagniarnaud999@gmail.com`) : seule l'adresse de la structure, dans `src/social.ts`, est publiée.
 - Le RCCM ou l'IFU : la société est en cours de constitution, ces identifiants n'existent pas encore.
 - L'adresse de domiciliation du porteur.
 - Un nom de client, un témoignage, une statistique non sourcée, ou le tableau comparatif concurrentiel interne du business plan.

@@ -10,7 +10,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
     },
     {
       label: 'Données collectées',
-      body: 'Une seule voie collectera des données personnelles : le formulaire de contact. Les champs sont les suivants.',
+      body: 'La seule voie par laquelle ce site collectera des données personnelles : le formulaire de contact. Nous écrire directement depuis votre messagerie est un autre geste, qui ne passe par aucune de ces pages. Les champs du formulaire sont les suivants.',
       items: [
         'Votre nom — obligatoire, pour savoir à qui répondre.',
         'Entreprise ou structure — facultatif.',
@@ -29,7 +29,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
     },
     {
       label: 'Sous-traitant',
-      body: 'Les demandes sont transmises par Web3Forms, un service tiers qui relaie le message jusqu’à son destinataire. L’identifiant public du formulaire est lisible dans le code source de la page : c’est le fonctionnement normal de ce service. L’adresse de réception, elle, n’apparaît nulle part sur le site — et les origines autorisées à envoyer sont restreintes au domaine du site.',
+      body: 'Les demandes sont transmises par Web3Forms, un service tiers qui relaie le message jusqu’à son destinataire. L’identifiant public du formulaire est lisible dans le code source de la page : c’est le fonctionnement normal de ce service. Le message est remis à l’adresse officielle d’iNOVA BENIN, publiée sur la page Contact et au pied de chaque page. Les origines autorisées à envoyer sont restreintes au domaine du site.',
     },
     {
       label: 'Durée de conservation',
@@ -45,7 +45,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
     },
     {
       label: 'Vos droits',
-      body: 'Accès, rectification, effacement et opposition s’exercent par le formulaire de contact, en indiquant l’adresse électronique utilisée lors de la demande. La réponse est donnée par le porteur du projet lui-même.',
+      body: 'Accès, rectification, effacement et opposition s’exercent par le formulaire de contact, ou par e-mail à l’adresse publiée en bas de page, en indiquant l’adresse électronique utilisée lors de la demande. La réponse est donnée par le porteur du projet lui-même.',
     },
   ],
   en: [
@@ -55,7 +55,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
     },
     {
       label: 'Data collected',
-      body: 'One single path collects personal data: the contact form. These are the fields.',
+      body: 'The only path by which this site collects personal data: the contact form. Writing to us from your own mail client is a different act, one that touches none of these pages. These are the form’s fields.',
       items: [
         'Your name — required, so we know whom to answer.',
         'Company or organisation — optional.',
@@ -74,7 +74,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
     },
     {
       label: 'Processor',
-      body: 'Requests are relayed by Web3Forms, a third-party service that forwards the message to its recipient. The form’s public identifier is readable in the page source: that is how the service works. The receiving address appears nowhere on the site, and the origins allowed to submit are restricted to the site’s own domain.',
+      body: 'Requests are relayed by Web3Forms, a third-party service that forwards the message to its recipient. The form’s public identifier is readable in the page source: that is how the service works. The message is delivered to iNOVA BENIN’s official address, published on the Contact page and in the footer of every page. The origins allowed to submit are restricted to the site’s own domain.',
     },
     {
       label: 'Retention',
@@ -90,7 +90,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
     },
     {
       label: 'Your rights',
-      body: 'Access, rectification, erasure and objection are exercised through the contact form, quoting the e-mail address used in the request. The answer comes from the founder directly.',
+      body: 'Access, rectification, erasure and objection are exercised through the contact form, or by e-mail to the address published in the footer, quoting the e-mail address used in the request. The answer comes from the founder directly.',
     },
   ],
 };

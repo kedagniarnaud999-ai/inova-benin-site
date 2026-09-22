@@ -1,14 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
+import FlowMark from '../components/FlowMark.astro';
 import PoleBands from '../components/PoleBands.astro';
-import Track369 from '../components/Track369.astro';
-import LedgerTable from '../components/LedgerTable.astro';
-import { home } from '../i18n/pages/home';
-import { METHOD_STEPS } from '../i18n/method';
+import MethodTrack from '../components/MethodTrack.astro';
+import LabShowcase from '../components/LabShowcase.astro';
+import Principles from '../components/Principles.astro';
+import Constellation from '../components/Constellation.astro';
+import Ambition from '../components/Ambition.astro';
+import Collaborate from '../components/Collaborate.astro';
+import { home, SKILLS } from '../i18n/pages/home';
+import { BUILD_STEPS } from '../i18n/method';
 import { EXPERIMENTS, LIVE_COUNT } from '../content/experiments';
 import { url, type Locale } from '../i18n/config';
 import { t } from '../i18n/ui';
+import { EMAIL, SOCIAL } from '../social';
 
 interface Props {
   locale: Locale;
@@ -17,137 +23,327 @@ interface Props {
 const { locale } = Astro.props;
 const c = home[locale];
 const s = t(locale);
+const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
 ---
 
 <BaseLayout title={c.meta.title} description={c.meta.description} {locale} route="home">
-  <section class="hero mx-auto max-w-[88rem] px-5 pt-12 pb-4 sm:px-8 sm:pt-16">
-    <p class="label text-muted">{c.hero.eyebrow}</p>
-    <h1 class="display mt-5 text-hero">
-      <span class="block">{c.hero.line1}</span>
-      <span class="block">{c.hero.line2}</span>
-      <span class="block">{c.hero.line3}</span>
-    </h1>
-    <div class="hero-bar" aria-hidden="true"></div>
-
-    <div class="mt-8 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-      <p class="max-w-[52ch] text-lede text-ink">{c.hero.lede}</p>
-      <a
-        href={url(locale, 'contact')}
-        class="btn btn-solid justify-self-start lg:justify-self-end"
-      >
-        {s.cta.contact}
-      </a>
+  <!-- 01 — HERO -->
+  <section class="hero mx-auto max-w-[88rem] px-5 pt-14 pb-6 sm:px-8 sm:pt-20">
+    <div class="hero-top">
+      <p class="label text-muted">{c.hero.eyebrow}</p>
+      <p class="label hero-year">2026</p>
     </div>
 
-    <PoleBands {locale} hint={c.hero.bandsHint} />
+    <h1 class="display hero-h1 text-hero">
+      <span class="block">{c.hero.line1}</span>
+      <span class="block">{c.hero.line2}</span>
+      <span class="block accent-line">{c.hero.line3}</span>
+    </h1>
+
+    <div class="hero-bar" aria-hidden="true"></div>
+
+    <div class="mt-9 grid gap-9 lg:grid-cols-[1.1fr_auto] lg:items-end">
+      <p class="max-w-[46ch] text-lede text-ink">{c.hero.lede}</p>
+      <div class="flex flex-wrap gap-3 lg:justify-end">
+        <a href={url(locale, 'contact')} class="btn btn-solid">{c.hero.cta}</a>
+        <a href="#projets" class="btn btn-line">{c.hero.secondary}</a>
+      </div>
+    </div>
+
+    <p class="label hero-words">{c.conviction.flow.map((f) => f.label).join('  ·  ')}</p>
   </section>
 
-  <Section tone="ink" size="wide" class="mt-8">
-    <div class="grid gap-8 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
-      <p class="display text-[clamp(1.6rem,3.1vw,2.5rem)]">{c.statement.body}</p>
+  <!-- 02 — NOTRE CONVICTION -->
+  <Section tone="ink" size="wide" class="field conviction">
+    <div class="grid gap-10 lg:grid-cols-[1.45fr_1fr] lg:gap-16">
       <div>
-        <p class="label text-chalk/55">{c.statement.eyebrow}</p>
-        <p class="mt-4 max-w-[52ch] text-chalk/80">{c.statement.note}</p>
+        <p class="label text-chalk/55">{c.conviction.eyebrow}</p>
+        <h2 class="mt-4 max-w-[24ch] text-mega">{c.conviction.title}</h2>
       </div>
+      <div class="conviction-body">
+        {c.conviction.body.map((line) => <p class="text-chalk/80">{line}</p>)}
+        <p class="conviction-claim">{c.conviction.claim}</p>
+        <p class="text-chalk/70">{c.conviction.close}</p>
+      </div>
+    </div>
+
+    <FlowMark class="conviction-flow" items={c.conviction.flow} tone="ink" />
+  </Section>
+
+  <!-- 03 — CE QUE NOUS FAISONS -->
+  <Section id="poles" eyebrow={c.ways.eyebrow} title={c.ways.title} size="wide">
+    <p class="mb-10 max-w-[58ch] text-lede text-muted">{c.ways.intro}</p>
+    <div class="ways" data-reveal>
+      <div class="ways-rule" aria-hidden="true"></div>
+      <PoleBands {locale} />
     </div>
   </Section>
 
+  <!-- 04 — NOTRE MÉTHODE -->
   <div data-pole="lab">
-    <Section id="methode" eyebrow={c.method.eyebrow} title={c.method.title} size="wide">
-      <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.method.intro}</p>
-      <Track369 {locale} steps={METHOD_STEPS[locale]} />
+    <Section
+      id="methode"
+      eyebrow={c.method.eyebrow}
+      title={c.method.title}
+      size="wide"
+      class="method">
+      <p class="mb-12 max-w-[52ch] text-lede text-muted">{c.method.intro}</p>
+      <MethodTrack steps={BUILD_STEPS[locale]} railLabel={c.method.rail} />
       <p class="mt-10">
         <a href={url(locale, 'lab')} class="btn btn-line">{c.method.link}</a>
       </p>
     </Section>
+  </div>
 
-    <Section id="carnet" eyebrow={c.ledger.eyebrow} title={c.ledger.title} size="wide">
-      <p class="mb-4 max-w-[62ch] text-lede text-muted">{c.ledger.intro}</p>
+  <!-- 05 — CE QUE NOUS CONSTRUISONS -->
+  <div data-pole="lab">
+    <Section id="projets" eyebrow={c.projects.eyebrow} title={c.projects.title} size="wide">
+      <p class="mb-4 max-w-[58ch] text-lede text-muted">{c.projects.intro}</p>
       <p class="label mb-10 text-accent-ink">
-        {c.ledger.countLabel(EXPERIMENTS.length)} · {c.ledger.liveLabel(LIVE_COUNT)}
+        {c.projects.countLabel(EXPERIMENTS.length)} · {c.projects.liveLabel(LIVE_COUNT)} ·
+        {SKILLS.length} {locale === 'fr' ? 'compétences mobilisables' : 'mobilisable skills'}
       </p>
-      <LedgerTable {locale} limit={3} />
+      <LabShowcase {locale} />
       <p class="mt-10">
-        <a href={url(locale, 'lab')} class="btn btn-line">{c.ledger.link}</a>
+        <a href={url(locale, 'lab')} class="btn btn-line">{c.projects.link}</a>
       </p>
     </Section>
   </div>
 
-  <div data-pole="studio">
-    <Section id="studio" eyebrow={c.studio.eyebrow} title={c.studio.title} size="wide">
-      <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.studio.intro}</p>
-      <ul class="grid gap-px bg-rule sm:grid-cols-3">
-        {
-          c.studio.formats.map((f) => (
-            <li class="bg-chalk py-7 pr-6 pl-0">
-              <p class="label text-accent-ink">{f.name}</p>
-              <h3 class="mt-3 text-h3">{f.what}</h3>
-              <p class="mt-3 max-w-[34ch] text-[0.98rem] text-muted">{f.body}</p>
-            </li>
-          ))
-        }
-      </ul>
-      <div class="mt-14 grid gap-6 border-t border-rule pt-10 lg:grid-cols-[1.3fr_1fr] lg:items-center">
-        <div>
-          <p class="label text-muted">{c.partners.eyebrow}</p>
-          <h3 class="mt-3 max-w-[24ch] text-h3">{c.partners.title}</h3>
-          <p class="mt-4 max-w-[62ch] text-[0.98rem] text-muted">{c.partners.body}</p>
-        </div>
-        <div class="flex flex-wrap gap-4 lg:justify-end">
-          <a href={url(locale, 'studio')} class="btn btn-line">{c.studio.link}</a>
-          <a href={url(locale, 'contact')} class="btn btn-solid">{c.partners.cta}</a>
-        </div>
-      </div>
-    </Section>
-  </div>
+  <!-- 06 — POURQUOI iNOVA -->
+  <Section tone="ink" id="principes" eyebrow={c.principles.eyebrow} title={c.principles.title} size="wide" class="field">
+    <p class="mb-12 max-w-[52ch] text-chalk/70">{c.principles.intro}</p>
+    <Principles items={c.principles.items} />
+  </Section>
 
-  <Section id="contact" eyebrow={c.closing.eyebrow} title={c.closing.title} size="wide">
-    <p class="mb-10 max-w-[52ch] text-lede text-muted">{c.closing.body}</p>
-    <div class="flex flex-wrap gap-4">
-      <a href={url(locale, 'contact')} class="btn btn-solid">{c.closing.cta}</a>
-      <a href={url(locale, 'about')} class="btn btn-line">{c.closing.secondary}</a>
+  <!-- 07 — ÉQUIPE ET RÉSEAU -->
+  <Section id="equipe" eyebrow={c.team.eyebrow} title={c.team.title} size="wide">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.25fr] lg:gap-16 lg:items-center">
+      <div>
+        <p class="max-w-[42ch] text-lede text-muted">{c.team.body}</p>
+        <div class="founder" data-reveal>
+          <h3 class="founder-name">{c.team.founderName}</h3>
+          <p class="founder-role">{c.team.founderRole}</p>
+          <p class="mt-3 max-w-[46ch] text-[0.98rem] text-muted">{c.team.founderBody}</p>
+          {
+            linkedin && (
+              <p class="mt-5">
+                <a href={linkedin} rel="me noopener" target="_blank" class="label link-underline">
+                  LinkedIn
+                </a>
+              </p>
+            )
+          }
+        </div>
+        <p class="mt-8">
+          <a href={url(locale, 'contact')} class="btn btn-line">{c.team.join}</a>
+        </p>
+      </div>
+      <div>
+        <Constellation
+          coreLabel={locale === 'fr' ? 'Équipe cœur' : 'Core team'}
+          coreName={c.team.founderName}
+          listLabel={c.team.networkTitle}
+        />
+        <p class="mt-6 max-w-[46ch] text-[0.95rem] text-muted">{c.team.networkNote}</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 08 — AFRIQUE ET AMBITION -->
+  <Section tone="ink" id="ambition" size="wide" class="field ambition">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:items-center">
+      <div>
+        <p class="label text-chalk/55">{c.ambition.eyebrow}</p>
+        <h2 class="mt-3 max-w-[20ch] text-h2">{c.ambition.title}</h2>
+        {c.ambition.body.map((line, i) => <p class="ambition-line" data-reveal style={`--d: ${i * 90}ms`}>{line}</p>)}
+      </div>
+      <Ambition rings={c.ambition.rings} anchor={c.ambition.anchor} />
+    </div>
+  </Section>
+
+  <!-- 09 — COLLABORATIONS -->
+  <Section id="collaborer" eyebrow={c.collaborate.eyebrow} title={c.collaborate.title} size="wide">
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16 lg:items-start">
+      <div>
+        <p class="max-w-[38ch] text-lede text-muted">{c.collaborate.intro}</p>
+        <p class="collab-lead display">{c.collaborate.lead}</p>
+      </div>
+      <Collaborate {locale} modes={c.collaborate.modes} cta={c.collaborate.cta} />
+    </div>
+  </Section>
+
+  <!-- 10 — ÉCRIRE À iNOVA -->
+  <Section id="ecrire" eyebrow={c.writing.eyebrow} title={c.writing.title} size="wide" class="writing">
+    <div class="grid gap-8 lg:grid-cols-[1.2fr_auto] lg:items-center">
+      <div>
+        <p class="max-w-[52ch] text-lede text-muted">{c.writing.body}</p>
+        <a href={`mailto:${EMAIL}`} class="writing-mail">{EMAIL}</a>
+      </div>
+      <div class="flex flex-wrap gap-3 lg:justify-end">
+        <a href={`mailto:${EMAIL}`} class="btn btn-solid">{c.writing.cta}</a>
+        <a href={url(locale, 'contact')} class="btn btn-line">{s.cta.contact}</a>
+      </div>
     </div>
   </Section>
 </BaseLayout>
 
 <style>
-  /* Le héros ne prend la couleur d'aucun pôle au repos : les trois sont à
-     égalité tant qu'aucun n'est visé. En revanche, survoler ou tabuler une
-     bande propage sa couleur au filet et aux libellés — la couleur répond
-     à l'intention, jamais elle ne la devance. */
-  .hero {
-    --accent: var(--color-ink);
-    --accent-ink: var(--color-ink);
+  .hero-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
   }
 
-  .hero:has([data-p='consulting']:hover),
-  .hero:has([data-p='consulting']:focus-within) {
-    --accent: var(--color-cobalt);
-    --accent-ink: var(--color-cobalt);
+  .hero-year {
+    color: var(--color-rule);
   }
 
-  .hero:has([data-p='lab']:hover),
-  .hero:has([data-p='lab']:focus-within) {
-    --accent: var(--color-verdigris);
-    --accent-ink: var(--color-verdigris);
+  .hero-h1 {
+    margin-top: clamp(1.8rem, 5vw, 3.4rem);
   }
 
-  .hero:has([data-p='studio']:hover),
-  .hero:has([data-p='studio']:focus-within) {
-    --accent: var(--color-ocre);
-    --accent-ink: var(--color-ocre-ink);
+  /* Le point final n'est pas un ornement : c'est la ligne d'arrivée du
+     PROBLEMS → PRODUCTS → VENTURES, et elle porte la couleur du pôle visé. */
+  .accent-line {
+    color: var(--color-ink);
   }
 
   .hero-bar {
-    margin-top: 1.6rem;
+    margin-top: 1.7rem;
     height: 3px;
     width: 100%;
     background: var(--accent);
     transition: background-color 260ms ease-out;
   }
 
+  .hero-words {
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--color-muted);
+    letter-spacing: 0.22em;
+  }
+
+  .conviction {
+    padding-block: clamp(4.5rem, 10vw, 8rem);
+  }
+
+  .conviction-body {
+    display: grid;
+    gap: 1.15rem;
+    align-content: start;
+    padding-top: 0.9rem;
+  }
+
+  .conviction-claim {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 100;
+    font-size: 1.15rem;
+    line-height: 1.4;
+    color: var(--color-chalk);
+    border-left: 2px solid var(--color-chalk);
+    padding-left: 1.1rem;
+  }
+
+  .conviction-flow {
+    margin-top: clamp(3rem, 7vw, 5.5rem);
+    color: var(--color-chalk);
+  }
+
+  /* Le filet au-dessus des trois pôles répond à l'intention : il prend la
+     couleur du pôle que le regard ou le clavier vise, jamais l'inverse. */
+  .ways {
+    --accent: var(--color-ink);
+    --accent-ink: var(--color-ink);
+  }
+
+  .ways:has([data-p='lab']:hover),
+  .ways:has([data-p='lab']:focus-within) {
+    --accent: var(--color-verdigris);
+    --accent-ink: var(--color-verdigris);
+  }
+
+  .ways:has([data-p='consulting']:hover),
+  .ways:has([data-p='consulting']:focus-within) {
+    --accent: var(--color-cobalt);
+    --accent-ink: var(--color-cobalt);
+  }
+
+  .ways:has([data-p='studio']:hover),
+  .ways:has([data-p='studio']:focus-within) {
+    --accent: var(--color-ocre);
+    --accent-ink: var(--color-ocre-ink);
+  }
+
+  .ways-rule {
+    height: 3px;
+    background: var(--accent);
+    margin-bottom: 1.9rem;
+    transition: background-color 260ms ease-out;
+  }
+
+  .founder {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--color-rule);
+    padding-top: 1.4rem;
+  }
+
+  .founder-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 108;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-top: 0.5rem;
+  }
+
+  .founder-role {
+    margin-top: 0.6rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--accent-ink);
+    max-width: 40ch;
+  }
+
+  .ambition-line {
+    margin-top: 1.15rem;
+    max-width: 52ch;
+    color: color-mix(in oklab, var(--color-chalk) 78%, transparent);
+  }
+
+  .collab-lead {
+    margin-top: 1.6rem;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--color-ink);
+  }
+
+  .writing {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .writing-mail {
+    display: inline-block;
+    margin-top: 1.4rem;
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 100;
+    font-size: clamp(1.3rem, 3.4vw, 2.1rem);
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.24em;
+    text-decoration-color: var(--color-rule);
+    word-break: break-all;
+  }
+
+  .writing-mail:hover,
+  .writing-mail:focus-visible {
+    text-decoration-color: var(--accent-ink);
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .hero-bar {
+    .hero-bar,
+    .ways-rule {
       transition: none;
     }
   }

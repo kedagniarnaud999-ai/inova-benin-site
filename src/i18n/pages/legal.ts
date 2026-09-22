@@ -75,7 +75,7 @@ export const legal: Record<Locale, LegalContent> = {
       },
       {
         label: 'Contact et signalement',
-        body: 'Le formulaire de contact est le seul canal ouvert par ce site. Aucune adresse électronique n’y est affichée. Les demandes de retrait, de correction et les signalements y passent également.',
+        body: 'Deux canaux, un seul destinataire : le formulaire de contact et l’adresse électronique officielle publiée au pied de chaque page. L’un et l’autre sont lus par le porteur du projet. Les demandes de retrait, de correction et les signalements passent par l’un ou l’autre.',
       },
     ],
   },
@@ -127,7 +127,7 @@ export const legal: Record<Locale, LegalContent> = {
       },
       {
         label: 'Contact and reporting',
-        body: 'The contact form is the only channel this site opens. No e-mail address is displayed on it. Withdrawal requests, corrections and reports go through the same form.',
+        body: 'Two channels, one recipient: the contact form and the official e-mail address published in the footer of every page. Both are read by the person carrying the project. Withdrawal requests, corrections and reports go through either.',
       },
     ],
   },

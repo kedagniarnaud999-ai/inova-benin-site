@@ -7,8 +7,11 @@ import sitemap from '@astrojs/sitemap';
 // L'URL de production réelle, sinon chaque canonical, og:url et entrée de sitemap
 // pointerait sur un hôte mort. Le nom court est celui à publier : l'alias long
 // suffixé par l'équipe sert le même contenu, et sans canonical qui tranche les
-// deux sont des doublons aux yeux d'un crawler. À remplacer par le domaine
-// définitif dès qu'il est acheté : `site` alimente canonical, hreflang et sitemap.
+// deux sont des doublons aux yeux d'un crawler.
+// Décision du 2026-09-22 : c'est l'URL définitive, aucun domaine n'est prévu.
+// Si un domaine personnalisé était ajouté plus tard, `site` alimente canonical,
+// hreflang, sitemap et og:url : le changer ici, vérifier que Vercel garde le nom
+// court actif, et redéployer.
 const SITE = 'https://inova-benin-site.vercel.app';
 
 // https://astro.build/config

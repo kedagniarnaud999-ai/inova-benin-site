@@ -1,0 +1,340 @@
+---
+import { EXPERIMENTS, type Experiment } from '../content/experiments';
+import LabVisual from './LabVisual.astro';
+import { t } from '../i18n/ui';
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+  /** Les grandes cartes du haut ; le reste passe en lignes compactes. */
+  featured?: number;
+}
+
+const { locale, featured = 3 } = Astro.props;
+const s = t(locale);
+const labels = s.labels;
+
+const large: Experiment[] = EXPERIMENTS.slice(0, featured);
+const small: Experiment[] = EXPERIMENTS.slice(featured);
+
+const badgeClass: Record<Experiment['status'], string> = {
+  live: 'badge-live',
+  preview: 'badge-preview',
+  built: 'badge-built',
+};
+const badgeText: Record<Experiment['status'], string> = {
+  live: labels.status_live,
+  preview: labels.status_preview,
+  built: labels.status_built,
+};
+---
+
+<div class="showcase">
+  <ul class="large">
+    {
+      large.map((item, i) => (
+        <li class="card" data-reveal style={`--d: ${i * 90}ms`}>
+          <a class="card-link" href={item.live ?? item.repo} rel="noopener">
+            <div class="card-shot">
+              <LabVisual kind={item.visual} uid={item.id} />
+              <span class="card-id label">{item.id}</span>
+            </div>
+
+            <div class="card-body">
+              <div class="card-head">
+                <h3 class="card-name">{item.name}</h3>
+                <span class:list={['badge', badgeClass[item.status]]}>{badgeText[item.status]}</span>
+              </div>
+              <p class="card-promise">{item.promise[locale]}</p>
+              <p class="card-tag">{item.tagline[locale]}</p>
+              <ul class="card-tags" role="list">
+                {item.tags[locale].map((tag) => <li class="chip">{tag}</li>)}
+              </ul>
+              <p class="card-go label">
+                {s.cta.seeProduct}
+                <svg viewBox="0 0 16 10" class="card-arrow" fill="none" aria-hidden="true">
+                  <path d="M0 5h14M10 1l4 4-4 4" stroke="currentColor" stroke-width="1.4" />
+                </svg>
+              </p>
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <ul class="small">
+    {
+      small.map((item, i) => (
+        <li data-reveal style={`--d: ${i * 70}ms`}>
+          <a class="row" href={item.live ?? item.repo} rel="noopener">
+            <span class="row-shot">
+              <LabVisual kind={item.visual} uid={item.id} />
+            </span>
+            <span class="row-body">
+              <span class="row-head">
+                <span class="label row-id">{item.id}</span>
+                <span class="row-name">{item.name}</span>
+                <span class:list={['badge', badgeClass[item.status]]}>
+                  {badgeText[item.status]}
+                </span>
+              </span>
+              <span class="row-promise">{item.promise[locale]}</span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .showcase {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .large {
+    display: grid;
+    gap: 1px;
+    background: var(--color-rule);
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 62rem) {
+    .large {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .card {
+    background: var(--color-chalk);
+  }
+
+  .card-link {
+    display: block;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Profondeur légère : la figure respire, la carte se soulève d'un cheveu. */
+  .card-shot {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 8 / 5;
+    background: var(--color-ink);
+  }
+
+  .card-shot :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .card-link:hover .card-shot :global(svg),
+  .card-link:focus-visible .card-shot :global(svg) {
+    transform: scale(1.035);
+  }
+
+  .card-id {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    padding: 0.25rem 0.5rem;
+    background: var(--color-ink);
+    color: var(--color-chalk);
+    border: 1px solid color-mix(in oklab, var(--color-chalk) 26%, transparent);
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.6rem 1.5rem 1.8rem;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .card-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 108;
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .card-promise {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 100;
+    font-size: 1.06rem;
+    line-height: 1.35;
+    color: var(--color-ink);
+    max-width: 34ch;
+  }
+
+  .card-tag {
+    font-size: 0.94rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+    max-width: 44ch;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+  }
+
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    border: 1px solid var(--color-rule);
+    padding: 0.28rem 0.5rem;
+  }
+
+  .card-go {
+    margin-top: auto;
+    padding-top: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--accent-ink);
+  }
+
+  .card-arrow {
+    width: 16px;
+    height: 10px;
+    transition: transform 240ms ease-out;
+  }
+
+  .card-link:hover .card-arrow,
+  .card-link:focus-visible .card-arrow {
+    transform: translateX(5px);
+  }
+
+  .card-link:hover .chip {
+    border-color: var(--accent-ink);
+  }
+
+  .small {
+    display: grid;
+    gap: 1px;
+    background: var(--color-rule);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: center;
+    background: var(--color-chalk);
+    padding: 1.15rem 1.25rem;
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 200ms ease-out;
+  }
+
+  @media (min-width: 48rem) {
+    .row {
+      grid-template-columns: 9.5rem 1fr;
+      gap: 1.6rem;
+    }
+  }
+
+  .row:hover,
+  .row:focus-visible {
+    background: var(--accent-wash);
+  }
+
+  .row-shot {
+    display: block;
+    aspect-ratio: 8 / 5;
+    overflow: hidden;
+    border: 1px solid var(--color-rule);
+  }
+
+  @media (max-width: 47.99rem) {
+    .row-shot {
+      display: none;
+    }
+  }
+
+  .row-body {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+
+  .row-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .row-id {
+    color: var(--accent-ink);
+  }
+
+  .row-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 105;
+    font-size: 1.15rem;
+    letter-spacing: -0.015em;
+  }
+
+  .row-promise {
+    font-size: 0.94rem;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--color-muted);
+  }
+
+  .badge::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--accent-ink);
+  }
+
+  .badge-live::before {
+    background: var(--accent);
+  }
+
+  /* Le troisième statut n'est ni plein ni vide : le point est à demi rempli. */
+  .badge-preview::before {
+    background: linear-gradient(90deg, var(--accent) 50%, transparent 50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-shot :global(svg),
+    .card-arrow,
+    .row {
+      transition: none;
+    }
+  }
+</style>

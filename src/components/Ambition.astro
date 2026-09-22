@@ -1,0 +1,138 @@
+---
+/**
+ * L'ambition dessinée en anneaux concentriques depuis Cotonou (§10 du brief).
+ * Ce n'est pas une carte : aucune frontière n'est affirmée, seuls des rayons
+ * qui s'écartent d'un point. Les quatre paliers portent le même texte en HTML,
+ * donc ils restent lisibles, traduits et sélectionnables.
+ */
+interface Props {
+  rings: string[];
+  anchor: string;
+}
+
+const { rings, anchor } = Astro.props;
+const RADII = [17, 33, 49, 65];
+const ANCHOR = { x: 4, y: 96 };
+---
+
+<figure class="ambition">
+  <svg class="rings" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <g class="arcs">
+      {
+        RADII.map((r, i) => (
+          <path
+            data-reveal
+            style={`--d: ${i * 130}ms`}
+            class="arc"
+            d={`M ${ANCHOR.x + r} ${ANCHOR.y} A ${r} ${r} 0 0 0 ${ANCHOR.x} ${ANCHOR.y - r}`}
+            fill="none"
+            vector-effect="non-scaling-stroke"></path>
+        ))
+      }
+    </g>
+    <circle class="anchor-dot" cx={ANCHOR.x} cy={ANCHOR.y} r="1.6" vector-effect="non-scaling-stroke"></circle>
+  </svg>
+
+  <ul class="paliers">
+    <li class="palier" data-reveal style="--d: 0ms">
+      <span class="palier-dot" aria-hidden="true"></span>
+      <span class="label palier-name">{anchor}</span>
+    </li>
+    {
+      rings.map((name, i) => (
+        <li class="palier" data-reveal style={`--d: ${(i + 1) * 130}ms`}>
+          <span class="palier-tick" aria-hidden="true" style={`--i: ${i + 1}`}></span>
+          <span class="label palier-name">{name}</span>
+        </li>
+      ))
+    }
+  </ul>
+</figure>
+
+<style>
+  .ambition {
+    position: relative;
+    aspect-ratio: 1.15;
+    min-height: 22rem;
+    margin: 0;
+  }
+
+  .rings {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .arc {
+    stroke: currentColor;
+    stroke-width: 1;
+    opacity: 0.5;
+  }
+
+  .arc:nth-of-type(2) {
+    opacity: 0.38;
+  }
+
+  .arc:nth-of-type(3) {
+    opacity: 0.26;
+  }
+
+  .arc:nth-of-type(4) {
+    opacity: 0.16;
+  }
+
+  .anchor-dot {
+    fill: var(--accent);
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+
+  .paliers {
+    position: absolute;
+    inset: auto 0 0;
+    display: grid;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .palier {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .palier-name {
+    color: currentColor;
+    letter-spacing: 0.14em;
+    background: color-mix(in oklab, var(--color-ink) 55%, transparent);
+    padding: 0.15rem 0.45rem;
+  }
+
+  .palier-dot {
+    width: 9px;
+    height: 9px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* Chaque palier se range sous le rayon qui lui correspond. */
+  .palier-tick {
+    width: 1px;
+    height: 1px;
+    background: currentColor;
+    margin-left: calc(var(--i) * 1.4rem);
+  }
+
+  @media (max-width: 47.99rem) {
+    .ambition {
+      aspect-ratio: 1;
+      min-height: 18rem;
+    }
+    .palier-tick {
+      margin-left: calc(var(--i) * 0.9rem);
+    }
+  }
+</style>

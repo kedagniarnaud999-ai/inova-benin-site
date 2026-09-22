@@ -5,6 +5,7 @@ import PoleHero from '../components/PoleHero.astro';
 import Section from '../components/Section.astro';
 import { contact } from '../i18n/pages/contact';
 import { url, type Locale } from '../i18n/config';
+import { EMAIL } from '../social';
 
 interface Props {
   locale: Locale;
@@ -30,6 +31,16 @@ const c = contact[locale];
 
       <aside class="space-y-9 border-t border-rule pt-8 lg:border-t-0 lg:border-l lg:pl-12">
         <div>
+          <p class="label text-accent-ink">{c.direct.eyebrow}</p>
+          <p class="mt-3">
+            <a href={`mailto:${EMAIL}`} class="direct-mail">{EMAIL}</a>
+          </p>
+          <p class="mt-2 max-w-[42ch] text-[0.98rem] text-muted">{c.direct.body}</p>
+          <p class="mt-5">
+            <a href={`mailto:${EMAIL}`} class="btn btn-solid">{c.direct.cta}</a>
+          </p>
+        </div>
+        <div>
           <p class="label text-accent-ink">{c.destination.eyebrow}</p>
           <p class="mt-3 max-w-[42ch] text-[0.98rem] text-muted">{c.destination.body}</p>
         </div>
@@ -52,3 +63,20 @@ const c = contact[locale];
     </div>
   </Section>
 </BaseLayout>
+
+<style>
+  .direct-mail {
+    font-family: var(--font-display);
+    font-size: 1.08rem;
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.24em;
+    overflow-wrap: anywhere;
+  }
+
+  .direct-mail:hover,
+  .direct-mail:focus-visible {
+    text-decoration-thickness: 2px;
+  }
+</style>

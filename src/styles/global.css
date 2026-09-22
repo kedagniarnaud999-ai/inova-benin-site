@@ -33,12 +33,18 @@
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   --text-eyebrow: 0.6875rem;
-  --text-hero: clamp(2.75rem, 8vw, 6.75rem);
-  --text-h2: clamp(1.85rem, 4vw, 3.35rem);
+  --text-hero: clamp(3rem, 11vw, 9.5rem);
+  --text-h2: clamp(1.9rem, 4.4vw, 3.7rem);
   --text-h3: clamp(1.25rem, 2vw, 1.6rem);
-  --text-lede: clamp(1.05rem, 1.5vw, 1.3rem);
+  --text-lede: clamp(1.05rem, 1.5vw, 1.35rem);
+  --text-mega: clamp(2.2rem, 6vw, 4.6rem);
 
   --tracking-label: 0.18em;
+
+  /* Le champ de points : la trame « blueprint » qui porte les blocs sombres.
+     Une seule définition, réutilisée par les sections qui en ont besoin. */
+  --field-dots: radial-gradient(currentColor 1px, transparent 1px);
+  --field-step: 26px;
 }
 
 /* L'accent courant, réécrit par pôle. `inline` est obligatoire : sans lui,
@@ -212,4 +218,97 @@
   background: var(--color-ink);
   color: var(--color-chalk);
   border-radius: 2px;
+}
+
+/* ─── Révélation au scroll ──────────────────────────────────────────────────
+   Trois garde-fous, dans cet ordre : sans JavaScript la classe `js` n'est
+   jamais posée et tout reste visible ; avec `prefers-reduced-motion: reduce`
+   rien n'est masqué non plus ; et seul `opacity`/`transform` bouge, jamais la
+   mise en page. `--d` porte le décalage d'une étape.
+   ─────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 620ms cubic-bezier(0.22, 0.61, 0.36, 1),
+      transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition-delay: var(--d, 0ms);
+  }
+
+  html.js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Trame « blueprint » : les points appartiennent au fond, jamais au texte. */
+.field {
+  position: relative;
+}
+
+.field::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--field-dots);
+  background-size: var(--field-step) var(--field-step);
+  color: currentColor;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+/* ─── La marque : PROBLEMS → PRODUCTS → VENTURES ────────────────────────────
+   L'élément identifiant du site (§4 du brief). Le trait se trace, puis les
+   trois nœuds s'allument dans le même tempo ; hors animation, le tracé est
+   simplement complet d'emblée.
+   ─────────────────────────────────────────────────────────────────────── */
+@keyframes flow-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes flow-node {
+  from {
+    opacity: 0.25;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes flow-word {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .flow-line {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: flow-draw 1500ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .flow-node {
+    transform-origin: center;
+    opacity: 0.25;
+    animation: flow-node 520ms ease-out forwards;
+  }
+
+  .flow-word {
+    opacity: 0;
+    animation: flow-word 620ms ease-out forwards;
+  }
 }

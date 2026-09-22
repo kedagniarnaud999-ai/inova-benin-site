@@ -1,0 +1,215 @@
+---
+import type { ExperimentVisual } from '../content/experiments';
+
+interface Props {
+  kind: ExperimentVisual;
+  /** Chaque visuel vit sur la même page : les <defs> ont besoin d'un espace de noms. */
+  uid: string;
+}
+
+const { kind, uid } = Astro.props;
+const pid = `dots-${uid}`;
+---
+
+<svg class="visual" viewBox="0 0 96 60" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <pattern id={pid} width="4" height="4" patternUnits="userSpaceOnUse">
+      <circle class="v-dot" cx="0.6" cy="0.6" r="0.35" />
+    </pattern>
+  </defs>
+  <rect width="96" height="60" class="v-bg" />
+  <rect width="96" height="60" fill={`url(#${pid})`} />
+
+  {
+    kind === 'path' && (
+      <g>
+        <path class="v-rule" d="M0 18h96M0 30h96M0 42h96" />
+        <path class="v-rule" d="M12 6v48M30 6v48M48 6v48M66 6v48M84 6v48" />
+        <polyline class="v-line" points="12,46 30,40 48,32 66,22 84,14" />
+        <circle class="v-node" cx="12" cy="46" r="2" />
+        <circle class="v-node" cx="30" cy="40" r="2" />
+        <circle class="v-node v-lit" cx="48" cy="32" r="2.6" />
+        <circle class="v-node" cx="66" cy="22" r="2" />
+        <circle class="v-node v-gold" cx="84" cy="14" r="3" />
+      </g>
+    )
+  }
+
+  {
+    kind === 'graticule' && (
+      <g>
+        <path
+          class="v-rule"
+          d="M0 16Q48 8 96 18M0 30Q48 24 96 34M0 46Q48 40 96 50M18 0Q12 30 18 60M40 0Q36 30 42 60M64 0Q62 30 68 60M86 0Q84 30 88 60"
+        />
+        <g class="v-pin">
+          <circle class="v-node" cx="24" cy="22" r="2.2" />
+          <path class="v-line" d="M24 24.2V30" />
+        </g>
+        <g class="v-pin">
+          <circle class="v-node v-lit" cx="46" cy="34" r="2.6" />
+          <path class="v-line" d="M46 36.6V43" />
+        </g>
+        <g class="v-pin">
+          <circle class="v-node" cx="70" cy="18" r="2.2" />
+          <path class="v-line" d="M70 20.2V26" />
+        </g>
+        <g class="v-pin">
+          <circle class="v-node" cx="58" cy="46" r="2.2" />
+          <path class="v-line" d="M58 48.2V54" />
+        </g>
+        <g class="v-pin">
+          <circle class="v-node v-gold" cx="82" cy="40" r="2.6" />
+          <path class="v-line" d="M82 42.6V48" />
+        </g>
+      </g>
+    )
+  }
+
+  {
+    kind === 'routes' && (
+      <g>
+        <path class="v-line" d="M10 30C34 8 62 8 86 30" />
+        <path class="v-line" d="M10 30h76" />
+        <path class="v-line v-litline" d="M10 30C34 52 62 52 86 30" />
+        <circle class="v-node" cx="30" cy="30" r="1.6" />
+        <circle class="v-node" cx="50" cy="30" r="1.6" />
+        <circle class="v-node" cx="70" cy="30" r="1.6" />
+        <circle class="v-node v-lit" cx="48" cy="13.5" r="2.4" />
+        <circle class="v-node v-gold" cx="48" cy="46.5" r="2.4" />
+        <circle class="v-node v-hub" cx="10" cy="30" r="3.4" />
+        <circle class="v-node v-hub" cx="86" cy="30" r="3.4" />
+      </g>
+    )
+  }
+  {
+    kind === 'dialogue' && (
+      <g>
+        <path class="v-rule" d="M48 4v52" />
+        <path class="v-line" d="M26 12l44 12M70 24L26 36" />
+        <path class="v-line v-litline" d="M26 36l44 12" />
+        <circle class="v-node v-gold" cx="26" cy="12" r="2.6" />
+        <circle class="v-node" cx="70" cy="24" r="2.6" />
+        <circle class="v-node" cx="26" cy="36" r="2.6" />
+        <circle class="v-node v-lit" cx="70" cy="48" r="3" />
+        <circle class="v-node" cx="26" cy="48" r="2.6" />
+        <circle class="v-node" cx="70" cy="12" r="2.6" />
+        <circle class="v-node" cx="26" cy="24" r="2.6" />
+        <circle class="v-node" cx="70" cy="36" r="2.6" />
+      </g>
+    )
+  }
+
+  {
+    kind === 'modules' && (
+      <g>
+        <rect class="v-node" x="12" y="12" width="9" height="9" />
+        <rect class="v-node" x="26" y="12" width="9" height="9" />
+        <rect class="v-node v-gold" x="40" y="12" width="9" height="9" />
+        <rect class="v-node" x="12" y="26" width="9" height="9" />
+        <rect class="v-node v-lit" x="26" y="26" width="9" height="9" />
+        <rect class="v-node" x="40" y="26" width="9" height="9" />
+        <rect class="v-node" x="12" y="40" width="9" height="9" />
+        <rect class="v-node" x="26" y="40" width="9" height="9" />
+        <rect class="v-node" x="40" y="40" width="9" height="9" />
+        <path class="v-line" d="M49 20h17" />
+        <circle class="v-node v-lit" cx="72" cy="20" r="3.2" />
+        <path class="v-line" d="M72 23.2V36" />
+        <circle class="v-node" cx="72" cy="38.5" r="1.6" />
+        <path class="v-rule" d="M60 44h24" />
+      </g>
+    )
+  }
+
+  {
+    kind === 'cycle' && (
+      <g>
+        <g class="v-week">
+          <circle class="v-node" cx="12" cy="18" r="1.9" />
+          <circle class="v-node" cx="22" cy="18" r="1.9" />
+          <circle class="v-node" cx="32" cy="18" r="1.9" />
+          <circle class="v-node" cx="42" cy="18" r="1.9" />
+          <circle class="v-node" cx="52" cy="18" r="1.9" />
+          <circle class="v-node" cx="62" cy="18" r="1.9" />
+          <circle class="v-node" cx="72" cy="18" r="1.9" />
+        </g>
+        <g class="v-week">
+          <circle class="v-node v-lit" cx="12" cy="30" r="1.9" />
+          <circle class="v-node v-lit" cx="22" cy="30" r="1.9" />
+          <circle class="v-node v-lit" cx="32" cy="30" r="1.9" />
+          <circle class="v-node v-gold" cx="42" cy="30" r="2.3" />
+          <circle class="v-node" cx="52" cy="30" r="1.9" />
+          <circle class="v-node" cx="62" cy="30" r="1.9" />
+          <circle class="v-node" cx="72" cy="30" r="1.9" />
+        </g>
+        <g class="v-week">
+          <circle class="v-node" cx="12" cy="42" r="1.9" />
+          <circle class="v-node" cx="22" cy="42" r="1.9" />
+          <circle class="v-node" cx="32" cy="42" r="1.9" />
+          <circle class="v-node" cx="42" cy="42" r="1.9" />
+          <circle class="v-node" cx="52" cy="42" r="1.9" />
+          <circle class="v-node" cx="62" cy="42" r="1.9" />
+          <circle class="v-node" cx="72" cy="42" r="1.9" />
+        </g>
+        <circle class="v-rule" cx="86" cy="30" r="9" />
+        <path class="v-line v-litline" d="M86 21a9 9 0 0 1 8 5" />
+      </g>
+    )
+  }
+</svg>
+
+<style>
+  .visual {
+    display: block;
+    width: 100%;
+    height: 100%;
+    shape-rendering: geometricPrecision;
+  }
+
+  .v-bg {
+    fill: var(--color-ink);
+  }
+
+  .v-dot {
+    fill: color-mix(in oklab, var(--color-chalk) 14%, transparent);
+  }
+
+  /* Le trait reste un cheveu quelle que soit la taille du cadre : c'est la
+     règle du système, et elle tient aussi sur la vignette compacte. */
+  .v-rule,
+  .v-line,
+  .v-node {
+    fill: none;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .v-rule {
+    stroke: color-mix(in oklab, var(--color-chalk) 15%, transparent);
+  }
+
+  .v-line {
+    stroke: color-mix(in oklab, var(--color-chalk) 48%, transparent);
+  }
+
+  .v-litline {
+    stroke: color-mix(in oklab, var(--color-verdigris) 62%, var(--color-chalk));
+  }
+
+  .v-node {
+    fill: var(--color-ink);
+    stroke: color-mix(in oklab, var(--color-chalk) 48%, transparent);
+  }
+
+  .v-hub {
+    stroke: color-mix(in oklab, var(--color-chalk) 72%, transparent);
+  }
+
+  .v-lit {
+    fill: color-mix(in oklab, var(--color-verdigris) 66%, var(--color-chalk));
+  }
+
+  .v-gold {
+    fill: color-mix(in oklab, var(--color-ocre) 74%, var(--color-chalk));
+  }
+</style>

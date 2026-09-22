@@ -1,23 +1,29 @@
 import type { Locale } from '../config';
 
 /**
- * Contact. Le formulaire est le seul canal demandé : aucune adresse e-mail
- * n'est affichée, donc aucun délai de réponse, aucun standard et aucune
- * adresse postale ne sont promis ici. Le nom du porteur vient de la
- * section 2.3 du business plan, le statut « en cours de constitution » de
- * la section 2.2.
+ * Contact. Deux voies, un seul destinataire : le formulaire et l'adresse
+ * officielle publiée par la section 12 du brief aboutissent à la même boîte.
+ * Aucun délai de réponse, aucun standard et aucune adresse postale ne sont
+ * promis ici. Le nom du porteur vient de la section 2.3 du business plan, le
+ * statut « en cours de constitution » de la section 2.2.
  */
 const fr = {
   meta: {
     title: 'Contact — écrire à iNOVA BENIN (Consulting, Lab, Studio)',
     description:
-      'Un seul canal : le formulaire du site. Votre demande part directement chez le porteur du projet, qui y répond lui-même.',
+      'Le formulaire du site ou l’e-mail officiel : les deux demandes arrivent au même endroit, chez le porteur du projet.',
   },
 
   hero: {
     eyebrow: 'Contact',
-    title: 'Un seul canal, et c’est voulu.',
-    lede: 'iNOVA BENIN n’affiche pas d’adresse e-mail. Tout passe par ce formulaire, et votre message part directement chez le porteur du projet.',
+    title: 'Écrivez-nous, par la voie que vous préférez.',
+    lede: 'Le formulaire ou l’e-mail officiel : les deux aboutissent à la même adresse, lue par le porteur du projet en personne.',
+  },
+
+  direct: {
+    eyebrow: 'Adresse officielle',
+    body: 'Ouvert dans votre messagerie, sans intermédiaire.',
+    cta: 'Écrire à iNOVA',
   },
 
   form: {
@@ -31,7 +37,7 @@ const fr = {
 
   destination: {
     eyebrow: 'À qui ça va',
-    body: 'C’est Jolidon Arnaud KEDAGNI, porteur du projet, qui lit et traite les demandes. L’entreprise est en cours de constitution : ce n’est ni un standard ni une boîte générique.',
+    body: 'Le formulaire et l’e-mail officiel tapent dans la même adresse, celle d’iNOVA BENIN. C’est Jolidon Arnaud KEDAGNI, porteur du projet, qui la lit et traite les demandes. La société est encore en cours de constitution.',
   },
 
   data: {
@@ -55,13 +61,19 @@ const en: typeof fr = {
   meta: {
     title: 'Contact — write to iNOVA BENIN (Consulting, Lab, Studio)',
     description:
-      'One channel only: the form on this site. Your request goes straight to the founder, who answers it himself.',
+      'The form on this site or the official e-mail address: either way the request lands with the founder, in the same inbox.',
   },
 
   hero: {
     eyebrow: 'Contact',
-    title: 'One channel, and that is deliberate.',
-    lede: 'iNOVA BENIN publishes no e-mail address. Everything goes through this form, and your message lands directly with the person running the project.',
+    title: 'Write to us, the way you prefer.',
+    lede: 'The form or the official address: both reach the same inbox, read by the person running the project.',
+  },
+
+  direct: {
+    eyebrow: 'Official address',
+    body: 'Opens in your mail client, with no intermediary.',
+    cta: 'Write to iNOVA',
   },
 
   form: {
@@ -74,7 +86,7 @@ const en: typeof fr = {
 
   destination: {
     eyebrow: 'Where it goes',
-    body: 'Jolidon Arnaud KEDAGNI, who carries the project, reads and handles the requests himself. The company is still being incorporated: this is neither a switchboard nor a shared inbox.',
+    body: 'The form and the official address feed the same inbox — iNOVA BENIN’s. Jolidon Arnaud KEDAGNI, who carries the project, reads it and handles the requests himself. The company is still being incorporated.',
   },
 
   data: {

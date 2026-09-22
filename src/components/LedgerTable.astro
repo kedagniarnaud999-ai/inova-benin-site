@@ -14,6 +14,17 @@ const s = t(locale);
 const labels = s.labels;
 
 const rows: Experiment[] = typeof limit === 'number' ? EXPERIMENTS.slice(0, limit) : EXPERIMENTS;
+
+const badgeClass: Record<Experiment['status'], string> = {
+  live: 'badge-live',
+  preview: 'badge-preview',
+  built: 'badge-built',
+};
+const badgeText: Record<Experiment['status'], string> = {
+  live: labels.status_live,
+  preview: labels.status_preview,
+  built: labels.status_built,
+};
 ---
 
 <table class="ledger">
@@ -45,8 +56,8 @@ const rows: Experiment[] = typeof limit === 'number' ? EXPERIMENTS.slice(0, limi
             {row.sector[locale]}
           </td>
           <td data-label={labels.stage}>
-            <span class:list={['badge', row.status === 'live' ? 'badge-live' : 'badge-built']}>
-              {row.status === 'live' ? labels.status_live : labels.status_built}
+            <span class:list={['badge', badgeClass[row.status]]}>
+              {badgeText[row.status]}
             </span>
           </td>
           <td data-label={labels.access} class="ledger-links">
@@ -193,6 +204,11 @@ const rows: Experiment[] = typeof limit === 'number' ? EXPERIMENTS.slice(0, limi
 
   .badge-live::before {
     background: var(--accent);
+  }
+
+  /* Demi-remplissage : la façade est publique, une partie du service non. */
+  .badge-preview::before {
+    background: linear-gradient(90deg, var(--accent) 0 50%, transparent 50% 100%);
   }
 
   .ledger-links {

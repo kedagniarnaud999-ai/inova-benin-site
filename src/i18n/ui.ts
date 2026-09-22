@@ -28,13 +28,13 @@ const fr = {
   },
 
   footer: {
-    legalTitle: 'Informations légales',
     privacy: 'Confidentialité',
     legal: 'Mentions légales',
-    poles: 'Les trois pôles',
-    company: 'L’entreprise',
+    sitemap: 'Plan du site',
+    projects: 'Projets',
+    collaborate: 'Collaborer',
+    rhythm: 'Construire. Tester. Apprendre. Grandir.',
     rights: 'Tous droits réservés.',
-    built: 'Construit à Cotonou.',
   },
 
   form: {
@@ -67,6 +67,7 @@ const fr = {
     experiments: 'expérimentations',
     access: 'Accès',
     status_live: 'En ligne',
+    status_preview: 'Accès partiel',
     status_built: 'Construit',
     status_private: 'Privé',
     status_concept: 'Concept',
@@ -106,13 +107,13 @@ const en: typeof fr = {
   },
 
   footer: {
-    legalTitle: 'Legal information',
     privacy: 'Privacy',
     legal: 'Legal notice',
-    poles: 'The three poles',
-    company: 'The company',
+    sitemap: 'Site map',
+    projects: 'Projects',
+    collaborate: 'Collaborate',
+    rhythm: 'Build. Test. Learn. Grow.',
     rights: 'All rights reserved.',
-    built: 'Built in Cotonou.',
   },
 
   form: {
@@ -144,6 +145,7 @@ const en: typeof fr = {
     experiments: 'experiments',
     access: 'Access',
     status_live: 'Live',
+    status_preview: 'Partial access',
     status_built: 'Built',
     status_private: 'Private',
     status_concept: 'Concept',

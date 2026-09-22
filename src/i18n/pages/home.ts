@@ -1,84 +1,136 @@
 import type { Locale } from '../config';
 
-// Contenu issu du seul business plan : aucun client, aucun témoignage, aucun chiffre hors du BP.
+// Contenu de la vitrine : le brief de refonte fait foi. Ni mécaniques de
+// financement interne, ni justifications administratives — elles appartiennent
+// aux pages de pôle. Aucun client, aucun témoignage, aucun chiffre non sourcé.
 const fr = {
   meta: {
     title: 'iNOVA BENIN — Building Africa’s Next Ventures',
     description:
-      'Plateforme d’innovation et de création d’entreprises à Cotonou : conseil produit (iNOVA Consulting), construction de produits et de startups (iNOVA Lab), contenus de valorisation entrepreneuriale (iNOVA Studio).',
+      'iNOVA BENIN est une venture-building company : nous transformons des problèmes et opportunités africains en produits, projets et entreprises.',
   },
 
   hero: {
-    eyebrow: 'Cotonou, Bénin',
-    line1: 'Problème africain,',
-    line2: 'produit,',
-    line3: 'entreprise.',
-    lede: 'iNOVA BENIN identifie des problèmes et des opportunités, conçoit des solutions, construit des produits — et fait progressivement émerger des startups. Le tout sous une même structure.',
-    bandsHint: 'Trois pôles, un seul chantier. Choisissez votre porte d’entrée.',
+    eyebrow: 'Cotonou, Bénin · Venture building',
+    line1: 'Building',
+    line2: 'Africa’s Next',
+    line3: 'Ventures.',
+    lede: 'Nous transformons des problèmes et opportunités africains en produits, projets et entreprises.',
+    cta: 'Construire avec iNOVA',
+    secondary: 'Découvrir nos projets',
+    scroll: 'Défiler',
   },
 
-  statement: {
-    eyebrow: 'Le parti pris',
-    body: 'Nous ne voulons pas seulement accompagner ceux qui créent des entreprises. Nous voulons aussi apprendre à les construire.',
-    note: 'C’est la raison pour laquelle iNOVA Consulting, iNOVA Lab et iNOVA Studio existent ensemble : le conseil finance la structure, le Lab construit le portefeuille, le Studio raconte le travail fait.',
+  conviction: {
+    eyebrow: 'Notre conviction',
+    title: 'Les prochaines grandes ventures africaines peuvent naître de problèmes africains.',
+    body: [
+      'L’Afrique ne manque pas seulement d’idées. Elle a besoin de davantage de personnes capables de transformer ces idées en solutions concrètes, puis ces solutions en organisations durables.',
+      'C’est là que nous voulons intervenir.',
+    ],
+    claim:
+      'iNOVA connecte exploration, conception, technologie, gestion de projet et entrepreneuriat pour construire des solutions ancrées dans les réalités africaines.',
+    close: 'Nous voulons expérimenter rapidement, apprendre du terrain et construire avec les bonnes compétences.',
+    flow: [
+      { label: 'Problems', note: 'Un problème observable' },
+      { label: 'Products', note: 'Une solution qui tient' },
+      { label: 'Ventures', note: 'Une organisation durable' },
+    ],
+  },
+
+  ways: {
+    eyebrow: 'Ce que nous faisons',
+    title: 'Trois façons de construire.',
+    intro:
+      'Trois expressions d’un même écosystème : structurer une idée, la transformer en produit, lui donner de la visibilité.',
+    link: 'Ouvrir la page',
   },
 
   method: {
-    eyebrow: 'Comment le Lab travaille',
-    title: 'La méthode 369',
-    intro:
-      'Chaque opportunité suivie par le Lab passe par trois horizons. Ils ne sont pas trois promesses : ce sont trois points de contrôle, avec ce qu’il faut produire à chacun.',
+    eyebrow: 'Notre méthode',
+    title: 'Construire. Tester. Apprendre. Grandir.',
+    intro: 'C’est notre manière de transformer une idée en solution.',
+    rail: 'Progression',
     link: 'Voir comment le Lab travaille',
   },
 
-  ledger: {
-    eyebrow: 'Preuve',
-    title: 'Le carnet du Lab',
+  projects: {
+    eyebrow: 'Ce que nous construisons',
+    title: 'From ideas to products.',
     intro:
-      'Un portefeuille d’expérimentations réellement engagées, à des degrés de maturité différents. Elles sont publiées ici au fur et à mesure qu’elles produisent quelque chose de consultable.',
-    countLabel: (n: number) => `${n} expérimentations construites`,
-    liveLabel: (n: number) => `dont ${n} accessibles en ligne`,
+      'Des problèmes identifiés sur le terrain deviennent des expériences, des prototypes et parfois des produits.',
+    countLabel: (n: number) => `${n} expérimentations engagées`,
+    liveLabel: (n: number) => `${n} en ligne`,
     link: 'Ouvrir le carnet',
   },
 
-  studio: {
-    eyebrow: 'Ce que le Studio produit',
-    title: 'Trois formats, une même idée : montrer les modèles qui marchent',
-    intro:
-      'La visibilité d’iNOVA ne vient pas d’une démarche commerciale. Elle vient des acteurs économiques réels que le Studio met en avant — formels, informels et semi-modernes.',
-    formats: [
+  principles: {
+    eyebrow: 'Pourquoi iNOVA',
+    title: 'Nous ne voulons pas seulement parler d’innovation. Nous voulons construire.',
+    intro: 'Trois principes, appliqués à chaque projet — pas un discours.',
+    items: [
       {
-        name: 'Format court',
-        what: 'Interviews à chaud',
-        body: 'Tournées en événement et en rencontre, avec des entrepreneurs béninois et des actrices des marchés.',
+        name: 'Ancrage',
+        body: 'Nous partons de problèmes et de réalités observables sur le terrain.',
       },
       {
-        name: 'Format long',
-        what: 'Podcast',
-        body: 'Des expériences réelles, décrites assez précisément pour transmettre des enseignements à la jeune génération.',
+        name: 'Expérimentation',
+        body: 'Nous privilégions les prototypes et les cycles d’apprentissage rapides.',
       },
       {
-        name: 'Format série',
-        what: 'Accompagnement documenté',
-        body: 'Un acteur économique diagnostiqué, puis suivi à l’écran jusqu’à l’obtention de résultats concrets.',
+        name: 'Collaboration',
+        body: 'Nous réunissons les compétences nécessaires autour du projet, plutôt que de tout faire seuls.',
       },
     ],
-    link: 'Découvrir iNOVA Studio',
   },
 
-  partners: {
-    eyebrow: 'Partenariats',
-    title: 'Le Studio se finance par la collaboration, pas par la publicité display',
-    body: 'Partenariats de marque, contenu commandité, sponsoring institutionnel : chaque format peut accueillir une marque ou une institution, à condition de rester aligné avec la mission de promotion d’un entrepreneuriat adapté aux réalités africaines.',
-    cta: 'Proposer un partenariat',
+  team: {
+    eyebrow: 'Équipe et réseau',
+    title: 'Une équipe cœur. Un réseau de compétences.',
+    body: 'iNOVA est porté par une équipe cœur et s’appuie sur un réseau de compétences mobilisables selon les projets.',
+    founderRole: 'Founder — Project & Product Management, Digital Transformation & Venture Building',
+    founderBody:
+      'Il pilote la vision d’iNOVA, la structuration des projets et le développement des initiatives du Lab.',
+    founderName: 'Arnaud KEDAGNI',
+    networkTitle: 'Compétences mobilisables',
+    networkNote:
+      'Ces compétences ne sont pas toutes salariées : elles sont mobilisées là où un projet en a besoin.',
+    join: 'Rejoindre le réseau iNOVA',
   },
 
-  closing: {
-    eyebrow: 'Premier contact',
-    title: 'Un besoin produit, un projet à structurer, une idée à tester ?',
-    body: 'Décrivez le contexte. Le premier échange est un diagnostic, pas une avant-vente.',
-    cta: 'Décrire un besoin',
-    secondary: 'Qui est derrière iNOVA',
+  ambition: {
+    eyebrow: 'Afrique et ambition',
+    title: 'Built in Africa. Designed to scale.',
+    body: [
+      'Nous croyons au potentiel de la prochaine génération d’entrepreneurs, de créateurs et de bâtisseurs africains.',
+      'iNOVA commence au Bénin, mais notre ambition dépasse un seul marché.',
+      'Nous voulons contribuer à construire des produits et des ventures capables de répondre aux réalités africaines tout en ayant le potentiel de se développer au-delà de leurs frontières.',
+    ],
+    rings: ['Bénin', 'Afrique de l’Ouest', 'Afrique', 'Au-delà'],
+    anchor: 'Cotonou',
+  },
+
+  collaborate: {
+    eyebrow: 'Collaborations',
+    title: 'Construisons ensemble.',
+    intro:
+      'Une idée à explorer, un problème à résoudre, un produit à construire ou une expertise à mettre au service d’un projet ?',
+    lead: 'Parlons-en.',
+    cta: 'Démarrer une conversation',
+    modes: [
+      { name: 'Projet', body: 'Vous souhaitez structurer et développer une initiative.' },
+      { name: 'Produit', body: 'Vous avez une idée ou un problème à transformer en solution.' },
+      { name: 'Partenariat', body: 'Vous souhaitez construire une initiative avec iNOVA.' },
+      { name: 'Expertise', body: 'Vous souhaitez mettre vos compétences au service de projets innovants.' },
+    ],
+  },
+
+  writing: {
+    eyebrow: 'Contact',
+    title: 'Écrire à iNOVA',
+    body: 'Le formulaire arrive directement chez le porteur du projet. En attendant, une adresse suffit.',
+    cta: 'Écrire à iNOVA',
+    or: 'ou',
   },
 };
 
@@ -86,81 +138,149 @@ const en: typeof fr = {
   meta: {
     title: 'iNOVA BENIN — Building Africa’s Next Ventures',
     description:
-      'An innovation and company-building platform in Cotonou: product advisory (iNOVA Consulting), building products and startups (iNOVA Lab), and entrepreneurial storytelling (iNOVA Studio).',
+      'iNOVA BENIN is a venture-building company: we turn African problems and opportunities into products, projects and companies.',
   },
 
   hero: {
-    eyebrow: 'Cotonou, Benin',
-    line1: 'African problem,',
-    line2: 'product,',
-    line3: 'company.',
-    lede: 'iNOVA BENIN identifies problems and opportunities, designs solutions, builds products — and gradually brings startups up. All under one structure.',
-    bandsHint: 'Three poles, one build site. Pick your door.',
+    eyebrow: 'Cotonou, Benin · Venture building',
+    line1: 'Building',
+    line2: 'Africa’s Next',
+    line3: 'Ventures.',
+    lede: 'We turn African problems and opportunities into products, projects and companies.',
+    cta: 'Build with iNOVA',
+    secondary: 'See what we’ve built',
+    scroll: 'Scroll',
   },
 
-  statement: {
-    eyebrow: 'The stance',
-    body: 'We do not only want to support the people who create companies. We also want to learn how to build them.',
-    note: 'That is why iNOVA Consulting, iNOVA Lab and iNOVA Studio exist together: advisory pays for the structure, the Lab builds the portfolio, the Studio tells the story of the work.',
+  conviction: {
+    eyebrow: 'What we believe',
+    title: 'Africa’s next great ventures can start from African problems.',
+    body: [
+      'Africa does not lack ideas. It needs more people able to turn those ideas into working solutions, and those solutions into lasting organisations.',
+      'That is where we want to be.',
+    ],
+    claim:
+      'iNOVA connects exploration, design, technology, project management and entrepreneurship to build solutions grounded in African realities.',
+    close: 'We want to experiment fast, learn from the field, and build with the right skills.',
+    flow: [
+      { label: 'Problems', note: 'An observable problem' },
+      { label: 'Products', note: 'A solution that holds' },
+      { label: 'Ventures', note: 'A lasting organisation' },
+    ],
+  },
+
+  ways: {
+    eyebrow: 'What we do',
+    title: 'Three ways to build.',
+    intro:
+      'Three expressions of one ecosystem: structure an idea, turn it into a product, give it visibility.',
+    link: 'Open the page',
   },
 
   method: {
-    eyebrow: 'How the Lab works',
-    title: 'The 369 method',
-    intro:
-      'Every opportunity the Lab takes on runs against three horizons. They are not three promises: they are three checkpoints, each with something concrete to deliver.',
+    eyebrow: 'How we work',
+    title: 'Build. Test. Learn. Grow.',
+    intro: 'This is how we turn an idea into a solution.',
+    rail: 'Progress',
     link: 'See how the Lab works',
   },
 
-  ledger: {
-    eyebrow: 'Proof',
-    title: 'The Lab ledger',
-    intro:
-      'A portfolio of experiments genuinely under way, at different stages of maturity. They appear here as soon as they produce something worth looking at.',
-    countLabel: (n: number) => `${n} experiments built`,
-    liveLabel: (n: number) => `${n} of them live online`,
+  projects: {
+    eyebrow: 'What we are building',
+    title: 'From ideas to products.',
+    intro: 'Problems spotted on the ground become experiments, prototypes and, sometimes, products.',
+    countLabel: (n: number) => `${n} experiments under way`,
+    liveLabel: (n: number) => `${n} live online`,
     link: 'Open the ledger',
   },
 
-  studio: {
-    eyebrow: 'What the Studio makes',
-    title: 'Three formats, one idea: show the models that work',
-    intro:
-      'iNOVA’s visibility does not come from sales outreach. It comes from the real economic actors the Studio puts forward — formal, informal and semi-modern.',
-    formats: [
+  principles: {
+    eyebrow: 'Why iNOVA',
+    title: 'We do not want to talk about innovation. We want to build.',
+    intro: 'Three principles, applied to every project — not a speech.',
+    items: [
       {
-        name: 'Short format',
-        what: 'On-the-spot interviews',
-        body: 'Filmed at events and meet-ups, with Beninese entrepreneurs and market traders.',
+        name: 'Grounding',
+        body: 'We start from problems and realities that can be observed on the ground.',
       },
       {
-        name: 'Long format',
-        what: 'Podcast',
-        body: 'Real experiences, described precisely enough to hand lessons to the next generation.',
+        name: 'Experimentation',
+        body: 'We favour prototypes and fast learning cycles.',
       },
       {
-        name: 'Series format',
-        what: 'Documented support',
-        body: 'One economic actor diagnosed, then followed on camera until concrete results land.',
+        name: 'Collaboration',
+        body: 'We bring the needed skills around the project, instead of doing everything alone.',
       },
     ],
-    link: 'Discover iNOVA Studio',
   },
 
-  partners: {
-    eyebrow: 'Partnerships',
-    title: 'The Studio is funded by collaboration, not by display advertising',
-    body: 'Brand partnerships, commissioned content, institutional sponsorship: any format can carry a brand or an institution, as long as it stays aligned with promoting entrepreneurship suited to African realities.',
-    cta: 'Propose a partnership',
+  team: {
+    eyebrow: 'Team and network',
+    title: 'A core team. A network of skills.',
+    body: 'iNOVA is run by a core team and draws on a network of skills mobilised project by project.',
+    founderRole: 'Founder — Project & Product Management, Digital Transformation & Venture Building',
+    founderBody:
+      'He sets the vision for iNOVA, structures the projects and develops the Lab’s initiatives.',
+    founderName: 'Arnaud KEDAGNI',
+    networkTitle: 'Skills we can mobilise',
+    networkNote:
+      'Not all of these skills are in-house: they are brought in where a project needs them.',
+    join: 'Join the iNOVA network',
   },
 
-  closing: {
-    eyebrow: 'First contact',
-    title: 'A product need, a project to structure, an idea to test?',
-    body: 'Describe the context. The first conversation is a diagnosis, not a sales pitch.',
-    cta: 'Describe a need',
-    secondary: 'Who is behind iNOVA',
+  ambition: {
+    eyebrow: 'Africa and ambition',
+    title: 'Built in Africa. Designed to scale.',
+    body: [
+      'We believe in the potential of the next generation of African entrepreneurs, makers and builders.',
+      'iNOVA starts in Benin, but our ambition is not one market.',
+      'We want to help build products and ventures that answer African realities and can grow beyond their borders.',
+    ],
+    rings: ['Benin', 'West Africa', 'Africa', 'Beyond'],
+    anchor: 'Cotonou',
+  },
+
+  collaborate: {
+    eyebrow: 'Collaborations',
+    title: 'Let’s build together.',
+    intro:
+      'An idea to explore, a problem to solve, a product to build, or expertise to put at the service of a project?',
+    lead: 'Let’s talk.',
+    cta: 'Start a conversation',
+    modes: [
+      { name: 'Project', body: 'You want to structure and grow an initiative.' },
+      { name: 'Product', body: 'You have an idea or a problem to turn into a solution.' },
+      { name: 'Partnership', body: 'You want to build an initiative with iNOVA.' },
+      { name: 'Expertise', body: 'You want to put your skills behind innovative projects.' },
+    ],
+  },
+
+  writing: {
+    eyebrow: 'Contact',
+    title: 'Write to iNOVA',
+    body: 'The form lands with the founder directly. Meanwhile, one address is enough.',
+    cta: 'Write to iNOVA',
+    or: 'or',
   },
 };
 
 export const home: Record<Locale, typeof fr> = { fr, en };
+
+/**
+ * Le réseau de compétences (§9). Une seule liste pour les deux langues : le
+ * brief les écrit telles quelles en français comme en anglais, et le nombre
+ * affiché dans l'interface est dérivé d'ici.
+ */
+export const SKILLS = [
+  'Product',
+  'Technology',
+  'Design',
+  'Data',
+  'Project Management',
+  'Digital Transformation',
+  'Marketing',
+  'Business Development',
+  'Finance',
+  'Legal',
+  'Communication',
+] as const;
