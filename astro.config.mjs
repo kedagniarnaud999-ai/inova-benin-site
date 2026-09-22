@@ -4,9 +4,10 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
-// À remplacer par le nom de domaine définitif dès qu'il est acheté :
-// `site` alimente l'URL canonique, les hreflang et le sitemap.
-const SITE = 'https://inova-benin.vercel.app';
+// L'URL de production réelle, sinon chaque canonical, og:url et entrée de sitemap
+// pointerait sur un hôte mort. À remplacer par le nom de domaine définitif dès
+// qu'il est acheté : `site` alimente l'URL canonique, les hreflang et le sitemap.
+const SITE = 'https://inova-benin-site-kedagniarnaud999-ais-projects.vercel.app';
 
 // https://astro.build/config
 export default defineConfig({
