@@ -1,5 +1,5 @@
 ---
-import { EXPERIMENTS, type Experiment } from '../content/experiments';
+import { EXPERIMENTS, type Experiment, type ExperimentShot } from '../content/experiments';
 import LabVisual from './LabVisual.astro';
 import { t } from '../i18n/ui';
 import type { Locale } from '../i18n/config';
@@ -47,6 +47,17 @@ const host = (item: Experiment) => {
     return href;
   }
 };
+/** Le navigateur choisit entre les deux largeurs publiées ; on n'invente aucun chiffre. */
+const shotAttrs = (shot: ExperimentShot) => ({
+  src: shot.wide.src,
+  srcset: `${shot.narrow.src} ${shot.narrow.width}w, ${shot.wide.src} ${shot.wide.width}w`,
+  sizes: '(min-width: 62rem) 620px, calc(100vw - 2.5rem)',
+  width: shot.wide.width,
+  height: shot.wide.height,
+  alt: '',
+  loading: 'lazy',
+  decoding: 'async',
+} as const);
 ---
 
 <div class="showcase">
@@ -58,7 +69,13 @@ const host = (item: Experiment) => {
         <span class="frame-host">{host(lead)}</span>
       </span>
       <span class="frame-screen">
-        <LabVisual kind={lead.visual} uid={`${lead.id}-lead`} />
+        {
+          lead.shot ? (
+            <img {...shotAttrs(lead.shot)} />
+          ) : (
+            <LabVisual kind={lead.visual} uid={`${lead.id}-lead`} />
+          )
+        }
       </span>
     </a>
 
@@ -97,7 +114,13 @@ const host = (item: Experiment) => {
         <li class="card" data-reveal style={`--d: ${i * 110}ms`}>
           <a class="card-link" href={address(item)} rel="noopener">
             <div class="card-shot">
-              <LabVisual kind={item.visual} uid={item.id} />
+              {
+                item.shot ? (
+                  <img {...shotAttrs(item.shot)} />
+                ) : (
+                  <LabVisual kind={item.visual} uid={item.id} />
+                )
+              }
               <span class="card-id label">{item.id}</span>
             </div>
 
@@ -218,7 +241,7 @@ const host = (item: Experiment) => {
 
   .frame-screen {
     display: block;
-    aspect-ratio: 16 / 11;
+    aspect-ratio: 16 / 10;
     overflow: hidden;
   }
 
@@ -231,6 +254,19 @@ const host = (item: Experiment) => {
 
   .frame:hover .frame-screen :global(svg),
   .frame:focus-visible .frame-screen :global(svg) {
+    transform: scale(1.03);
+  }
+
+  .frame-screen :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .frame:hover .frame-screen :global(img),
+  .frame:focus-visible .frame-screen :global(img) {
     transform: scale(1.03);
   }
 
@@ -359,6 +395,20 @@ const host = (item: Experiment) => {
 
   .card-link:hover .card-shot :global(svg),
   .card-link:focus-visible .card-shot :global(svg) {
+    transform: scale(1.035);
+  }
+
+  .card-shot :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+    transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .card-link:hover .card-shot :global(img),
+  .card-link:focus-visible .card-shot :global(img) {
     transform: scale(1.035);
   }
 
@@ -533,7 +583,9 @@ const host = (item: Experiment) => {
   @media (prefers-reduced-motion: reduce) {
     .frame,
     .frame-screen :global(svg),
+    .frame-screen :global(img),
     .card-shot :global(svg),
+    .card-shot :global(img),
     .card-arrow,
     .tile {
       transition: none;

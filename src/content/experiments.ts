@@ -1,4 +1,10 @@
 import type { Locale } from '../i18n/config';
+import alitcheNarrow from '../assets/products/alitche-640.webp';
+import alitcheWide from '../assets/products/alitche-1280.webp';
+import nyimiNarrow from '../assets/products/nyimi-640.webp';
+import nyimiWide from '../assets/products/nyimi-1280.webp';
+import vibemapNarrow from '../assets/products/vibemap-640.webp';
+import vibemapWide from '../assets/products/vibemap-1280.webp';
 
 /**
  * `live` : l'application répond et se parcourt.
@@ -7,8 +13,14 @@ import type { Locale } from '../i18n/config';
  */
 export type ExperimentStatus = 'live' | 'preview' | 'built';
 
-/** Figure tracée par LabVisual : une géométrie par produit, jamais une capture. */
+/** Figure tracée par LabVisual : le repli d'un produit sans écran publié. */
 export type ExperimentVisual = 'path' | 'graticule' | 'routes' | 'dialogue' | 'modules' | 'cycle';
+
+/** Écran réellement capturé du produit, en deux largeurs pour le bandeau `srcset`. */
+export interface ExperimentShot {
+  narrow: typeof alitcheNarrow;
+  wide: typeof alitcheWide;
+}
 
 export interface Experiment {
   /** Identifiant court, affiché en mono : c'est le numéro de dossier du Lab. */
@@ -30,16 +42,20 @@ export interface Experiment {
   year: number;
   live?: string;
   repo?: string;
-  /** Figure tracée en SVG pour la carte du showcase. Ce n'est pas l'écran du produit. */
+  /** Écran publié du produit ; sert la grande carte quand il existe. */
+  shot?: ExperimentShot;
+  /** Figure tracée en SVG, montrée en repli d'un produit sans écran publié. */
   visual: ExperimentVisual;
 }
 
 /**
  * Le carnet du Lab. Chaque entrée correspond à un dépôt réellement engagé.
  * Les URL `live` sont vérifiées en HTTP : le serveur renvoie bien le titre du
- * produit. Les visuels sont des figures tracées, pas des captures : le produit
- * se juge en cliquant. Le nombre affiché dans l'interface est dérivé de ce
- * tableau — jamais écrit en dur dans un texte.
+ * produit. Un produit publié avec son `shot` montre son écran réel ; les autres
+ * gardent une figure tracée. Un `shot` n'est admis que s'il a été obtenu sans
+ * compte ni mot de passe : une capture derrière un mur d'authentification ne
+ * prouve rien de ce que le visiteur verra. Le nombre affiché dans l'interface
+ * est dérivé de ce tableau — jamais écrit en dur dans un texte.
  */
 export const EXPERIMENTS: Experiment[] = [
   {
@@ -62,10 +78,13 @@ export const EXPERIMENTS: Experiment[] = [
       fr: ['Éducation', 'Orientation', 'Employabilité'],
       en: ['Education', 'Guidance', 'Employability'],
     },
-    status: 'live',
+    // Le bandeau d'authentification s'affiche sur une partie du service : la
+    // façade répond, le parcours complet ne se termine pas encore.
+    status: 'preview',
     year: 2026,
     live: 'https://ali-ce-i6it.vercel.app/',
     repo: 'https://github.com/kedagniarnaud999-ai/alice',
+    shot: { narrow: alitcheNarrow, wide: alitcheWide },
     visual: 'path',
   },
   {
@@ -88,6 +107,7 @@ export const EXPERIMENTS: Experiment[] = [
     year: 2026,
     live: 'https://la-vibe-map-cultural-tourism-benin.ai.studio/',
     repo: 'https://github.com/kedagniarnaud999-ai/Vibe-Map',
+    shot: { narrow: vibemapNarrow, wide: vibemapWide },
     visual: 'graticule',
   },
   {
@@ -110,6 +130,7 @@ export const EXPERIMENTS: Experiment[] = [
     year: 2026,
     live: 'https://nyimi.vercel.app/',
     repo: 'https://github.com/kedagniarnaud999-ai/nyimi',
+    shot: { narrow: nyimiNarrow, wide: nyimiWide },
     visual: 'routes',
   },
   {
