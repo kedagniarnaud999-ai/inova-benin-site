@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PoleHero from '../components/PoleHero.astro';
 import Section from '../components/Section.astro';
-import { EXPERIMENTS, LIVE_COUNT } from '../content/experiments';
+import LabVisual from '../components/LabVisual.astro';
+import { EXPERIMENTS, LIVE_COUNT, type Experiment } from '../content/experiments';
 import { url, type Locale } from '../i18n/config';
 import { about } from '../i18n/pages/about';
+import { t } from '../i18n/ui';
 import { FOUNDER, SOCIAL } from '../social';
 
 interface Props {
@@ -13,94 +14,108 @@ interface Props {
 
 const { locale } = Astro.props;
 const c = about[locale];
+const labels = t(locale).labels;
+
+/**
+ * Les chiffres ne sont pas écrits dans le texte : ils viennent du carnet
+ * lui-même, sinon la page affirmerait un nombre que rien ne soutient.
+ */
+const REPOS = EXPERIMENTS.filter((e) => e.repo).length;
+const LAB_HREF = url(locale, 'lab');
+
+/** Le nom montré est celui du profil versé comme preuve, pas une troisième orthographe. */
+const founder = SOCIAL.find((p) => p.person);
+const founderName = founder?.person ?? FOUNDER;
+const linkedin = founder?.href;
+const github = SOCIAL.find((p) => p.label === 'GitHub')?.href;
+
+/** Trois lignes écrites dans `about.ts` ; l'adresse et le nombre se résolvent ici. */
+const proofs = c.verify.rows.map((row, i) => ({
+  field: row.field,
+  body: row.body,
+  cta: row.cta,
+  value: typeof row.value === 'function' ? row.value(i === 0 ? REPOS : i === 1 ? LIVE_COUNT : 0) : row.value,
+  href: i === 0 ? github : i === 1 ? LAB_HREF : linkedin,
+  external: i !== 1,
+}));
+
+const badgeClass: Record<Experiment['status'], string> = {
+  live: 'b-live',
+  preview: 'b-preview',
+  built: 'b-built',
+};
+const badgeText: Record<Experiment['status'], string> = {
+  live: labels.status_live,
+  preview: labels.status_preview,
+  built: labels.status_built,
+};
 ---
 
 <BaseLayout title={c.meta.title} description={c.meta.description} {locale} route="about">
-  <PoleHero
-    eyebrow={c.hero.eyebrow}
-    title={c.hero.title}
-    lede={c.hero.lede(EXPERIMENTS.length, LIVE_COUNT)}
-  >
-    <a href="#etapes" class="btn btn-solid">{c.hero.steps}</a>
-    <a href="#reseau" class="btn btn-line">{c.hero.network}</a>
-  </PoleHero>
+  <!-- 1 — LA PREUVE D'ABORD : le carnet s'ouvre dès le premier écran. -->
+  <section class="hero mx-auto max-w-[88rem] px-5 pt-14 pb-16 sm:px-8 sm:pt-20">
+    <p class="label text-muted">{c.hero.eyebrow}</p>
+    <h1 class="display mt-5 max-w-[19ch] text-mega">{c.hero.title}</h1>
+    <div class="bar mt-7" aria-hidden="true"></div>
 
-  <Section eyebrow={c.intent.eyebrow} title={c.intent.title} size="wide" class="mt-8">
-    <blockquote class="quote">
-      <p class="text-h3">{c.intent.quote}</p>
-    </blockquote>
-    <p class="mt-9 max-w-[62ch] text-lede text-muted">{c.intent.body}</p>
-    <p class="mt-14">
-      <span class="label text-muted">{c.founder.eyebrow}</span>
-      <span class="mt-3 block text-h3">{FOUNDER}</span>
-      <span class="mt-2 block font-mono text-[0.8rem] text-muted">{c.founder.role}</span>
-      <span class="mt-5 block max-w-[58ch] text-[0.98rem]">{c.founder.body}</span>
-      <span class="mt-5 flex flex-wrap gap-x-6 gap-y-2">
-        {
-          SOCIAL.map((profile) => (
-            <a
-              href={profile.href}
-              rel="me noopener"
-              target="_blank"
-              class="link-underline font-mono text-[0.8rem] text-accent-ink"
-            >
-              {profile.label}
-            </a>
-          ))
-        }
-      </span>
-    </p>
-  </Section>
+    <div class="mt-9 grid gap-9 lg:grid-cols-[1.1fr_auto] lg:items-end">
+      <p class="max-w-[52ch] text-lede text-ink">{c.hero.lede(EXPERIMENTS.length, LIVE_COUNT)}</p>
+      <div class="flex flex-wrap gap-3 lg:justify-end">
+        <a href="#intention" class="btn btn-line">{c.hero.intention}</a>
+        <a href={LAB_HREF} class="btn btn-solid">{c.hero.ledger}</a>
+      </div>
+    </div>
 
-  <Section id="statut" eyebrow={c.legal.eyebrow} title={c.legal.title} size="wide">
-    <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.legal.intro}</p>
-    <dl class="grid gap-x-14 gap-y-9 sm:grid-cols-2">
+    <h2 class="strip-label label">{c.hero.stripLabel}</h2>
+    <ul class="strip" role="list">
       {
-        c.legal.rows.map((row) => (
-          <div>
-            <dt class="label text-accent-ink">{row.label}</dt>
-            <dd class="mt-3 max-w-[46ch] text-[0.98rem]">{row.body}</dd>
-          </div>
+        EXPERIMENTS.map((item, i) => (
+          <li class="strip-cell" data-reveal style={`--d: ${i * 60}ms`}>
+            <a class="strip-link" href={item.live ?? item.repo}>
+              <span class="strip-shot">
+                <LabVisual kind={item.visual} uid={item.id} />
+                <span class="strip-id label">{item.id}</span>
+              </span>
+              <span class="strip-body">
+                <span class="strip-name">{item.name}</span>
+                <span class:list={['badge', badgeClass[item.status]]}>{badgeText[item.status]}</span>
+              </span>
+            </a>
+          </li>
         ))
       }
-    </dl>
+    </ul>
+  </section>
+
+  <!-- 2 — L'INTENTION : une seule déclaration, pleine page, sans paragraphe d'appui. -->
+  <Section id="intention" tone="ink" size="wide" class="field declaration">
+    <p class="label declaration-eyebrow">{c.declaration.eyebrow}</p>
+    <h2 class="declaration-lines">
+      <span class="block">{c.declaration.line1}</span>
+      <span class="block">{c.declaration.line2}</span>
+      <span class="block declaration-lit">{c.declaration.line3}</span>
+    </h2>
+    <p class="declaration-body">{c.declaration.body}</p>
   </Section>
 
-  <Section id="reseau" eyebrow={c.network.eyebrow} title={c.network.title} size="wide">
-    <p class="mb-12 max-w-[62ch] text-lede text-muted">{c.network.intro}</p>
-    <div class="grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
-      <p class="label pt-1 text-muted">{c.network.skillsTitle}</p>
-      <ul class="grid gap-x-10 gap-y-3 sm:grid-cols-2">
-        {
-          c.network.skills.map((skill) => (
-            <li class="flex items-baseline gap-3 border-b border-rule pb-3">
-              <span class="h-1.5 w-1.5 shrink-0 translate-y-[-2px] bg-accent" aria-hidden="true"></span>
-              <span>{skill}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    <p class="mt-10 max-w-[62ch] border-t border-rule pt-8 text-[0.98rem] text-muted">
-      {c.network.formalisation}
-    </p>
-  </Section>
-
-  <Section id="etapes" tone="ink" size="wide">
-    <div class="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+  <!-- 3 — LE POINT DE DÉPART : la suite des quatre verbes, en regard du texte. -->
+  <Section size="wide">
+    <div class="grid gap-x-16 gap-y-12 lg:grid-cols-[0.85fr_1.15fr]">
       <div>
-        <p class="label text-chalk/55">{c.steps.eyebrow}</p>
-        <h2 class="mt-3 max-w-[22ch] text-h2 text-chalk">{c.steps.title}</h2>
-        <p class="mt-6 max-w-[46ch] text-chalk/80">{c.steps.intro}</p>
+        <p class="label text-muted">{c.origin.eyebrow}</p>
+        <h2 class="mt-3 max-w-[20ch] text-h2">{c.origin.title}</h2>
+        <p class="mt-7 max-w-[48ch] text-[0.98rem] text-muted">{c.origin.body1}</p>
+        <p class="mt-4 max-w-[48ch] text-[0.98rem] text-muted">{c.origin.body2}</p>
       </div>
-      <ol class="space-y-5">
+      <ol class="steps" role="list">
         {
-          c.steps.items.map((item, i) => (
-            <li class="grid grid-cols-[auto_1fr] gap-x-5 border-t border-chalk/15 pt-5">
-              <span class="font-mono text-[0.8rem] text-chalk/60">
-                {String(i + 1).padStart(2, '0')}
+          c.origin.steps.map((step, i) => (
+            <li data-reveal style={`--d: ${i * 90}ms`}>
+              <span class="label step-n">{String(i + 1).padStart(2, '0')}</span>
+              <span class="step-text">
+                <span class="step-name">{step.name}</span>
+                <span class="step-note">{step.note}</span>
               </span>
-              <span class="max-w-[58ch] text-chalk/90">{item}</span>
             </li>
           ))
         }
@@ -108,22 +123,430 @@ const c = about[locale];
     </div>
   </Section>
 
-  <Section eyebrow={c.elsewhere.eyebrow} title={c.elsewhere.title} size="wide">
-    <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end lg:gap-16">
-      <p class="max-w-[58ch] text-lede text-muted">{c.elsewhere.body}</p>
-      <p class="lg:pb-2 lg:text-right">
-        <a href={url(locale, 'contact')} class="btn btn-solid">{c.elsewhere.cta}</a>
-      </p>
+  <!-- 4 — LE CARNET DE PREUVES : trois lignes, trois adresses, aucun adjectif. -->
+  <Section size="wide">
+    <header class="mb-12">
+      <p class="label text-muted">{c.verify.eyebrow}</p>
+      <h2 class="mt-3 max-w-[26ch] text-h2">{c.verify.title}</h2>
+      <p class="mt-6 max-w-[52ch] text-lede text-muted">{c.verify.intro}</p>
+    </header>
+
+    <ul class="ledger" role="list">
+      {
+        proofs.map((proof, i) => (
+          <li class="ledger-row" data-reveal style={`--d: ${i * 90}ms`}>
+            <p class="label ledger-field">{proof.field}</p>
+            <div class="ledger-main">
+              <p class="ledger-value">{proof.value}</p>
+              <p class="ledger-body">{proof.body}</p>
+            </div>
+            {
+              proof.href && (
+                <p class="ledger-link">
+                  <a
+                    href={proof.href}
+                    rel={proof.external ? 'noopener' : undefined}
+                    target={proof.external ? '_blank' : undefined}
+                    class="label link-underline"
+                  >
+                    {proof.cta}
+                  </a>
+                </p>
+              )
+            }
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <!-- 5 — LE PORTEUR : une signature, pas un CV. -->
+  <Section size="wide">
+    <div class="grid gap-x-16 gap-y-9 lg:grid-cols-[1fr_1.15fr] lg:items-start">
+      <div>
+        <p class="label text-muted">{c.founder.eyebrow}</p>
+        <h2 class="display mt-4 text-mega">{founderName}</h2>
+        <p class="sign-rule" aria-hidden="true"></p>
+        <p class="founder-role">{c.founder.role}</p>
+      </div>
+      <div>
+        <p class="max-w-[54ch] text-lede">{c.founder.body1}</p>
+        <p class="mt-4 max-w-[54ch] text-[0.98rem] text-muted">{c.founder.body2}</p>
+        <p class="founder-proof">{c.founder.proof}</p>
+        {
+          linkedin && (
+            <p class="mt-8">
+              <a href={linkedin} rel="me noopener" target="_blank" class="btn btn-line">
+                {c.founder.cta}
+              </a>
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </Section>
+
+  <!-- 6 — LE RÉSEAU : les capacités en grille, sans constellation ni promesse d'effectif. -->
+  <Section size="wide">
+    <header class="mb-12">
+      <p class="label text-muted">{c.network.eyebrow}</p>
+      <h2 class="mt-3 max-w-[24ch] text-h2">{c.network.title}</h2>
+      <p class="mt-6 max-w-[52ch] text-lede text-muted">{c.network.intro}</p>
+    </header>
+
+    <ul class="skills" role="list">
+      {
+        c.network.skills.map((skill, i) => (
+          <li class="skill" data-reveal style={`--d: ${i * 40}ms`}>
+            {skill}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="mt-10 max-w-[62ch] text-[0.98rem] text-muted">{c.network.formalised}</p>
+
+    <div class="network-ask">
+      <p class="max-w-[34ch] text-lede">{c.network.ask}</p>
+      <a href={url(locale, 'contact')} class="btn btn-solid">
+        {c.network.join}
+      </a>
+    </div>
+  </Section>
+
+  <!-- 7 — LA DERNIÈRE LIGNE : une seule porte de sortie. -->
+  <Section size="wide" class="close">
+    <div class="grid gap-9 lg:grid-cols-[1.2fr_auto] lg:items-end lg:gap-16">
+      <div>
+        <h2 class="display max-w-[16ch] text-mega">{c.close.title}</h2>
+        <p class="mt-6 max-w-[52ch] text-lede text-muted">{c.close.body}</p>
+      </div>
+      <a href={url(locale, 'contact')} class="btn btn-solid">
+        {c.close.cta}
+      </a>
     </div>
   </Section>
 </BaseLayout>
 
 <style>
-  /* Le filet de citation porte l'accent courant : sur cette page il reste
-     cobalt, la page n'étant rattachée à aucun pôle. */
-  .quote {
-    border-left: 3px solid var(--accent);
+  .bar {
+    height: 3px;
+    width: min(100%, 12rem);
+    background: var(--accent);
+  }
+
+  /* ── Le bandeau de preuves ───────────────────────────────────────────────
+     Le trait intérieur est le fond `rule` exposé par le pas de 1 px de la
+     grille : six dossiers d'un seul tenant, séparés d'un cheveu. */
+  .strip-label {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--color-rule);
+    color: var(--color-muted);
+    line-height: 1.3;
+  }
+
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--color-rule);
+    border: 1px solid var(--color-rule);
+    border-top: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .strip {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .strip {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  .strip-cell {
+    background: var(--color-chalk);
+  }
+
+  .strip-link {
+    display: block;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .strip-shot {
+    position: relative;
+    display: block;
+    aspect-ratio: 8 / 5;
+    overflow: hidden;
+    background: var(--color-ink);
+  }
+
+  .strip-id {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    padding: 0.2rem 0.4rem;
+    background: var(--color-ink);
+    color: var(--color-chalk);
+    border: 1px solid color-mix(in oklab, var(--color-chalk) 26%, transparent);
+  }
+
+  .strip-body {
+    display: grid;
+    gap: 0.45rem;
+    align-content: start;
+    padding: 1rem 0.9rem 1.15rem;
+    min-height: 6.6rem;
+    transition: background-color 200ms ease-out;
+  }
+
+  .strip-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 106;
+    font-size: 1.05rem;
+    letter-spacing: -0.018em;
+    line-height: 1.1;
+  }
+
+  .strip-link:hover .strip-body,
+  .strip-link:focus-visible .strip-body {
+    background: var(--accent-wash);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border: 1px solid var(--accent-ink);
+  }
+
+  .b-live::before {
+    background: var(--accent);
+  }
+
+  .b-preview::before {
+    background: linear-gradient(90deg, var(--accent) 50%, transparent 50%);
+  }
+
+  /* ── La déclaration ──────────────────────────────────────────────────── */
+  .declaration-eyebrow {
+    color: color-mix(in oklab, var(--color-chalk) 55%, transparent);
+  }
+
+  /* Les deux premiers vers sont volontairement en retrait : la ligne qui
+     compte — « apprendre à les construire » — est la seule pleine. */
+  .declaration-lines {
+    margin-top: 1.1rem;
+    max-width: 30ch;
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 110;
+    font-size: clamp(1.65rem, 4.4vw, 3.5rem);
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    color: color-mix(in oklab, var(--color-chalk) 58%, transparent);
+  }
+
+  .declaration-lit {
+    color: var(--color-chalk);
+  }
+
+  .declaration-body {
+    margin-top: clamp(2rem, 4vw, 3.2rem);
+    max-width: 58ch;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: color-mix(in oklab, var(--color-chalk) 78%, transparent);
+  }
+
+  /* ── Les quatre verbes ────────────────────────────────────────────────── */
+  .steps {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .steps li {
+    display: grid;
+    grid-template-columns: 3.1rem 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .step-n {
+    color: var(--color-muted);
+  }
+
+  .step-text {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .step-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 108;
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    line-height: 1;
+    letter-spacing: -0.022em;
+  }
+
+  .step-note {
     max-width: 46ch;
-    padding-left: 1.6rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  /* ── Le carnet de preuves ─────────────────────────────────────────────── */
+  .ledger {
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .ledger-row {
+    display: grid;
+    gap: 0.6rem 2.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  @media (min-width: 62rem) {
+    .ledger-row {
+      grid-template-columns: 9.5rem 1fr auto;
+      align-items: baseline;
+    }
+  }
+
+  .ledger-field {
+    color: var(--accent-ink);
+  }
+
+  .ledger-value {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 108;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+  }
+
+  .ledger-body {
+    margin-top: 0.55rem;
+    max-width: 58ch;
+    font-size: 0.97rem;
+    line-height: 1.65;
+    color: var(--color-muted);
+  }
+
+  @media (min-width: 62rem) {
+    .ledger-link {
+      text-align: right;
+      white-space: nowrap;
+    }
+  }
+
+  /* ── La signature ─────────────────────────────────────────────────────── */
+  .sign-rule {
+    margin-top: 1.3rem;
+    height: 1px;
+    background: var(--color-ink);
+    position: relative;
+  }
+
+  /* Le tiret bas de la ligne à signer : l'accent dit où apposer le nom. */
+  .sign-rule::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 2.6rem;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  .founder-role {
+    margin-top: 1.1rem;
+    max-width: 40ch;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    color: var(--color-muted);
+  }
+
+  .founder-proof {
+    margin-top: 1.8rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--accent-ink);
+    max-width: 52ch;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  /* ── Les capacités ────────────────────────────────────────────────────── */
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--color-rule);
+    border: 1px solid var(--color-rule);
+  }
+
+  @media (min-width: 48rem) {
+    .skills {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 62rem) {
+    .skills {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .skill {
+    background: var(--color-chalk);
+    padding: 1.15rem 1rem;
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 104;
+    font-size: 1rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .network-ask {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.4rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  /* ── La dernière ligne ────────────────────────────────────────────────── */
+  .close {
+    border-top: 3px solid var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .strip-body {
+      transition: none;
+    }
   }
 </style>

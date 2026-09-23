@@ -1,202 +1,236 @@
 import type { Locale } from '../config';
 
 /**
- * À propos. Sections 2.1, 2.2, 2.3 et 7 du business plan. Ni RCCM ni IFU ne sont
- * nommés : ils n'existent pas encore, et les citer laisserait croire à une
- * immatriculation déjà obtenue.
+ * À propos : la page de preuve, pas une seconde vitrine.
+ *
+ * La méthode, les pôles, le réseau de compétences, la progression Afrique et les
+ * quatre entrées de collaboration existent déjà sur l'accueil ; le carnet complet
+ * existe sur `/lab`. Rien de tout cela n'est rejoué ici : la page ne répond qu'à
+ * une question, « comment vérifier ».
+ *
+ * Statut juridique, immatriculation, effectif et local sont des informations
+ * internes : mentions légales et documents institutionnels, pas le storytelling
+ * public. Ni formulation défensive, ni rien d'inventé.
+ *
+ * « Trois choses » et « Dix capacités » sont les seuls nombres écrits en toutes
+ * lettres de cette page : ils doivent rester égaux à `verify.rows.length` et à
+ * `network.skills.length`. Tout autre chiffre est dérivé dans le gabarit.
  */
 const fr = {
   meta: {
-    title: 'À propos — iNOVA BENIN, SASU en cours de constitution à Cotonou',
+    title: 'À propos — iNOVA BENIN, venture builder à Cotonou',
     description:
-      'Le porteur du projet, la forme juridique retenue, le réseau réellement mobilisé et les étapes qui restent avant l’immatriculation. Ce qui n’existe pas encore est dit comme tel.',
+      'Ce que iNOVA construit réellement, où le vérifier, qui porte le projet et quelles compétences le réseau réunit.',
   },
 
   hero: {
-    eyebrow: 'À propos',
-    title: 'Une entreprise pas encore immatriculée, des produits déjà consultables.',
+    eyebrow: 'À propos · Cotonou, Bénin',
+    title: 'Ce que nous disons se vérifie.',
     lede: (built: number, live: number) =>
-      `iNOVA BENIN est en cours de constitution sous la forme d’une SASU. Le carnet du Lab, lui, n’a pas attendu l’immatriculation : ${built} expérimentations y sont construites, dont ${live} accessibles en ligne.`,
-    steps: 'Les étapes restantes',
-    network: 'Le réseau',
+      `iNOVA BENIN est un venture builder. Ce qu’il avance tient sur ${built} expérimentations construites, dont ${live} ouvertes en ligne : chacune s’ouvre dans un onglet et se juge sans attendre notre parole.`,
+    stripLabel: 'Le carnet, consultable maintenant',
+    ledger: 'Ouvrir tout le carnet',
+    intention: 'Notre intention',
   },
 
-  intent: {
-    eyebrow: 'L’intention',
-    title: 'Apprendre à construire, pas seulement accompagner',
-    quote:
-      'Nous ne voulons pas seulement accompagner ceux qui créent des entreprises. Nous voulons aussi apprendre à les construire.',
-    body: 'L’ambition inscrite dans le projet : être capable d’identifier des problèmes et des opportunités, de concevoir des solutions, de construire des produits, de créer des startups et, à terme, de contribuer à un portefeuille de ventures africaines. C’est ce qui distingue iNOVA d’un cabinet de conseil classique : une partie de ce que la structure produit lui appartient.',
+  declaration: {
+    eyebrow: 'Notre intention',
+    line1: 'Nous ne voulons pas seulement accompagner',
+    line2: 'ceux qui créent des entreprises.',
+    line3: 'Nous voulons apprendre à les construire.',
+    body:
+      'Un cabinet qui conseille garde la distance. Nous avons choisi de la réduire : une partie de ce que nous produisons nous appartient, et chaque produit livré apprend ce qu’aucune mission ne pourrait apprendre.',
+  },
+
+  origin: {
+    eyebrow: 'D’où nous partons',
+    title: 'Repérer. Concevoir. Construire. Faire durer.',
+    steps: [
+      { name: 'Repérer', note: 'Un problème observable sur le terrain, pas une mode.' },
+      { name: 'Concevoir', note: 'Une solution soutenable, pas une démonstration.' },
+      { name: 'Construire', note: 'Un produit qui tient, pas une maquette.' },
+      { name: 'Faire durer', note: 'Une organisation, pas un projet sans suite.' },
+    ],
+    body1:
+      'Trois métiers travaillent ensemble : le Consulting structure les idées, le Lab les transforme en produits, le Studio donne de la visibilité à ceux qui construisent. Les trois s’appliquent à des problèmes africains.',
+    body2:
+      'L’ambition ne s’arrête pas au conseil rendu : constituer, à terme, un portefeuille de ventures dont iNOVA détiendra une part — bâties au Bénin et conçues pour dépasser leur marché d’origine.',
+  },
+
+  verify: {
+    eyebrow: 'À vérifier vous-même',
+    title: 'Trois choses que vous n’avez pas besoin de nous croire.',
+    intro: 'Tout ce que cette page affirme est publié quelque part. Voici où.',
+    rows: [
+      {
+        field: 'Le code',
+        value: (n: number) => `${n} dépôts publics`,
+        body:
+          'Chaque expérimentation engagée a son dépôt. L’historique des commits est ouvert, et il précède cette page.',
+        cta: 'Ouvrir GitHub',
+      },
+      {
+        field: 'Les produits',
+        value: (n: number) => `${n} en ligne`,
+        body: 'Les adresses s’ouvrent directement. Elles sont revérifiées à chaque mise en ligne du site.',
+        cta: 'Ouvrir le carnet',
+      },
+      {
+        field: 'Le porteur',
+        value: 'Un profil, un parcours',
+        body: 'Le projet a un nom et un historique professionnel consultables par tous.',
+        cta: 'Ouvrir LinkedIn',
+      },
+    ],
   },
 
   founder: {
-    eyebrow: 'Le porteur',
-    role: 'PMO — gestion de projet digital, entrepreneuriat',
-    body: 'Le projet est porté par une seule personne, nommément. Tout le reste est un réseau mobilisé au coup par coup : aucun associé, aucun salarié à ce jour.',
-  },
-
-  legal: {
-    eyebrow: 'Statut',
-    title: 'SASU, en cours de constitution',
-    intro:
-      'La forme juridique est retenue et motivée, les statuts sont en cours de finalisation. Rien sur ce site ne laisse entendre que la société est déjà immatriculée.',
-    rows: [
-      {
-        label: 'Forme',
-        body: 'Société par Actions Simplifiée Unipersonnelle, régie par l’Acte uniforme OHADA relatif au droit des sociétés commerciales.',
-      },
-      {
-        label: 'Pourquoi cette forme',
-        body: 'Elle permet, sans transformation juridique ultérieure, d’accueillir de nouveaux associés — en numéraire comme en industrie — et des investisseurs, et elle reste le véhicule privilégié des opérations d’investissement dans l’espace OHADA. Sa constitution requiert un acte notarié.',
-      },
-      {
-        label: 'État',
-        body: 'Immatriculation non finalisée à la date de publication. Les numéros d’identification qui en découleront ne sont donc pas publiés.',
-      },
-      {
-        label: 'Base',
-        body: 'Activité basée à Cotonou, sans local dédié à ce jour. La domiciliation provisoire est une adresse personnelle : elle n’est pas publiée.',
-      },
-    ],
+    eyebrow: 'Qui porte iNOVA',
+    role: 'Founder — Project & Product Management, Digital Transformation & Venture Building',
+    body1:
+      'Il pilote la vision d’iNOVA, le cadrage des projets et le développement des expérimentations du Lab.',
+    body2:
+      'Les compétences qui complètent le projet se réunissent au coup par coup, selon ce que le problème exige.',
+    proof: 'Le code des expérimentations est publié sous ce même compte.',
+    cta: 'Voir le profil LinkedIn',
   },
 
   network: {
     eyebrow: 'Le réseau',
-    title: 'Des compétences réunies, pas un effectif',
+    title: 'Dix capacités, réunies projet par projet.',
     intro:
-      'À ce stade, iNOVA BENIN s’appuie sur un réseau de collaborateurs mobilisés ponctuellement, et sur un partenaire disposant d’une agence de communication pour la production du Studio. Aucun effectif salarié n’est revendiqué.',
-    skillsTitle: 'Compétences couvertes',
+      'iNOVA les mobilise là où un projet en a besoin, et les réunit autour de lui plutôt que de tout faire seul.',
     skills: [
-      'Développement',
+      'Produit',
+      'Technologie',
       'Design',
+      'Data',
       'Gestion de projet',
-      'Marketing et communication',
-      'Data et digitalisation',
-      'Comptabilité',
-      'Production de contenu',
+      'Transformation digitale',
+      'Marketing',
+      'Business development',
+      'Finance',
+      'Communication',
     ],
-    formalisation:
-      'Ces collaborations seront progressivement formalisées — prestation, association ou salariat — à mesure que l’activité, notamment celle du Consulting, générera un chiffre d’affaires régulier.',
+    formalised:
+      'Ces collaborations se formalisent au rythme de l’activité : prestation, apport en compétence, ou emploi quand le projet le justifie.',
+    ask: 'Vous avez une de ces compétences et un projet à construire ?',
+    join: 'Rejoindre le réseau iNOVA',
   },
 
-  steps: {
-    eyebrow: 'Prochaines étapes',
-    title: 'Ce qui reste à faire avant l’amorçage',
-    intro:
-      'iNOVA BENIN se construit à partir d’un premier portefeuille d’expérimentations concret et d’une activité de conseil immédiatement mobilisable. La demande d’accompagnement à la création vise à sécuriser la structuration juridique du projet.',
-    items: [
-      'Finaliser l’immatriculation de la société, statuts notariés compris.',
-      'Ouvrir le compte bancaire de la société et libérer le capital social.',
-      'Déployer le budget de démarrage.',
-      'Lancer les premières missions de Consulting pour amorcer la trésorerie.',
-      'Produire les premiers contenus du Studio et démarrer le format série avec un premier acteur accompagné.',
-      'Structurer l’ouverture du capital à de futurs associés, en numéraire et en apports en industrie.',
-      'Préparer, une fois ces jalons franchis, une demande de financement pour la phase d’amorçage.',
-    ],
-  },
-
-  elsewhere: {
-    eyebrow: 'Vérifier par vous-même',
-    title: 'Les deux profils qui engagent réellement',
-    body: 'Plutôt qu’un discours sur la crédibilité, les travaux sont consultables là où ils sont publiés : le code des expérimentations et le profil professionnel du porteur.',
+  close: {
+    title: 'Décrivez le problème.',
+    body:
+      'Une ligne suffit. La demande part directement chez le porteur du projet, et nous disons vite si iNOVA n’est pas le bon endroit pour votre besoin.',
     cta: 'Décrire un besoin',
   },
 };
 
 const en: typeof fr = {
   meta: {
-    title: 'About — iNOVA BENIN, a SASU being incorporated in Cotonou',
+    title: 'About — iNOVA BENIN, a venture builder in Cotonou',
     description:
-      'The founder, the legal form chosen, the network genuinely in place and the steps left before incorporation. What does not exist yet is stated as such.',
+      'What iNOVA actually builds, where to check it, who carries the project and which skills the network holds.',
   },
 
   hero: {
-    eyebrow: 'About',
-    title: 'A company not yet registered, products you can already open.',
+    eyebrow: 'About · Cotonou, Benin',
+    title: 'What we say can be checked.',
     lede: (built: number, live: number) =>
-      `iNOVA BENIN is being incorporated as a SASU. The Lab’s ledger did not wait for that: ${built} experiments are built, ${live} of them live online.`,
-    steps: 'Remaining steps',
-    network: 'The network',
+      `iNOVA BENIN is a venture builder. What it claims rests on ${built} experiments built, ${live} of them live right now: each one opens in a tab and judges itself.`,
+    stripLabel: 'The ledger, open now',
+    ledger: 'Open the full ledger',
+    intention: 'Our intention',
   },
 
-  intent: {
-    eyebrow: 'The intention',
-    title: 'Learning to build, not only advising',
-    quote:
-      'We do not want simply to support those who create businesses. We want to learn to build them too.',
-    body: 'The ambition written into the project: to be able to spot problems and opportunities, design solutions, build products, create startups and, in time, contribute to an African venture portfolio. That is what separates iNOVA from a conventional consultancy — part of what the structure produces belongs to it.',
+  declaration: {
+    eyebrow: 'Our intention',
+    line1: 'We do not want simply to advise',
+    line2: 'those who create businesses.',
+    line3: 'We want to learn to build them.',
+    body:
+      'An advisory keeps its distance. We chose to close ours: part of what we produce belongs to us, and every product shipped teaches what no engagement could.',
+  },
+
+  origin: {
+    eyebrow: 'Where we start',
+    title: 'Spot. Design. Build. Last.',
+    steps: [
+      { name: 'Spot', note: 'A problem observable on the ground, not a fashion.' },
+      { name: 'Design', note: 'A solution that holds, not a demo.' },
+      { name: 'Build', note: 'A product that runs, not a mockup.' },
+      { name: 'Last', note: 'An organisation, not a project with no follow-on.' },
+    ],
+    body1:
+      'Three trades work together: Consulting structures ideas, the Lab turns them into products, the Studio gives visibility to the people building. All three are pointed at African problems.',
+    body2:
+      'The ambition does not stop at advice delivered: to build, over time, a portfolio of ventures iNOVA holds a share in — made in Benin, designed to outgrow their home market.',
+  },
+
+  verify: {
+    eyebrow: 'Check it yourself',
+    title: 'Three things you do not need to take on trust.',
+    intro: 'Everything this page states is published somewhere. Here is where.',
+    rows: [
+      {
+        field: 'The code',
+        value: (n: number) => `${n} public repositories`,
+        body:
+          'Every experiment engaged has its repository. Commit history is open, and it predates this page.',
+        cta: 'Open GitHub',
+      },
+      {
+        field: 'The products',
+        value: (n: number) => `${n} live`,
+        body: 'The addresses open directly. Each one is re-checked on every publish of this site.',
+        cta: 'Open the ledger',
+      },
+      {
+        field: 'The founder',
+        value: 'One profile, one record',
+        body: 'The project has a name and a professional history anyone can read.',
+        cta: 'Open LinkedIn',
+      },
+    ],
   },
 
   founder: {
-    eyebrow: 'The founder',
-    role: 'PMO — digital project management, entrepreneurship',
-    body: 'One person carries the project, by name. Everything else is a network engaged case by case: no co-founder, no employee so far.',
-  },
-
-  legal: {
-    eyebrow: 'Status',
-    title: 'SASU, being incorporated',
-    intro:
-      'The legal form is chosen and reasoned; the articles are still being finalised. Nothing on this site suggests the company is already registered.',
-    rows: [
-      {
-        label: 'Form',
-        body: 'Société par Actions Simplifiée Unipersonnelle, governed by the OHADA Uniform Act on commercial companies.',
-      },
-      {
-        label: 'Why this form',
-        body: 'It allows new shareholders — in cash or in skills — and investors to join without a later legal transformation, and it remains the preferred vehicle for investment deals across OHADA. Its formation requires a notarial deed.',
-      },
-      {
-        label: 'State',
-        body: 'Incorporation was not finalised at the time of publication, so the identification numbers that follow from it are not published.',
-      },
-      {
-        label: 'Base',
-        body: 'Operating out of Cotonou, with no dedicated premises so far. The provisional domiciliation is a personal address: it is not published.',
-      },
-    ],
+    eyebrow: 'Who carries iNOVA',
+    role: 'Founder — Project & Product Management, Digital Transformation & Venture Building',
+    body1:
+      'He leads iNOVA’s vision, the framing of engagements and the development of the Lab’s experiments.',
+    body2: 'The skills that complete a project come together one engagement at a time, as the problem requires.',
+    proof: 'The experiment code is published under that same account.',
+    cta: 'See the LinkedIn profile',
   },
 
   network: {
     eyebrow: 'The network',
-    title: 'A set of skills, not a headcount',
+    title: 'Ten capabilities, gathered project by project.',
     intro:
-      'At this stage iNOVA BENIN relies on a network of collaborators engaged case by case, plus a partner running a communications agency for Studio production. No salaried headcount is claimed.',
-    skillsTitle: 'Skills covered',
+      'iNOVA calls on them where a project needs them, and assembles them rather than building alone.',
     skills: [
-      'Development',
+      'Product',
+      'Technology',
       'Design',
+      'Data',
       'Project management',
-      'Marketing and communication',
-      'Data and digitalisation',
-      'Accounting',
-      'Content production',
+      'Digital transformation',
+      'Marketing',
+      'Business development',
+      'Finance',
+      'Communication',
     ],
-    formalisation:
-      'These collaborations will be formalised in turn — services, equity or employment — as the activity, Consulting above all, starts generating steady revenue.',
+    formalised:
+      'These collaborations are formalised as the activity allows: services, contribution in kind, or employment once a project justifies it.',
+    ask: 'Do you hold one of these skills and a project to build?',
+    join: 'Join the iNOVA network',
   },
 
-  steps: {
-    eyebrow: 'Next steps',
-    title: 'What is left before the seed round',
-    intro:
-      'iNOVA BENIN is being built from a concrete first portfolio of experiments and a consulting practice that can be mobilised immediately. The support sought is aimed at securing the project’s legal structuring.',
-    items: [
-      'Finish registering the company, notarial articles included.',
-      'Open the company bank account and release the share capital.',
-      'Deploy the start-up budget.',
-      'Run the first Consulting engagements to start generating cash.',
-      'Produce the first Studio content and open the series format with one accompanied operator.',
-      'Structure the opening of capital to future shareholders, in cash and in skills.',
-      'Prepare a seed-stage funding application once those milestones are cleared.',
-    ],
-  },
-
-  elsewhere: {
-    eyebrow: 'Check for yourself',
-    title: 'The two profiles that actually carry this',
-    body: 'Rather than a speech about credibility, the work is open where it is published: the experiment code and the founder’s professional profile.',
+  close: {
+    title: 'Describe the problem.',
+    body:
+      'One line is enough. The request goes straight to the founder, and we say early if iNOVA is not the right place for your need.',
     cta: 'Describe a need',
   },
 };
