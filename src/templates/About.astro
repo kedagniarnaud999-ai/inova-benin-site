@@ -5,6 +5,7 @@ import LabVisual from '../components/LabVisual.astro';
 import { EXPERIMENTS, LIVE_COUNT, type Experiment } from '../content/experiments';
 import { url, type Locale } from '../i18n/config';
 import { about } from '../i18n/pages/about';
+import { SKILLS, skillNames } from '../i18n/skills';
 import { t } from '../i18n/ui';
 import { FOUNDER, SOCIAL } from '../social';
 
@@ -15,6 +16,16 @@ interface Props {
 const { locale } = Astro.props;
 const c = about[locale];
 const labels = t(locale).labels;
+const skills = skillNames(locale);
+
+/**
+ * Deux nombres de cette page sont écrits en toutes lettres, et le typage ne peut
+ * rien contre un mot qui ne correspond plus à ce qu'il compte : le build s'arrête
+ * plutôt que de publier une page qui énonce un nombre faux.
+ */
+if (SKILLS.length !== 11 || c.verify.rows.length !== 3) {
+  throw new Error(`« À propos » : ${SKILLS.length} capacités, ${c.verify.rows.length} preuves.`);
+}
 
 /**
  * Les chiffres ne sont pas écrits dans le texte : ils viennent du carnet
@@ -196,7 +207,7 @@ const badgeText: Record<Experiment['status'], string> = {
 
     <ul class="skills" role="list">
       {
-        c.network.skills.map((skill, i) => (
+        skills.map((skill, i) => (
           <li class="skill" data-reveal style={`--d: ${i * 40}ms`}>
             {skill}
           </li>
@@ -514,7 +525,7 @@ const badgeText: Record<Experiment['status'], string> = {
 
   @media (min-width: 62rem) {
     .skills {
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
     }
   }
 

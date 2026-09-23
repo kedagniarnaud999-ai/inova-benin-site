@@ -6,16 +6,24 @@ import type { Locale } from '../i18n/config';
 
 interface Props {
   locale: Locale;
-  /** Les grandes cartes du haut ; le reste passe en lignes compactes. */
-  featured?: number;
+  /** Combien de cartes visuelles entre le projet principal et la grille compacte. */
+  secondary?: number;
 }
 
-const { locale, featured = 3 } = Astro.props;
+const { locale, secondary = 2 } = Astro.props;
 const s = t(locale);
 const labels = s.labels;
 
-const large: Experiment[] = EXPERIMENTS.slice(0, featured);
-const small: Experiment[] = EXPERIMENTS.slice(featured);
+/**
+ * §9 du brief : une hiérarchie, pas six blocs du même poids. Le projet qui porte
+ * un problème documenté ouvre la section — c'est celui dont on peut raconter
+ * l'origine, et c'est ce qui fait une preuve. Les suivants passent en cartes,
+ * le reste en grille compacte.
+ */
+const lead = EXPERIMENTS.find((e) => e.problem) ?? EXPERIMENTS[0];
+const rest = EXPERIMENTS.filter((e) => e.id !== lead.id);
+const large = rest.slice(0, secondary);
+const small = rest.slice(secondary);
 
 const badgeClass: Record<Experiment['status'], string> = {
   live: 'badge-live',
@@ -27,14 +35,67 @@ const badgeText: Record<Experiment['status'], string> = {
   preview: labels.status_preview,
   built: labels.status_built,
 };
+
+const address = (item: Experiment) => item.live ?? item.repo ?? '';
+/** L'URL publique telle qu'elle se montre dans le bandeau de la maquette. */
+const host = (item: Experiment) => {
+  const href = address(item);
+  if (!href) return '';
+  try {
+    return new URL(href).host;
+  } catch {
+    return href;
+  }
+};
 ---
 
 <div class="showcase">
+  <!-- 1 — Le projet principal -->
+  <article class="lead" data-reveal>
+    <a class="frame" href={address(lead)} rel="noopener" aria-label={`${s.cta.seeProduct} — ${lead.name}`}>
+      <span class="frame-bar">
+        <span class="frame-marks" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="frame-host">{host(lead)}</span>
+      </span>
+      <span class="frame-screen">
+        <LabVisual kind={lead.visual} uid={`${lead.id}-lead`} />
+      </span>
+    </a>
+
+    <div class="lead-body">
+      <p class="label lead-meta">
+        {lead.id} · {lead.sector[locale]}
+      </p>
+      <h3 class="lead-name display">{lead.name}</h3>
+      <p class="lead-promise">{lead.promise[locale]}</p>
+
+      <dl class="notes">
+        <div class="note">
+          <dt class="label">{labels.problem}</dt>
+          <dd>{lead.problem?.[locale]}</dd>
+        </div>
+        <div class="note">
+          <dt class="label">{labels.answer}</dt>
+          <dd>{lead.tagline[locale]}</dd>
+        </div>
+      </dl>
+
+      <ul class="tags" role="list">
+        {lead.tags[locale].map((tag) => <li class="chip">{tag}</li>)}
+      </ul>
+
+      <p class="lead-cta">
+        <a href={address(lead)} rel="noopener" class="btn btn-solid">{s.cta.seeProduct}</a>
+      </p>
+    </div>
+  </article>
+
+  <!-- 2 — Les cartes visuelles -->
   <ul class="large">
     {
       large.map((item, i) => (
-        <li class="card" data-reveal style={`--d: ${i * 90}ms`}>
-          <a class="card-link" href={item.live ?? item.repo} rel="noopener">
+        <li class="card" data-reveal style={`--d: ${i * 110}ms`}>
+          <a class="card-link" href={address(item)} rel="noopener">
             <div class="card-shot">
               <LabVisual kind={item.visual} uid={item.id} />
               <span class="card-id label">{item.id}</span>
@@ -46,7 +107,6 @@ const badgeText: Record<Experiment['status'], string> = {
                 <span class:list={['badge', badgeClass[item.status]]}>{badgeText[item.status]}</span>
               </div>
               <p class="card-promise">{item.promise[locale]}</p>
-              <p class="card-tag">{item.tagline[locale]}</p>
               <ul class="card-tags" role="list">
                 {item.tags[locale].map((tag) => <li class="chip">{tag}</li>)}
               </ul>
@@ -63,24 +123,21 @@ const badgeText: Record<Experiment['status'], string> = {
     }
   </ul>
 
-  <ul class="small">
+  <!-- 3 — Le reste du carnet, en grille compacte -->
+  <ul class="grid">
     {
       small.map((item, i) => (
-        <li data-reveal style={`--d: ${i * 70}ms`}>
-          <a class="row" href={item.live ?? item.repo} rel="noopener">
-            <span class="row-shot">
-              <LabVisual kind={item.visual} uid={item.id} />
+        <li data-reveal style={`--d: ${i * 80}ms`}>
+          <a class="tile" href={address(item)} rel="noopener">
+            <span class="tile-shot">
+              <LabVisual kind={item.visual} uid={`${item.id}-s`} />
             </span>
-            <span class="row-body">
-              <span class="row-head">
-                <span class="label row-id">{item.id}</span>
-                <span class="row-name">{item.name}</span>
-                <span class:list={['badge', badgeClass[item.status]]}>
-                  {badgeText[item.status]}
-                </span>
-              </span>
-              <span class="row-promise">{item.promise[locale]}</span>
+            <span class="tile-head">
+              <span class="tile-name">{item.name}</span>
+              <span class:list={['badge', badgeClass[item.status]]}>{badgeText[item.status]}</span>
             </span>
+            <span class="tile-promise">{item.promise[locale]}</span>
+            <span class="tile-id label">{item.id}</span>
           </a>
         </li>
       ))
@@ -94,16 +151,183 @@ const badgeText: Record<Experiment['status'], string> = {
     gap: clamp(2rem, 4vw, 3.5rem);
   }
 
+  /* ── 1. Le projet principal ───────────────────────────────────────────────
+     Le cadre n'est pas une capture : c'est une maquette, avec la figure tracée
+     du produit derrière un bandeau d'adresse. Le visiteur lit la géométrie du
+     produit et son hôte réel, puis juge en cliquant.
+     ─────────────────────────────────────────────────────────────────────── */
+  .lead {
+    display: grid;
+    gap: clamp(1.8rem, 3.5vw, 3.25rem);
+    border-top: 3px solid var(--color-ink);
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  @media (min-width: 62rem) {
+    .lead {
+      grid-template-columns: 1.08fr 1fr;
+      align-items: start;
+      gap: clamp(2.5rem, 5vw, 5rem);
+    }
+  }
+
+  .frame {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-ink);
+    background: var(--color-ink);
+    box-shadow: 0 18px 40px -28px rgb(11 30 45 / 0.55);
+    transition: transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .frame:hover,
+  .frame:focus-visible {
+    transform: translateY(-4px);
+  }
+
+  .frame-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-chalk) 22%, transparent);
+  }
+
+  .frame-marks {
+    display: inline-flex;
+    gap: 5px;
+  }
+
+  .frame-marks i {
+    width: 6px;
+    height: 6px;
+    border: 1px solid color-mix(in oklab, var(--color-chalk) 45%, transparent);
+  }
+
+  .frame-host {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    color: color-mix(in oklab, var(--color-chalk) 72%, transparent);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .frame-screen {
+    display: block;
+    aspect-ratio: 16 / 11;
+    overflow: hidden;
+  }
+
+  .frame-screen :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .frame:hover .frame-screen :global(svg),
+  .frame:focus-visible .frame-screen :global(svg) {
+    transform: scale(1.03);
+  }
+
+  .lead-body {
+    display: grid;
+    align-content: start;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 62rem) {
+    .lead-body {
+      padding-top: 0.2rem;
+    }
+  }
+
+  .lead-meta {
+    color: var(--accent-ink);
+  }
+
+  .lead-name {
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    letter-spacing: -0.03em;
+    line-height: 0.92;
+  }
+
+  .lead-promise {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 100;
+    font-size: clamp(1.1rem, 1.9vw, 1.35rem);
+    line-height: 1.35;
+    color: var(--color-ink);
+    max-width: 34ch;
+  }
+
+  .notes {
+    display: grid;
+    gap: 1px;
+    background: var(--color-rule);
+    border: 1px solid var(--color-rule);
+    margin-top: 0.6rem;
+  }
+
+  .note {
+    background: var(--color-chalk);
+    display: grid;
+    gap: 0.35rem;
+    padding: 1.05rem 1.15rem 1.2rem;
+  }
+
+  .note dt {
+    color: var(--accent-ink);
+  }
+
+  .note dd {
+    font-size: 0.98rem;
+    line-height: 1.62;
+    color: var(--color-muted);
+    max-width: 52ch;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+  }
+
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    border: 1px solid var(--color-rule);
+    padding: 0.28rem 0.5rem;
+  }
+
+  .lead-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.7rem;
+  }
+
+  /* ── 2. Les cartes visuelles ────────────────────────────────────────────── */
   .large {
     display: grid;
     gap: 1px;
     background: var(--color-rule);
     grid-template-columns: 1fr;
+    border-top: 1px solid var(--color-rule);
   }
 
   @media (min-width: 62rem) {
     .large {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
@@ -180,13 +404,6 @@ const badgeText: Record<Experiment['status'], string> = {
     max-width: 34ch;
   }
 
-  .card-tag {
-    font-size: 0.94rem;
-    line-height: 1.6;
-    color: var(--color-muted);
-    max-width: 44ch;
-  }
-
   .card-tags {
     display: flex;
     flex-wrap: wrap;
@@ -194,14 +411,8 @@ const badgeText: Record<Experiment['status'], string> = {
     margin-top: 0.35rem;
   }
 
-  .chip {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-    border: 1px solid var(--color-rule);
-    padding: 0.28rem 0.5rem;
+  .card-link:hover .chip {
+    border-color: var(--accent-ink);
   }
 
   .card-go {
@@ -224,82 +435,71 @@ const badgeText: Record<Experiment['status'], string> = {
     transform: translateX(5px);
   }
 
-  .card-link:hover .chip {
-    border-color: var(--accent-ink);
-  }
-
-  .small {
+  /* ── 3. La grille compacte ──────────────────────────────────────────────── */
+  .grid {
     display: grid;
     gap: 1px;
     background: var(--color-rule);
-    border-top: 1px solid var(--color-rule);
+    border: 1px solid var(--color-rule);
+    grid-template-columns: 1fr;
   }
 
-  .row {
+  @media (min-width: 40rem) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .tile {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    align-items: center;
+    align-content: start;
+    gap: 0.5rem;
     background: var(--color-chalk);
-    padding: 1.15rem 1.25rem;
+    padding: 1.15rem 1.15rem 1.35rem;
+    height: 100%;
     color: inherit;
     text-decoration: none;
     transition: background-color 200ms ease-out;
   }
 
-  @media (min-width: 48rem) {
-    .row {
-      grid-template-columns: 9.5rem 1fr;
-      gap: 1.6rem;
-    }
-  }
-
-  .row:hover,
-  .row:focus-visible {
+  .tile:hover,
+  .tile:focus-visible {
     background: var(--accent-wash);
   }
 
-  .row-shot {
+  .tile-shot {
     display: block;
-    aspect-ratio: 8 / 5;
+    aspect-ratio: 5 / 2;
     overflow: hidden;
     border: 1px solid var(--color-rule);
   }
 
-  @media (max-width: 47.99rem) {
-    .row-shot {
-      display: none;
-    }
-  }
-
-  .row-body {
-    display: grid;
-    gap: 0.35rem;
-    min-width: 0;
-  }
-
-  .row-head {
+  .tile-head {
     display: flex;
     align-items: baseline;
-    gap: 0.9rem;
+    justify-content: space-between;
+    gap: 0.75rem;
     flex-wrap: wrap;
   }
 
-  .row-id {
-    color: var(--accent-ink);
-  }
-
-  .row-name {
+  .tile-name {
     font-family: var(--font-display);
-    font-variation-settings: 'wdth' 105;
+    font-variation-settings: 'wdth' 106;
     font-size: 1.15rem;
     letter-spacing: -0.015em;
+    line-height: 1.1;
   }
 
-  .row-promise {
-    font-size: 0.94rem;
-    color: var(--color-muted);
+  .tile-promise {
+    font-size: 0.9rem;
     line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .tile-id {
+    margin-top: auto;
+    padding-top: 0.4rem;
+    color: var(--accent-ink);
   }
 
   .badge {
@@ -331,10 +531,17 @@ const badgeText: Record<Experiment['status'], string> = {
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .frame,
+    .frame-screen :global(svg),
     .card-shot :global(svg),
     .card-arrow,
-    .row {
+    .tile {
       transition: none;
+    }
+
+    .frame:hover,
+    .frame:focus-visible {
+      transform: none;
     }
   }
 </style>

@@ -22,7 +22,7 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
 ];
 ---
 
-<header class="border-b border-rule bg-chalk">
+<header class="head" data-head>
   <div class="mx-auto flex max-w-[88rem] items-center gap-6 px-5 py-4 sm:px-8">
     <a
       href={url(locale, 'home')}
@@ -67,6 +67,9 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
     </nav>
 
     <div class="ml-auto flex items-center gap-3 lg:ml-0">
+      <a href={url(locale, 'contact')} class="head-cta btn btn-solid hidden lg:inline-flex">
+        {s.nav.build}
+      </a>
       <a
         href={otherHref}
         hreflang={other}
@@ -97,8 +100,88 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
               </li>
             ))
           }
+          <li class="head-menus-cta">
+            <a href={url(locale, 'contact')} class="btn btn-solid w-full justify-center">
+              {s.nav.build}
+            </a>
+          </li>
         </ul>
       </details>
     </div>
   </div>
 </header>
+
+<style>
+  /* L'en-tête suit la page. Sans JavaScript ni support du voile, il reste
+     exactement ce qu'il était : plein, collé en haut du document. */
+  .head {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-chalk);
+    border-bottom: 1px solid var(--color-rule);
+    transition:
+      background-color 220ms ease-out,
+      border-bottom-color 220ms ease-out;
+  }
+
+  html.js .head.is-stuck {
+    background: color-mix(in oklab, var(--color-chalk) 88%, transparent);
+    border-bottom-color: color-mix(in oklab, var(--color-ink) 16%, transparent);
+  }
+
+  @supports (backdrop-filter: blur(1px)) {
+    html.js .head.is-stuck {
+      background: color-mix(in oklab, var(--color-chalk) 78%, transparent);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+  }
+
+  .head-cta {
+    padding: 0.55rem 0.95rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .head-menus-cta {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-rule);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .head {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const head = document.querySelector<HTMLElement>('[data-head]');
+
+  if (head) {
+    let stuck = false;
+    let queued = false;
+
+    const apply = () => {
+      queued = false;
+      const next = window.scrollY > 8;
+      if (next === stuck) return;
+      stuck = next;
+      head.classList.toggle('is-stuck', next);
+    };
+
+    // Un seul cadrage par image : le défilement ne déclenche aucun calcul.
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(apply);
+      },
+      { passive: true },
+    );
+    apply();
+  }
+</script>

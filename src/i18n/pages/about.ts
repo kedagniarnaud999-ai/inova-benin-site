@@ -12,9 +12,10 @@ import type { Locale } from '../config';
  * internes : mentions légales et documents institutionnels, pas le storytelling
  * public. Ni formulation défensive, ni rien d'inventé.
  *
- * « Trois choses » et « Dix capacités » sont les seuls nombres écrits en toutes
- * lettres de cette page : ils doivent rester égaux à `verify.rows.length` et à
- * `network.skills.length`. Tout autre chiffre est dérivé dans le gabarit.
+ * « Trois choses » et « Onze capacités » sont les seuls nombres écrits en toutes
+ * lettres de cette page. Ils ne sont pas vérifiables par le typage : `About.astro`
+ * arrête le build si `verify.rows.length` ou la liste de `i18n/skills` change sans
+ * que le mot soit réécrit avec lui. Tout autre chiffre est dérivé dans le gabarit.
  */
 const fr = {
   meta: {
@@ -97,21 +98,9 @@ const fr = {
 
   network: {
     eyebrow: 'Le réseau',
-    title: 'Dix capacités, réunies projet par projet.',
+    title: 'Onze capacités, réunies projet par projet.',
     intro:
       'iNOVA les mobilise là où un projet en a besoin, et les réunit autour de lui plutôt que de tout faire seul.',
-    skills: [
-      'Produit',
-      'Technologie',
-      'Design',
-      'Data',
-      'Gestion de projet',
-      'Transformation digitale',
-      'Marketing',
-      'Business development',
-      'Finance',
-      'Communication',
-    ],
     formalised:
       'Ces collaborations se formalisent au rythme de l’activité : prestation, apport en compétence, ou emploi quand le projet le justifie.',
     ask: 'Vous avez une de ces compétences et un projet à construire ?',
@@ -206,21 +195,9 @@ const en: typeof fr = {
 
   network: {
     eyebrow: 'The network',
-    title: 'Ten capabilities, gathered project by project.',
+    title: 'Eleven capabilities, gathered project by project.',
     intro:
       'iNOVA calls on them where a project needs them, and assembles them rather than building alone.',
-    skills: [
-      'Product',
-      'Technology',
-      'Design',
-      'Data',
-      'Project management',
-      'Digital transformation',
-      'Marketing',
-      'Business development',
-      'Finance',
-      'Communication',
-    ],
     formalised:
       'These collaborations are formalised as the activity allows: services, contribution in kind, or employment once a project justifies it.',
     ask: 'Do you hold one of these skills and a project to build?',

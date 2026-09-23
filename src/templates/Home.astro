@@ -5,11 +5,13 @@ import FlowMark from '../components/FlowMark.astro';
 import PoleBands from '../components/PoleBands.astro';
 import MethodTrack from '../components/MethodTrack.astro';
 import LabShowcase from '../components/LabShowcase.astro';
+import StatBand from '../components/StatBand.astro';
 import Principles from '../components/Principles.astro';
 import Constellation from '../components/Constellation.astro';
 import Ambition from '../components/Ambition.astro';
 import Collaborate from '../components/Collaborate.astro';
-import { home, SKILLS } from '../i18n/pages/home';
+import { home } from '../i18n/pages/home';
+import { SKILLS } from '../i18n/skills';
 import { BUILD_STEPS } from '../i18n/method';
 import { EXPERIMENTS, LIVE_COUNT } from '../content/experiments';
 import { url, type Locale } from '../i18n/config';
@@ -50,7 +52,7 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
       </div>
     </div>
 
-    <p class="label hero-words">{c.conviction.flow.map((f) => f.label).join('  ·  ')}</p>
+    <FlowMark class="hero-flow" items={c.conviction.flow} notes={false} tone="chalk" />
   </section>
 
   <!-- 02 — NOTRE CONVICTION -->
@@ -98,12 +100,17 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
   <!-- 05 — CE QUE NOUS CONSTRUISONS -->
   <div data-pole="lab">
     <Section id="projets" eyebrow={c.projects.eyebrow} title={c.projects.title} size="wide">
-      <p class="mb-4 max-w-[58ch] text-lede text-muted">{c.projects.intro}</p>
-      <p class="label mb-10 text-accent-ink">
-        {c.projects.countLabel(EXPERIMENTS.length)} · {c.projects.liveLabel(LIVE_COUNT)} ·
-        {SKILLS.length} {locale === 'fr' ? 'compétences mobilisables' : 'mobilisable skills'}
-      </p>
-      <LabShowcase {locale} />
+      <p class="mb-10 max-w-[58ch] text-lede text-muted">{c.projects.intro}</p>
+      <StatBand
+        items={[
+          { value: EXPERIMENTS.length, label: c.projects.statExperiments },
+          { value: LIVE_COUNT, label: c.projects.statLive },
+          { value: SKILLS.length, label: c.projects.statCapabilities },
+        ]}
+      />
+      <div class="mt-12">
+        <LabShowcase {locale} />
+      </div>
       <p class="mt-10">
         <a href={url(locale, 'lab')} class="btn btn-line">{c.projects.link}</a>
       </p>
@@ -141,6 +148,7 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
       </div>
       <div>
         <Constellation
+          {locale}
           coreLabel={locale === 'fr' ? 'Équipe cœur' : 'Core team'}
           coreName={c.team.founderName}
           listLabel={c.team.networkTitle}
@@ -218,10 +226,15 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
     transition: background-color 260ms ease-out;
   }
 
-  .hero-words {
+  .hero-flow {
     margin-top: clamp(2.5rem, 6vw, 4.5rem);
-    color: var(--color-muted);
-    letter-spacing: 0.22em;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--color-rule);
+    color: var(--color-ink);
+  }
+
+  .hero-flow :global(.flow-label) {
+    font-size: clamp(0.72rem, 1.9vw, 1.05rem);
   }
 
   .conviction {

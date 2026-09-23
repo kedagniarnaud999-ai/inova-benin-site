@@ -1,7 +1,9 @@
 ---
-import { SKILLS } from '../i18n/pages/home';
+import type { Locale } from '../i18n/config';
+import { skillNames } from '../i18n/skills';
 
 interface Props {
+  locale: Locale;
   /** libellé du centre : « équipe cœur » dans la langue de la page */
   coreLabel: string;
   coreName: string;
@@ -9,7 +11,7 @@ interface Props {
   listLabel: string;
 }
 
-const { coreLabel, coreName, listLabel } = Astro.props;
+const { locale, coreLabel, coreName, listLabel } = Astro.props;
 
 /**
  * Anneau calculé au build, pas à la main : les mêmes coordonnées nourrissent
@@ -19,9 +21,10 @@ const { coreLabel, coreName, listLabel } = Astro.props;
  */
 const RX = 33;
 const RY = 30;
-const N = SKILLS.length;
+const names = skillNames(locale);
+const N = names.length;
 
-const nodes = SKILLS.map((label, i) => {
+const nodes = names.map((label, i) => {
   const angle = (-90 + (360 / N) * i) * (Math.PI / 180);
   const x = 50 + RX * Math.cos(angle);
   const y = 50 + RY * Math.sin(angle);

@@ -59,8 +59,9 @@ const fr = {
     title: 'From ideas to products.',
     intro:
       'Des problèmes identifiés sur le terrain deviennent des expériences, des prototypes et parfois des produits.',
-    countLabel: (n: number) => `${n} expérimentations engagées`,
-    liveLabel: (n: number) => `${n} en ligne`,
+    statExperiments: 'Expérimentations',
+    statLive: 'En ligne',
+    statCapabilities: 'Capacités',
     link: 'Ouvrir le carnet',
   },
 
@@ -189,8 +190,9 @@ const en: typeof fr = {
     eyebrow: 'What we are building',
     title: 'From ideas to products.',
     intro: 'Problems spotted on the ground become experiments, prototypes and, sometimes, products.',
-    countLabel: (n: number) => `${n} experiments under way`,
-    liveLabel: (n: number) => `${n} live online`,
+    statExperiments: 'Experiments',
+    statLive: 'Live products',
+    statCapabilities: 'Capabilities',
     link: 'Open the ledger',
   },
 
@@ -265,22 +267,3 @@ const en: typeof fr = {
 };
 
 export const home: Record<Locale, typeof fr> = { fr, en };
-
-/**
- * Le réseau de compétences (§9). Une seule liste pour les deux langues : le
- * brief les écrit telles quelles en français comme en anglais, et le nombre
- * affiché dans l'interface est dérivé d'ici.
- */
-export const SKILLS = [
-  'Product',
-  'Technology',
-  'Design',
-  'Data',
-  'Project Management',
-  'Digital Transformation',
-  'Marketing',
-  'Business Development',
-  'Finance',
-  'Legal',
-  'Communication',
-] as const;

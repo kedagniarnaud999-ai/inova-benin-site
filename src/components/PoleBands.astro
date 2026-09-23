@@ -108,13 +108,19 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
 
   @media (min-width: 60rem) {
     .bands-list {
-      grid-template-columns: repeat(3, 1fr);
+      /* `1fr` seul = minmax(auto,1fr) : le mot le plus long de la bande
+         gonfle la piste et la rangée déborde de la fenêtre. */
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       transition: grid-template-columns 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
     }
   }
 
   .band-item {
     border-bottom: 1px solid var(--color-rule);
+    min-width: 0;
+    /* Le titre se mesure à sa bande, pas à la fenêtre : il tient quand la
+       bande se resserre au survol. */
+    container-type: inline-size;
   }
 
   @media (min-width: 60rem) {
@@ -128,13 +134,13 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
     /* La bande survolée prend de la place : le trio reste à égalité au repos,
        et l'une d'elles seulement s'impose le temps du regard. */
     .bands-list:has(.band-item:nth-child(1):hover) {
-      grid-template-columns: 1.4fr 0.8fr 0.8fr;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) minmax(0, 0.8fr);
     }
     .bands-list:has(.band-item:nth-child(2):hover) {
-      grid-template-columns: 0.8fr 1.4fr 0.8fr;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr) minmax(0, 0.8fr);
     }
     .bands-list:has(.band-item:nth-child(3):hover) {
-      grid-template-columns: 0.8fr 0.8fr 1.4fr;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 0.8fr) minmax(0, 1.4fr);
     }
   }
 
@@ -215,6 +221,7 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
 
   .band-name {
     font-size: clamp(1.9rem, 4.4vw, 3.1rem);
+    font-size: clamp(1.45rem, 9.5cqi, 3.1rem);
     color: var(--color-ink);
   }
 

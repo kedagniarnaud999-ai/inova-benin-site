@@ -16,6 +16,12 @@ export interface Experiment {
   name: string;
   /** La phrase d'adresse, courte : elle porte la carte du showcase. */
   promise: Record<Locale, string>;
+  /**
+   * La difficulté telle que le Lab l'a rencontrée, affichée en regard de la
+   * réponse sur la carte principale. Une lecture du terrain, pas une donnée de
+   * marché : aucun chiffre n'y a sa place.
+   */
+  problem?: Record<Locale, string>;
   tagline: Record<Locale, string>;
   sector: Record<Locale, string>;
   /** Trois étiquettes maximum, affichées en pastilles sur la carte. */
@@ -42,6 +48,10 @@ export const EXPERIMENTS: Experiment[] = [
     promise: {
       fr: 'De l’admission à l’insertion : construis ta voie.',
       en: 'From admission to employment: build your path.',
+    },
+    problem: {
+      fr: 'S’orienter demande deux réponses à la fois : qui l’on est, et quelles voies sont réellement ouvertes. Elles arrivent rarement ensemble.',
+      en: 'Choosing a path takes two answers at once: who you are, and which routes are actually open. They rarely arrive together.',
     },
     tagline: {
       fr: 'Une plateforme pensée pour aider les jeunes à mieux comprendre leur profil, explorer leurs possibilités et construire progressivement leur parcours.',

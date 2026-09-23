@@ -47,26 +47,33 @@ const { items } = Astro.props;
 
   .pillar-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(1.5rem, 4vw, 3.5rem);
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
     list-style: none;
-  }
-
-  @media (max-width: 47.99rem) {
-    .pillars-rail {
-      display: none;
-    }
-    .pillar-list {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
   }
 
   .pillar {
     display: grid;
     gap: 0.9rem;
     align-content: start;
+    /* Sans ça, la taille minimale d'un enfant empêche la piste de se serrer. */
+    min-width: 0;
     padding-top: 0;
+  }
+
+  /* La rangée de trois n'est possible qu'à partir du moment où le mot le plus
+     long (« EXPÉRIMENTATION ») tient dans son tiers de ligne. */
+  @media (min-width: 64rem) {
+    .pillar-list {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+    }
+  }
+
+  @media (max-width: 63.99rem) {
+    .pillars-rail {
+      display: none;
+    }
   }
 
   .pillar-node {
@@ -81,7 +88,7 @@ const { items } = Astro.props;
   .pillar-name {
     font-family: var(--font-display);
     font-variation-settings: 'wdth' 118;
-    font-size: clamp(1.5rem, 2.8vw, 2.15rem);
+    font-size: clamp(1.5rem, calc(2.6vw - 3px), 2.15rem);
     line-height: 0.98;
     letter-spacing: -0.015em;
     text-transform: uppercase;

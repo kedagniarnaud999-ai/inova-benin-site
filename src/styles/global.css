@@ -220,6 +220,12 @@
   border-radius: 2px;
 }
 
+/* L'en-tête collant recouvre le haut de sa cible : un point d'ancrage descend
+   d'abord de sa hauteur. `:where()` pour qu'une section puisse le réécrire. */
+:where(section, main)[id] {
+  scroll-margin-top: 5rem;
+}
+
 /* ─── Révélation au scroll ──────────────────────────────────────────────────
    Trois garde-fous, dans cet ordre : sans JavaScript la classe `js` n'est
    jamais posée et tout reste visible ; avec `prefers-reduced-motion: reduce`
