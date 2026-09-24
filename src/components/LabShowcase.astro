@@ -121,10 +121,10 @@ const shotAttrs = (shot: ExperimentShot) => ({
                   <LabVisual kind={item.visual} uid={item.id} />
                 )
               }
-              <span class="card-id label">{item.id}</span>
             </div>
 
             <div class="card-body">
+              <span class="card-meta label">{item.id}</span>
               <div class="card-head">
                 <h3 class="card-name">{item.name}</h3>
                 <span class:list={['badge', badgeClass[item.status]]}>{badgeText[item.status]}</span>
@@ -175,9 +175,8 @@ const shotAttrs = (shot: ExperimentShot) => ({
   }
 
   /* ── 1. Le projet principal ───────────────────────────────────────────────
-     Le cadre n'est pas une capture : c'est une maquette, avec la figure tracée
-     du produit derrière un bandeau d'adresse. Le visiteur lit la géométrie du
-     produit et son hôte réel, puis juge en cliquant.
+     Le bandeau porte l'hôte réel du produit ; l'écran dessous est sa capture
+     publiée, ou une figure tracée quand aucune capture n'existe.
      ─────────────────────────────────────────────────────────────────────── */
   .lead {
     display: grid;
@@ -412,14 +411,8 @@ const shotAttrs = (shot: ExperimentShot) => ({
     transform: scale(1.035);
   }
 
-  .card-id {
-    position: absolute;
-    top: 0.85rem;
-    left: 0.85rem;
-    padding: 0.25rem 0.5rem;
-    background: var(--color-ink);
-    color: var(--color-chalk);
-    border: 1px solid color-mix(in oklab, var(--color-chalk) 26%, transparent);
+  .card-meta {
+    color: var(--accent-ink);
   }
 
   .card-body {
