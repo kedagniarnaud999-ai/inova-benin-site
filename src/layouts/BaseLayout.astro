@@ -9,6 +9,7 @@ import '@fontsource/ibm-plex-mono/600.css';
 import Seo from '../components/Seo.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import MobileTabs from '../components/MobileTabs.astro';
 import { t } from '../i18n/ui';
 import type { Locale, Pole, RouteKey } from '../i18n/config';
 
@@ -40,6 +41,7 @@ const strings = t(locale);
       <slot />
     </main>
     <Footer {locale} />
+    <MobileTabs {locale} {route} />
   </body>
 </html>
 

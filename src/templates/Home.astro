@@ -32,8 +32,11 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
   <!-- 01 — HERO -->
   <section class="hero mx-auto max-w-[88rem] px-5 pt-14 pb-6 sm:px-8 sm:pt-20">
     <div class="hero-top">
-      <p class="label text-muted">{c.hero.eyebrow}</p>
-      <p class="label hero-year">2026</p>
+      <p class="live">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span class="label">{c.hero.eyebrow}</span>
+        <span class="label live-year">2026</span>
+      </p>
     </div>
 
     <h1 class="display hero-h1 text-hero">
@@ -77,7 +80,7 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
     <p class="mb-10 max-w-[58ch] text-lede text-muted">{c.ways.intro}</p>
     <div class="ways" data-reveal>
       <div class="ways-rule" aria-hidden="true"></div>
-      <PoleBands {locale} />
+      <PoleBands {locale} core={c.ways.coreSignal} />
     </div>
   </Section>
 
@@ -152,6 +155,7 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
           coreLabel={locale === 'fr' ? 'Équipe cœur' : 'Core team'}
           coreName={c.team.founderName}
           listLabel={c.team.networkTitle}
+          onDemand={c.team.onDemand}
         />
         <p class="mt-6 max-w-[46ch] text-[0.95rem] text-muted">{c.team.networkNote}</p>
       </div>
@@ -166,7 +170,7 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
         <h2 class="mt-3 max-w-[20ch] text-h2">{c.ambition.title}</h2>
         {c.ambition.body.map((line, i) => <p class="ambition-line" data-reveal style={`--d: ${i * 90}ms`}>{line}</p>)}
       </div>
-      <Ambition rings={c.ambition.rings} anchor={c.ambition.anchor} />
+      <Ambition rungs={c.ambition.rungs} />
     </div>
   </Section>
 
@@ -200,12 +204,50 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
   .hero-top {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
     gap: 1.5rem;
   }
 
-  .hero-year {
-    color: var(--color-rule);
+  /* La pastille d'état : seul le point prend l'accent, les libellés restent
+     en gris et en encre — la règle du Ledger interdit l'accent plein sur un
+     petit texte posé sur la craie. */
+  .live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    border: 1px solid var(--color-rule);
+    padding: 0.42rem 0.7rem;
+    color: var(--color-muted);
+  }
+
+  .live-dot {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    flex: none;
+    background: var(--accent);
+  }
+
+  .live-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 1px solid var(--accent);
+    animation: live-ping 2000ms cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+  }
+
+  @keyframes live-ping {
+    from {
+      opacity: 0.65;
+      transform: scale(0.55);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.45);
+    }
+  }
+
+  .live-year {
+    color: var(--color-ink);
   }
 
   .hero-h1 {
@@ -218,12 +260,19 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
     color: var(--color-ink);
   }
 
+  /* Le dégradé de la maquette devient un filet à trois segments : cobalt,
+     vert-de-gris, ocre, dans l'ordre des bandes. La couleur dit qu'il y a
+     trois façons de construire, elle ne décore pas le titre. */
   .hero-bar {
     margin-top: 1.7rem;
     height: 3px;
     width: 100%;
-    background: var(--accent);
-    transition: background-color 260ms ease-out;
+    background: linear-gradient(
+      90deg,
+      var(--color-cobalt) 0 33.333%,
+      var(--color-verdigris) 33.333% 66.667%,
+      var(--color-ocre) 66.667% 100%
+    );
   }
 
   .hero-flow {
@@ -355,7 +404,10 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-bar,
+    .live-dot::after {
+      display: none;
+    }
+
     .ways-rule {
       transition: none;
     }

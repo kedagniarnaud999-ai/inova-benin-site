@@ -43,6 +43,7 @@ const fr = {
     title: 'Trois façons de construire.',
     intro:
       'Trois expressions d’un même écosystème : structurer une idée, la transformer en produit, lui donner de la visibilité.',
+    coreSignal: 'Cœur d’accélération',
     link: 'Ouvrir la page',
   },
 
@@ -94,6 +95,7 @@ const fr = {
       'Il pilote la vision d’iNOVA, la structuration des projets et le développement des initiatives du Lab.',
     founderName: 'Arnaud KEDAGNI',
     networkTitle: 'Compétences mobilisables',
+    onDemand: 'À la demande',
     networkNote:
       'Ces compétences ne sont pas toutes salariées : elles sont mobilisées là où un projet en a besoin.',
     join: 'Rejoindre le réseau iNOVA',
@@ -107,8 +109,13 @@ const fr = {
       'iNOVA commence au Bénin, mais notre ambition dépasse un seul marché.',
       'Nous voulons contribuer à construire des produits et des ventures capables de répondre aux réalités africaines tout en ayant le potentiel de se développer au-delà de leurs frontières.',
     ],
-    rings: ['Bénin', 'Afrique de l’Ouest', 'Afrique', 'Au-delà'],
-    anchor: 'Cotonou',
+    rungs: [
+      { name: 'Cotonou', note: 'Ancrage et Lab' },
+      { name: 'Bénin', note: 'Écosystème national' },
+      { name: 'Afrique de l’Ouest', note: 'Sous-région UEMOA' },
+      { name: 'Afrique', note: 'Continental' },
+      { name: 'Au-delà', note: 'Impact mondial' },
+    ],
   },
 
   collaborate: {
@@ -175,6 +182,7 @@ const en: typeof fr = {
     title: 'Three ways to build.',
     intro:
       'Three expressions of one ecosystem: structure an idea, turn it into a product, give it visibility.',
+    coreSignal: 'Acceleration core',
     link: 'Open the page',
   },
 
@@ -225,6 +233,7 @@ const en: typeof fr = {
       'He sets the vision for iNOVA, structures the projects and develops the Lab’s initiatives.',
     founderName: 'Arnaud KEDAGNI',
     networkTitle: 'Skills we can mobilise',
+    onDemand: 'On demand',
     networkNote:
       'Not all of these skills are in-house: they are brought in where a project needs them.',
     join: 'Join the iNOVA network',
@@ -238,8 +247,13 @@ const en: typeof fr = {
       'iNOVA starts in Benin, but our ambition is not one market.',
       'We want to help build products and ventures that answer African realities and can grow beyond their borders.',
     ],
-    rings: ['Benin', 'West Africa', 'Africa', 'Beyond'],
-    anchor: 'Cotonou',
+    rungs: [
+      { name: 'Cotonou', note: 'Anchoring & Lab' },
+      { name: 'Benin', note: 'National ecosystem' },
+      { name: 'West Africa', note: 'WAEMU sub-region' },
+      { name: 'Africa', note: 'Continental' },
+      { name: 'Beyond', note: 'Global impact' },
+    ],
   },
 
   collaborate: {

@@ -6,6 +6,7 @@ const fr = {
   status: 'SASU en cours de constitution · Cotonou, Bénin',
 
   nav: {
+    home: 'Accueil',
     consulting: 'Consulting',
     lab: 'Lab',
     studio: 'Studio',
@@ -61,6 +62,7 @@ const fr = {
   },
 
   labels: {
+    flagship: 'Vedette',
     method: 'Méthode 369',
     portfolio: 'Carnet du Lab',
     file: 'Dossier',
@@ -88,6 +90,7 @@ const en: typeof fr = {
   status: 'SASU being incorporated · Cotonou, Benin',
 
   nav: {
+    home: 'Home',
     consulting: 'Consulting',
     lab: 'Lab',
     studio: 'Studio',
@@ -142,6 +145,7 @@ const en: typeof fr = {
   },
 
   labels: {
+    flagship: 'Flagship',
     method: 'The 369 Method',
     portfolio: 'Lab ledger',
     file: 'File',

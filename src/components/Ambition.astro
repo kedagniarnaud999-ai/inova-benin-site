@@ -1,138 +1,97 @@
 ---
 /**
- * L'ambition dessinée en anneaux concentriques depuis Cotonou (§10 du brief).
- * Ce n'est pas une carte : aucune frontière n'est affirmée, seuls des rayons
- * qui s'écartent d'un point. Les quatre paliers portent le même texte en HTML,
- * donc ils restent lisibles, traduits et sélectionnables.
+ * L'ambition en échelle, pas en anneaux (§10 du brief) : cinq barreaux qui
+ * montent de Cotonou au-delà, chacun porteur de son qualificatif. Le barreau
+ * s'élargit et s'éclaircit à mesure qu'on descend — l'ambition grandit, le
+ * horizon s'éloigne. Aucun chiffre inventé : la largeur dit un ordre, pas une
+ * mesure.
  */
-interface Props {
-  rings: string[];
-  anchor: string;
+interface Rung {
+  name: string;
+  note: string;
 }
 
-const { rings, anchor } = Astro.props;
-const RADII = [17, 33, 49, 65];
-const ANCHOR = { x: 4, y: 96 };
+interface Props {
+  rungs: Rung[];
+}
+
+const { rungs } = Astro.props;
+const ALPHAS = [0.8, 0.66, 0.52, 0.4, 0.3];
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
-<figure class="ambition">
-  <svg class="rings" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-    <g class="arcs">
-      {
-        RADII.map((r, i) => (
-          <path
-            data-reveal
-            style={`--d: ${i * 130}ms`}
-            class="arc"
-            d={`M ${ANCHOR.x + r} ${ANCHOR.y} A ${r} ${r} 0 0 0 ${ANCHOR.x} ${ANCHOR.y - r}`}
-            fill="none"
-            vector-effect="non-scaling-stroke"></path>
-        ))
-      }
-    </g>
-    <circle class="anchor-dot" cx={ANCHOR.x} cy={ANCHOR.y} r="1.6" vector-effect="non-scaling-stroke"></circle>
-  </svg>
-
-  <ul class="paliers">
-    <li class="palier" data-reveal style="--d: 0ms">
-      <span class="palier-dot" aria-hidden="true"></span>
-      <span class="label palier-name">{anchor}</span>
-    </li>
-    {
-      rings.map((name, i) => (
-        <li class="palier" data-reveal style={`--d: ${(i + 1) * 130}ms`}>
-          <span class="palier-tick" aria-hidden="true" style={`--i: ${i + 1}`}></span>
-          <span class="label palier-name">{name}</span>
-        </li>
-      ))
-    }
-  </ul>
-</figure>
+<ol class="ladder">
+  {
+    rungs.map((rung, i) => (
+      <li class="rung" data-reveal style={`--d: ${i * 90}ms`}>
+        <div class="rung-top">
+          <span class="label rung-n">{pad(i + 1)}</span>
+          <span class="rung-name">{rung.name}</span>
+          <span class="label rung-note">{rung.note}</span>
+        </div>
+        <span
+          class="rung-bar"
+          aria-hidden="true"
+          style={`--w: ${((i + 1) / rungs.length) * 100}%; --a: ${ALPHAS[i] ?? 0.3}`}></span>
+      </li>
+    ))
+  }
+</ol>
 
 <style>
-  .ambition {
-    position: relative;
-    aspect-ratio: 1.15;
-    min-height: 22rem;
-    margin: 0;
-  }
-
-  .rings {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-
-  .arc {
-    stroke: currentColor;
-    stroke-width: 1;
-    opacity: 0.5;
-  }
-
-  .arc:nth-of-type(2) {
-    opacity: 0.38;
-  }
-
-  .arc:nth-of-type(3) {
-    opacity: 0.26;
-  }
-
-  .arc:nth-of-type(4) {
-    opacity: 0.16;
-  }
-
-  .anchor-dot {
-    fill: var(--accent);
-    stroke: currentColor;
-    stroke-width: 1;
-  }
-
-  .paliers {
-    position: absolute;
-    inset: auto 0 0;
+  .ladder {
     display: grid;
-    gap: 0.5rem;
     list-style: none;
+    border-top: 1px solid color-mix(in oklab, var(--color-chalk) 24%, transparent);
   }
 
-  .palier {
+  .rung {
+    display: grid;
+    gap: 0.7rem;
+    padding: 1.05rem 0 1.15rem;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-chalk) 24%, transparent);
+  }
+
+  .rung-top {
     display: flex;
-    align-items: center;
-    gap: 0.6rem;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
   }
 
-  .palier-name {
-    color: currentColor;
-    letter-spacing: 0.14em;
-    background: color-mix(in oklab, var(--color-ink) 55%, transparent);
-    padding: 0.15rem 0.45rem;
+  /* Le premier barreau est le point de départ : il se lit, les autres s'effacent
+     à mesure que l'échelle s'éloigne de Cotonou. */
+  .rung-n {
+    color: color-mix(in oklab, var(--color-chalk) 52%, transparent);
+    font-variant-numeric: tabular-nums;
   }
 
-  .palier-dot {
-    width: 9px;
-    height: 9px;
-    flex: none;
-    border-radius: 50%;
-    background: var(--accent);
+  .rung:first-child .rung-n {
+    color: var(--color-chalk);
   }
 
-  /* Chaque palier se range sous le rayon qui lui correspond. */
-  .palier-tick {
-    width: 1px;
-    height: 1px;
-    background: currentColor;
-    margin-left: calc(var(--i) * 1.4rem);
+  .rung-name {
+    font-family: var(--font-display);
+    font-variation-settings: 'wdth' 108;
+    font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--color-chalk);
   }
 
-  @media (max-width: 47.99rem) {
-    .ambition {
-      aspect-ratio: 1;
-      min-height: 18rem;
-    }
-    .palier-tick {
-      margin-left: calc(var(--i) * 0.9rem);
-    }
+  .rung-note {
+    margin-left: auto;
+    text-align: right;
+    color: color-mix(in oklab, var(--color-chalk) 58%, transparent);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+
+  .rung-bar {
+    display: block;
+    height: 3px;
+    width: var(--w, 20%);
+    background: var(--color-chalk);
+    opacity: var(--a, 0.8);
   }
 </style>

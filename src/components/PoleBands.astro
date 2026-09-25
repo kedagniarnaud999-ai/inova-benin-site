@@ -7,9 +7,11 @@ interface Props {
   locale: Locale;
   /** phrase d'accroche au-dessus des bandes, propre à la page */
   hint?: string;
+  /** libellé qui distingue le pôle central ; sans lui, aucune bande n'est marquée */
+  core?: string;
 }
 
-const { locale, hint } = Astro.props;
+const { locale, hint, core } = Astro.props;
 const s = t(locale);
 const p = poles[locale];
 
@@ -33,7 +35,11 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
             <span class="band-body">
               <span class="band-top">
                 <span class="display band-name">{s.nav[key]}</span>
-                <svg class="band-glyph" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                <span class="band-marks">
+                  {core && key === 'lab' && (
+                    <span class="label band-core">{core}</span>
+                  )}
+                  <svg class="band-glyph" viewBox="0 0 32 32" fill="none" aria-hidden="true">
                   {
                     p[key].glyph === 'grid' ? (
                       <g>
@@ -70,6 +76,7 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
                     )
                   }
                 </svg>
+                </span>
               </span>
               <span class="band-promise">{p[key].promise}</span>
               <span class="band-role">{p[key].body}</span>
@@ -223,6 +230,32 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
     font-size: clamp(1.9rem, 4.4vw, 3.1rem);
     font-size: clamp(1.45rem, 9.5cqi, 3.1rem);
     color: var(--color-ink);
+  }
+
+  .band-marks {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex: none;
+  }
+
+  /* Le signal du pôle central : petit texte → variante foncée ; le point,
+     lui, prend la couleur pleine, c'est un aplat. */
+  .band-core {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--band-ink);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .band-core::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    flex: none;
+    background: var(--band);
   }
 
   .band-glyph {
