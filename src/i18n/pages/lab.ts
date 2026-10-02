@@ -9,38 +9,38 @@ const fr = {
   meta: {
     title: 'iNOVA Lab — Construction de produits et de startups à Cotonou',
     description:
-      'Le Lab identifie des opportunités, prototype des produits, teste en conditions réelles et fait progressivement émerger des startups. Carnet public des expérimentations réellement engagées.',
+      'Nous identifions des opportunités, nous prototypons, nous testons en conditions réelles et nous faisons émerger des startups. Le carnet public de nos expérimentations.',
   },
 
   hero: {
     eyebrow: 'iNOVA Lab',
-    title: 'Le pôle où l’on construit, pas celui où l’on explique.',
-    lede: 'Identification d’opportunités, prototypage, MVP, test de marché, création progressive de startups. Le Lab mène plusieurs expérimentations en parallèle, à des degrés de maturité différents. Celles qui ont produit quelque chose de consultable sont publiées ci-dessous.',
+    title: 'Nous transformons un problème observable en produit consultable.',
+    lede: 'Nous identifions des opportunités, nous prototypons, nous testons en conditions réelles, puis nous faisons émerger des startups. Nous menons plusieurs expérimentations en parallèle, à des degrés de maturité différents, et nous publions celles qui ont produit quelque chose à examiner.',
     ledger: 'Descendre au carnet',
     method: 'Voir la méthode 369',
   },
 
   method: {
     eyebrow: 'Le parcours',
-    title: 'Trois horizons, trois points de contrôle',
+    title: 'Trois horizons, trois points de décision',
     intro:
-      'Chaque opportunité suivie par le Lab est tenue contre ces trois échéances. Ce ne sont pas des promesses de résultat : ce sont les moments où l’on décide si ça continue.',
+      'Nous tenons chaque opportunité que nous suivons contre ces trois échéances. Chacune marque le moment où nous décidons, sur pièces, de continuer ou d’arrêter.',
     out: 'Au-delà de 9 semaines',
     outBody:
-      'Une expérimentation qui a passé les trois horizons sans traction est arrêtée ou mise en veille. Le carnet n’affiche que ce qui a été construit.',
+      'Quand une expérimentation a traversé les trois horizons sans traction, nous l’arrêtons ou nous la mettons en veille. Le carnet publie ce que nous avons construit.',
   },
 
   ledger: {
     eyebrow: 'Preuve',
     title: 'Le carnet',
     intro: (n: number, live: number) =>
-      `${n} expérimentations construites à ce jour, dont ${live} accessibles en ligne. Les autres sont publiées au fur et à mesure qu’elles produisent quelque chose de consultable.`,
+      `Nous avons construit ${n} expérimentations à ce jour, dont ${live} accessibles en ligne. Nous publions les autres dès qu’elles donnent quelque chose à examiner.`,
   },
 
   seekers: {
-    eyebrow: 'Ce que le Lab cherche',
-    title: 'Des preneurs, pas des spectateurs',
-    body: 'Le but est de trouver le plus tôt possible des utilisateurs, des clients ou des partenaires pour les produits du Lab. Une expérimentation qui trouve ses preneurs peut devenir une startup ; les autres s’arrêtent.',
+    eyebrow: 'Ce que nous cherchons',
+    title: 'Des utilisateurs, des clients, des partenaires.',
+    body: 'Nous cherchons le plus tôt possible des utilisateurs, des clients ou des partenaires pour nos produits. Une expérimentation qui trouve ses preneurs peut devenir une startup ; nous arrêtons les autres.',
     cta: 'Proposer un partenariat sur un produit',
   },
 };
@@ -49,38 +49,38 @@ const en: typeof fr = {
   meta: {
     title: 'iNOVA Lab — Building products and startups in Cotonou',
     description:
-      'The Lab identifies opportunities, prototypes, tests under real conditions and gradually brings startups up. Public ledger of the experiments genuinely under way.',
+      'We spot opportunities, prototype, test under real conditions and bring startups up. The public ledger of our experiments.',
   },
 
   hero: {
     eyebrow: 'iNOVA Lab',
-    title: 'The pole where things get built, not where they get explained.',
-    lede: 'Opportunity spotting, prototyping, MVPs, market testing, gradual startup creation. The Lab runs several experiments in parallel, at different stages of maturity. The ones that produced something worth looking at are published below.',
+    title: 'We turn an observable problem into a product you can look at.',
+    lede: 'We identify opportunities, prototype, test under real conditions, then bring startups up. We run several experiments in parallel, at different stages of maturity, and we publish the ones that produced something worth examining.',
     ledger: 'Go down to the ledger',
     method: 'See the 369 method',
   },
 
   method: {
     eyebrow: 'The track',
-    title: 'Three horizons, three checkpoints',
+    title: 'Three horizons, three decision points',
     intro:
-      'Every opportunity the Lab takes on is held against these three deadlines. They are not promises of a result: they are the moments where we decide whether it continues.',
+      'We hold every opportunity we take on against these three deadlines. Each one marks the moment where we decide, on evidence, whether to continue or stop.',
     out: 'Past week 9',
     outBody:
-      'An experiment that clears all three horizons without traction is stopped or shelved. The ledger only shows what was built.',
+      'When an experiment crosses all three horizons without traction, we stop it or shelve it. The ledger publishes what we have built.',
   },
 
   ledger: {
     eyebrow: 'Proof',
     title: 'The ledger',
     intro: (n: number, live: number) =>
-      `${n} experiments built so far, ${live} of them live online. The others appear here as soon as they produce something worth looking at.`,
+      `We have built ${n} experiments so far, ${live} of them live online. The others appear as soon as they produce something worth examining.`,
   },
 
   seekers: {
-    eyebrow: 'What the Lab is after',
-    title: 'Takers, not spectators',
-    body: 'The aim is to find users, customers or partners for the Lab’s products as early as possible. An experiment that finds its takers may become a startup; the others stop.',
+    eyebrow: 'What we are after',
+    title: 'Users, customers, partners.',
+    body: 'We look for users, customers or partners for our products as early as possible. An experiment that finds its takers may become a startup; we stop the others.',
     cta: 'Propose a partnership on a product',
   },
 };

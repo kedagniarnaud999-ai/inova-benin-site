@@ -1,139 +1,156 @@
 import type { Locale } from '../config';
 
 /**
- * iNOVA Studio. Sections 2.4 (formats), 3.2 (audience), 3.4 (visibilité et
- * monétisation), 4.2 (chaîne de production) et 6 (facteur de risque) du
- * business plan. Aucun épisode, aucune audience, aucun partenaire inventés.
+ * iNOVA Studio. Page d'offre au sponsor : les trois formes de la section 3.4 du
+ * business plan (partenariat de marque, contenu commandité, sponsoring
+ * institutionnel) et la chaîne de production de la section 4.2, reprise du point
+ * de vue du partenaire. Aucun épisode, aucune audience, aucun sponsor et aucun
+ * chiffre de diffusion inventés.
  */
 const fr = {
   meta: {
-    title: 'iNOVA Studio — Contenus de valorisation entrepreneuriale au Bénin',
+    title: 'iNOVA Studio — Sponsoring et partenariat de contenu au Bénin',
     description:
-      'Interviews à chaud, podcast et série documentée sur les modèles économiques béninois réels, formels, informels et semi-modernes. Le Studio se finance par partenariats, pas par publicité display.',
+      'Nous produisons des contenus sur des acteurs économiques béninois réels et nous ouvrons ces formats à une marque ou à une institution : ce que le partenaire reçoit, sur quels formats, comment le partenariat se déroule.',
   },
 
   hero: {
-    eyebrow: 'iNOVA Studio',
-    title: 'Montrer les modèles qui marchent, pas ceux qui se vendent bien.',
-    lede: 'Le Studio produit des contenus sur des acteurs économiques béninois réels — formels, informels et semi-modernes. Sa visibilité ne vient pas d’une démarche commerciale : elle vient des personnes qu’il met en avant, et c’est ce qui rend iNOVA Consulting crédible sans avoir à le dire.',
+    eyebrow: 'iNOVA Studio · Offre sponsor',
+    title: 'Nous associons votre marque à des entrepreneurs qui construisent.',
+    lede: 'Le Studio produit des interviews à chaud, un podcast et une série documentée sur des acteurs économiques béninois réels — formels, informels et semi-modernes. Une marque ou une institution peut financer l’un de ces formats : nous produisons le contenu, il est publié avec votre nom, et nous livrons le montage pour vos propres canaux.',
     primary: 'Proposer un partenariat',
     secondary: 'Voir les trois formats',
   },
 
   formats: {
-    eyebrow: 'Ce que le Studio produit',
-    title: 'Trois formats, déjà définis',
+    eyebrow: 'Les trois formats ouverts au sponsoring',
+    title: 'Ce que votre marque peut porter',
     intro:
-      'Le Studio n’a pas encore de catalogue publié. Les trois formats ci-dessous sont ceux qu’il produit, et ceux pour lesquels les premiers partenariats sont ouverts.',
+      'Les trois formats ci-dessous sont ceux que nous produisons et ceux que nous ouvrons aux premiers partenariats. Le sujet ou l’acteur se choisit avec vous au brief.',
     items: [
       {
         name: 'Format court',
         what: 'Interviews à chaud',
-        where: 'En événement et en rencontre',
-        body: 'Des entrepreneurs béninois et des actrices des marchés, interrogés sur ce qui marche dans leur activité, au moment où ils y travaillent.',
+        where: 'Tourné en événement, diffusé sur les réseaux',
+        body: 'Nous interrogeons des entrepreneurs béninois et des actrices des marchés sur ce qui marche dans leur activité, au moment où ils y travaillent.',
       },
       {
         name: 'Format long',
         what: 'Podcast',
         where: 'Destiné à la jeune génération d’entrepreneurs',
-        body: 'Des expériences réelles, décrites assez précisément pour transmettre des enseignements et pas seulement une anecdote.',
+        body: 'Nous recueillons des expériences réelles, décrites assez précisément pour transmettre un enseignement.',
       },
       {
         name: 'Format série',
         what: 'Accompagnement documenté',
         where: 'Un acteur, du diagnostic aux résultats',
-        body: 'Un acteur économique formel ou informel est diagnostiqué sur le problème qui limite son activité, puis suivi à l’écran jusqu’à l’obtention de résultats concrets.',
+        body: 'Nous diagnostiquons un acteur économique, formel ou informel, sur le problème qui limite son activité, puis nous le suivons à l’écran jusqu’à des résultats concrets.',
       },
     ],
   },
 
   pipeline: {
-    eyebrow: 'Chaîne de production',
-    title: 'De l’identification du sujet à l’accompagnement des résultats',
+    eyebrow: 'Déroulé d’un partenariat',
+    title: 'Du brief commun au bilan écrit',
     intro:
-      'La série est le seul format où le diagnostic intervient : un interview à chaud n’attend pas qu’un problème soit posé.',
+      'Le brief pose le format, l’acteur ou le sujet et les mentions du partenaire. À partir de là, la production nous revient, diagnostic compris sur le format série.',
     steps: [
-      'Identification du sujet ou de l’acteur',
-      'Diagnostic du problème qui limite son activité',
+      'Brief commun : format, acteur ou sujet',
+      'Cadrage écrit : périmètre, durée, mentions, livrables',
       'Captation',
       'Montage',
       'Publication',
-      'Accompagnement des résultats',
+      'Bilan : ce qui a été produit, où c’est publié',
     ],
-    note: 'La production s’appuie sur un partenaire disposant d’une agence de communication, et sur du matériel audio-vidéo identifié dans le budget de démarrage.',
+    note: 'La production s’appuie sur un partenaire disposant d’une agence de communication et sur du matériel audio-vidéo déjà budgété. Le choix des acteurs nous reste propre : un partenariat finance un contenu, il n’achète pas le propos de l’invité.',
   },
 
-  funding: {
-    eyebrow: 'Financement',
-    title: 'Des partenariats, pas de la publicité display',
-    body: 'Partenariats de marque, contenu commandité, sponsoring institutionnel : chaque format peut accueillir une marque ou une institution, à condition de rester aligné avec la promotion d’un entrepreneuriat adapté aux réalités africaines.',
-    risk: 'À dire tout de suite : cette monétisation dépend de l’adhésion effective de sponsors, et elle n’a pas encore été testée sur le marché béninois.',
+  offer: {
+    eyebrow: 'Offre',
+    title: 'Nous ouvrons les premiers partenariats du Studio.',
+    body: 'Partenariat de marque, contenu commandité, sponsoring institutionnel : les trois formes tiennent sur nos formats, à condition de rester alignées avec la promotion d’un entrepreneuriat adapté aux réalités africaines.',
+    gives: [
+      'Un contenu produit par notre chaîne, du brief à la publication.',
+      'Votre nom associé au contenu, à l’écran comme à la publication.',
+      'Le montage livré, réutilisable sur vos propres canaux.',
+      'Un bilan écrit : ce qui a été produit, ce qui a été publié.',
+    ],
+    terms:
+      'Un partenariat se chiffre au format, à la durée et au nombre de contenus. Le premier échange pose ces trois éléments, puis nous écrivons le cadrage.',
     cta: 'Proposer un partenariat',
   },
 };
 
 const en: typeof fr = {
   meta: {
-    title: 'iNOVA Studio — Entrepreneurial storytelling content in Benin',
+    title: 'iNOVA Studio — Sponsorship and content partnership in Benin',
     description:
-      'On-the-spot interviews, a podcast and a documented series on real Beninese economic models — formal, informal and semi-modern. The Studio is funded by partnerships, not display advertising.',
+      'We produce content about real Beninese economic actors and we open those formats to a brand or an institution: what the partner receives, on which formats, how the partnership runs.',
   },
 
   hero: {
-    eyebrow: 'iNOVA Studio',
-    title: 'Show the models that work, not the ones that sell themselves well.',
-    lede: 'The Studio produces content about real Beninese economic actors — formal, informal and semi-modern. Its visibility does not come from sales outreach: it comes from the people it puts forward, which is what makes iNOVA Consulting credible without having to say so.',
+    eyebrow: 'iNOVA Studio · Sponsor offer',
+    title: 'We put your brand beside entrepreneurs who are building.',
+    lede: 'The Studio produces on-the-spot interviews, a podcast and a documented series about real Beninese economic actors — formal, informal and semi-modern. A brand or an institution can fund one of these formats: we produce the content, it is published with your name on it, and we hand you the edit for your own channels.',
     primary: 'Propose a partnership',
     secondary: 'See the three formats',
   },
 
   formats: {
-    eyebrow: 'What the Studio makes',
-    title: 'Three formats, already defined',
+    eyebrow: 'The three formats open to sponsorship',
+    title: 'What your brand can carry',
     intro:
-      'The Studio has no published catalogue yet. The three formats below are the ones it produces, and the ones its first partnerships are opened for.',
+      'The three formats below are the ones we produce and the ones we open to the first partnerships. The subject or the actor is chosen with you at the brief.',
     items: [
       {
         name: 'Short format',
         what: 'On-the-spot interviews',
-        where: 'At events and meet-ups',
-        body: 'Beninese entrepreneurs and market traders, asked about what works in their business while they are working in it.',
+        where: 'Filmed at events, published on social channels',
+        body: 'We ask Beninese entrepreneurs and market traders what works in their business, while they are working in it.',
       },
       {
         name: 'Long format',
         what: 'Podcast',
         where: 'For the next generation of entrepreneurs',
-        body: 'Real experiences, described precisely enough to hand over a lesson and not just an anecdote.',
+        body: 'We collect real experiences, described precisely enough to hand over a lesson.',
       },
       {
         name: 'Series format',
         what: 'Documented support',
         where: 'One actor, from diagnosis to results',
-        body: 'A formal or informal economic actor is diagnosed on the problem limiting their business, then followed on camera until concrete results land.',
+        body: 'We diagnose a formal or informal economic actor on the problem limiting their business, then follow them on camera until concrete results land.',
       },
     ],
   },
 
   pipeline: {
-    eyebrow: 'Production chain',
-    title: 'From spotting the subject to following up on results',
-    intro: 'The series is the only format where the diagnosis comes in: an on-the-spot interview does not wait for a problem to be framed.',
+    eyebrow: 'How a partnership runs',
+    title: 'From a shared brief to a written recap',
+    intro:
+      'The brief sets the format, the actor or subject and the partner mentions. From there, production is ours, diagnosis included on the series format.',
     steps: [
-      'Spotting the subject or the actor',
-      'Diagnosing the problem that limits their business',
+      'Shared brief: format, actor or subject',
+      'Written scope: coverage, duration, mentions, deliverables',
       'Filming',
       'Editing',
       'Publishing',
-      'Following up on results',
+      'Recap: what was produced, where it was published',
     ],
-    note: 'Production relies on a partner running a communications agency, and on the audio-video equipment listed in the start-up budget.',
+    note: 'Production relies on a partner running a communications agency and on audio-video equipment already budgeted. The choice of actors stays with us: a partnership funds a piece of content, it does not buy the guest’s words.',
   },
 
-  funding: {
-    eyebrow: 'Funding',
-    title: 'Partnerships, not display advertising',
-    body: 'Brand partnerships, commissioned content, institutional sponsorship: any format can carry a brand or an institution, as long as it stays aligned with promoting entrepreneurship suited to African realities.',
-    risk: 'To say it plainly: that monetisation depends on sponsors actually showing up, and has not been tested on the Beninese market yet.',
+  offer: {
+    eyebrow: 'The offer',
+    title: 'We are opening the Studio’s first partnerships.',
+    body: 'Brand partnership, commissioned content, institutional sponsorship: the three forms fit our formats, as long as they stay aligned with promoting entrepreneurship suited to African realities.',
+    gives: [
+      'A piece of content produced by our chain, from brief to publication.',
+      'Your name tied to the content, on screen and at publication.',
+      'The edit delivered, reusable on your own channels.',
+      'A written recap: what was produced, what was published.',
+    ],
+    terms:
+      'A partnership is priced on the format, the duration and the number of pieces. The first conversation settles those three, then we write the scope.',
     cta: 'Propose a partnership',
   },
 };

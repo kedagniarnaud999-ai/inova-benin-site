@@ -54,19 +54,28 @@ const c = studio[locale];
     </p>
   </Section>
 
-  <Section tone="ink" size="wide">
+  <Section id="offre" tone="ink" size="wide">
     <div class="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
       <div>
-        <p class="label text-on-ink">{c.funding.eyebrow}</p>
-        <h2 class="mt-3 max-w-[24ch] text-h2 text-chalk">{c.funding.title}</h2>
-        <p class="mt-6 max-w-[58ch] text-chalk/80">{c.funding.body}</p>
-        <p class="mt-6 max-w-[58ch] border-l border-chalk/25 pl-5 text-[0.95rem] text-chalk/65">
-          {c.funding.risk}
+        <p class="label text-on-ink">{c.offer.eyebrow}</p>
+        <h2 class="mt-3 max-w-[24ch] text-h2 text-chalk">{c.offer.title}</h2>
+        <p class="mt-6 max-w-[58ch] text-chalk/80">{c.offer.body}</p>
+        <ul class="mt-8 grid gap-px bg-chalk/20 sm:grid-cols-2">
+          {
+            c.offer.gives.map((give) => (
+              <li class="bg-ink px-5 py-5 text-[0.95rem] text-chalk/85">{give}</li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="lg:pt-2">
+        <p class="max-w-[40ch] border-l border-chalk/25 pl-5 text-[0.95rem] text-chalk/65">
+          {c.offer.terms}
+        </p>
+        <p class="mt-8">
+          <a href={url(locale, 'contact')} class="btn btn-solid">{c.offer.cta}</a>
         </p>
       </div>
-      <p class="lg:pt-2 lg:text-right">
-        <a href={url(locale, 'contact')} class="btn btn-solid">{c.funding.cta}</a>
-      </p>
     </div>
   </Section>
 </BaseLayout>
