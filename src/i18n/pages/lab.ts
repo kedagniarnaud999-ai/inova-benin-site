@@ -1,9 +1,9 @@
 import type { Locale } from '../config';
 
 /**
- * iNOVA Lab. Sections 2.4, 4.1 et 5.2 du business plan. Le total du
- * portefeuille (11) vient du business plan ; ce qui est publié ici est compté
- * dans src/content/experiments.ts, jamais dans ce texte.
+ * iNOVA Lab. Sections 2.4, 4.1 et 5.2 du business plan pour la provenance. Les
+ * seuls chiffres publiés ici sont comptés dans src/content/experiments.ts : le
+ * total interne du plan (11) reste une donnée de pilotage, pas une promesse.
  */
 const fr = {
   meta: {
@@ -15,7 +15,7 @@ const fr = {
   hero: {
     eyebrow: 'iNOVA Lab',
     title: 'Le pôle où l’on construit, pas celui où l’on explique.',
-    lede: 'Identification d’opportunités, prototypage, MVP, test de marché, création progressive de startups. Le portefeuille compte onze expérimentations à des degrés de maturité différents. Celles qui ont produit quelque chose de consultable sont publiées ci-dessous.',
+    lede: 'Identification d’opportunités, prototypage, MVP, test de marché, création progressive de startups. Le Lab mène plusieurs expérimentations en parallèle, à des degrés de maturité différents. Celles qui ont produit quelque chose de consultable sont publiées ci-dessous.',
     ledger: 'Descendre au carnet',
     method: 'Voir la méthode 369',
   },
@@ -34,13 +34,13 @@ const fr = {
     eyebrow: 'Preuve',
     title: 'Le carnet',
     intro: (n: number, live: number) =>
-      `${n} expérimentations construites sur les onze du portefeuille, dont ${live} accessibles en ligne. Les autres sont publiées au fur et à mesure qu’elles produisent quelque chose de consultable.`,
+      `${n} expérimentations construites à ce jour, dont ${live} accessibles en ligne. Les autres sont publiées au fur et à mesure qu’elles produisent quelque chose de consultable.`,
   },
 
   seekers: {
     eyebrow: 'Ce que le Lab cherche',
     title: 'Des preneurs, pas des spectateurs',
-    body: 'L’objectif du business plan est explicite : trouver le plus tôt possible des utilisateurs, des clients ou des partenaires pour les produits du portefeuille. Une expérimentation qui trouve ses preneurs peut devenir une startup ; les autres s’arrêtent.',
+    body: 'Le but est de trouver le plus tôt possible des utilisateurs, des clients ou des partenaires pour les produits du Lab. Une expérimentation qui trouve ses preneurs peut devenir une startup ; les autres s’arrêtent.',
     cta: 'Proposer un partenariat sur un produit',
   },
 };
@@ -55,7 +55,7 @@ const en: typeof fr = {
   hero: {
     eyebrow: 'iNOVA Lab',
     title: 'The pole where things get built, not where they get explained.',
-    lede: 'Opportunity spotting, prototyping, MVPs, market testing, gradual startup creation. The portfolio holds eleven experiments at different stages of maturity. The ones that produced something worth looking at are published below.',
+    lede: 'Opportunity spotting, prototyping, MVPs, market testing, gradual startup creation. The Lab runs several experiments in parallel, at different stages of maturity. The ones that produced something worth looking at are published below.',
     ledger: 'Go down to the ledger',
     method: 'See the 369 method',
   },
@@ -74,13 +74,13 @@ const en: typeof fr = {
     eyebrow: 'Proof',
     title: 'The ledger',
     intro: (n: number, live: number) =>
-      `${n} experiments built out of the portfolio’s eleven, ${live} of them live online. The others appear here as soon as they produce something worth looking at.`,
+      `${n} experiments built so far, ${live} of them live online. The others appear here as soon as they produce something worth looking at.`,
   },
 
   seekers: {
     eyebrow: 'What the Lab is after',
     title: 'Takers, not spectators',
-    body: 'The business plan states the objective plainly: find users, customers or partners for the portfolio products as early as possible. An experiment that finds its takers may become a startup; the others stop.',
+    body: 'The aim is to find users, customers or partners for the Lab’s products as early as possible. An experiment that finds its takers may become a startup; the others stop.',
     cta: 'Propose a partnership on a product',
   },
 };

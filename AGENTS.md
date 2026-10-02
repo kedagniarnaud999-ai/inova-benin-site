@@ -48,11 +48,11 @@ ligne et se lit `INOVA`. Les quatre surfaces qui portent le nom lui-même
 (`.head-brand`, `.foot-mark`, `.brand`, `.foot-copy`) sont les seules à
 s'en exonérer.
 
-`iNOVA BENIN` reste écrit tel quel **uniquement** dans les phrases qui portent
-sur l'entité juridique : immatriculation, SASU en cours de constitution,
-OHADA, responsabilité des données. Rien n'établit le nom sous lequel la SASU
-sera déposée ; ces lignes se corrigent avec la pièce officielle, pas avec la
-maquette.
+Un seul nom, celui de la marque et celui de la société : `iNOVA SPACE` s'écrit
+partout, y compris dans les phrases d'immatriculation, de SASU en cours de
+constitution, d'OHADA et de responsabilité des traitements. Les mentions légales
+publient la forme juridique et son état, et aucun numéro de RCCM ni d'IFU faute
+de pièce — mais pas un nom social distinct de la marque.
 
 Le renommage ne touche pas les identifiants d'infrastructure, qui gardent
 `inova-benin` / `inovabenin1` : adresse e-mail de la structure, clé

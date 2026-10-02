@@ -14,8 +14,8 @@ const fr = {
 
   hero: {
     eyebrow: 'iNOVA Consulting',
-    title: 'Le pôle qui paie la structure, pas celui qui la raconte.',
-    lede: 'Consulting est le premier moteur de trésorerie d’iNOVA SPACE : des missions pour des tiers — conception produit, transformation numérique, gestion de projet, formation — pendant que le Lab construit son portefeuille et que le Studio porte la visibilité.',
+    title: 'Le pôle où l’on résout les problèmes des autres, pas les nôtres.',
+    lede: 'Consulting, c’est iNOVA SPACE au travail sur des besoins qui ne sont pas les nôtres : conception produit, transformation numérique, gestion de projet, formation. Les méthodes viennent des produits que le Lab construit et que le Studio fait connaître.',
     primary: 'Décrire un besoin',
     secondary: 'Voir les trois pôles',
   },
@@ -54,14 +54,14 @@ const fr = {
   audiences: {
     eyebrow: 'À qui ça s’adresse',
     title: 'PME, entrepreneurs et institutions',
-    body: 'Le business plan cible une demande précise : la conception produit, la transformation numérique ou l’accompagnement en gestion de projet. Pas de secteur privilégié, pas de taille minimale.',
+    body: 'La demande visée est précise : la conception produit, la transformation numérique ou l’accompagnement en gestion de projet. Pas de secteur privilégié, pas de taille minimale.',
   },
 
   process: {
     eyebrow: 'Comment une mission se déroule',
     title: 'Cinq étapes, dans cet ordre',
     intro:
-      'Le déroulé est celui que le business plan a fixé pour le pôle. Il ne promet ni un délai ni une équipe dédiée : il dit dans quel ordre les choses se passent.',
+      'Le déroulé est le même pour toutes les missions du pôle. Il ne promet ni un délai ni une équipe dédiée : il dit dans quel ordre les choses se passent.',
     steps: [
       { title: 'Prise de contact', body: 'Le contexte est décrit par celui qui a le besoin, pas deviné par celui qui va le traiter.' },
       { title: 'Diagnostic des besoins', body: 'Premier échange : ce qui bloque réellement, et ce qui ne l’est pas.' },
@@ -74,8 +74,8 @@ const fr = {
   pricing: {
     eyebrow: 'Tarification',
     title: 'Fixée à la mission',
-    body: 'Le business plan écarte la grille tarifaire : chaque mission est chiffrée en fonction de la valeur produite et de la nature de l’accompagnement demandé. Le premier échange sert à établir ces deux éléments, pas à établir une facture.',
-    note: 'À ce stade, iNOVA BENIN est en cours de constitution : les conditions sont établies au cas par cas, contrat par contrat.',
+    body: 'Pas de grille tarifaire : chaque mission est chiffrée en fonction de la valeur produite et de la nature de l’accompagnement demandé. Le premier échange sert à établir ces deux éléments, pas à établir une facture.',
+    note: 'À ce stade, iNOVA SPACE est en cours de constitution : les conditions sont établies au cas par cas, contrat par contrat.',
   },
 };
 
@@ -89,7 +89,7 @@ const en: typeof fr = {
   hero: {
     eyebrow: 'iNOVA Consulting',
     title: 'The pole that pays for the structure, not the one that talks about it.',
-    lede: 'Consulting is iNOVA SPACE’s first cash engine: missions for third parties — product design, digital transformation, project management, training — while the Lab builds its portfolio and the Studio carries the visibility.',
+    lede: 'Consulting is iNOVA SPACE working on needs that are not our own: product design, digital transformation, project management, training. The methods come from the products the Lab builds and the Studio makes known.',
     primary: 'Describe a need',
     secondary: 'See the three poles',
   },
@@ -128,14 +128,14 @@ const en: typeof fr = {
   audiences: {
     eyebrow: 'Who it is for',
     title: 'SMEs, entrepreneurs and institutions',
-    body: 'The business plan aims at a specific demand: product design, digital transformation or project management support. No favoured sector, no minimum size.',
+    body: 'The demand we aim at is specific: product design, digital transformation or project management support. No favoured sector, no minimum size.',
   },
 
   process: {
     eyebrow: 'How a mission runs',
     title: 'Five stages, in that order',
     intro:
-      'This is the sequence the business plan set for the pole. It promises neither a deadline nor a dedicated team: it says in which order things happen.',
+      'This is the same sequence for every mission the pole takes. It promises neither a deadline nor a dedicated team: it says in which order things happen.',
     steps: [
       { title: 'First contact', body: 'The context is described by the person who has the need, not guessed by the one who will handle it.' },
       { title: 'Needs diagnosis', body: 'A first conversation: what genuinely blocks, and what does not.' },
@@ -148,8 +148,8 @@ const en: typeof fr = {
   pricing: {
     eyebrow: 'Pricing',
     title: 'Set per mission',
-    body: 'The business plan rules out a price list: each mission is priced on the value produced and the kind of support requested. The first conversation establishes those two things, not an invoice.',
-    note: 'At this stage iNOVA BENIN is still being incorporated: terms are set case by case, contract by contract.',
+    body: 'No price list: each mission is priced on the value produced and the kind of support requested. The first conversation establishes those two things, not an invoice.',
+    note: 'At this stage iNOVA SPACE is still being incorporated: terms are set case by case, contract by contract.',
   },
 };
 

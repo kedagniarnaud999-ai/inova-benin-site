@@ -55,7 +55,7 @@ const fr = {
     body1:
       'Trois métiers travaillent ensemble : le Consulting structure les idées, le Lab les transforme en produits, le Studio donne de la visibilité à ceux qui construisent. Les trois s’appliquent à des problèmes africains.',
     body2:
-      'L’ambition ne s’arrête pas au conseil rendu : constituer, à terme, un portefeuille de ventures dont iNOVA détiendra une part — bâties au Bénin et conçues pour dépasser leur marché d’origine.',
+      'L’ambition ne s’arrête pas au conseil rendu : iNOVA SPACE veut aussi garder une part du capital des startups qu’elle aide à construire, bâties au Bénin et conçues pour dépasser leur marché d’origine.',
   },
 
   verify: {
@@ -153,7 +153,7 @@ const en: typeof fr = {
     body1:
       'Three trades work together: Consulting structures ideas, the Lab turns them into products, the Studio gives visibility to the people building. All three are pointed at African problems.',
     body2:
-      'The ambition does not stop at advice delivered: to build, over time, a portfolio of ventures iNOVA holds a share in — made in Benin, designed to outgrow their home market.',
+      'The ambition does not stop at advice delivered: iNOVA SPACE also wants to keep a share of the capital in the startups it helps build, made in Benin and designed to outgrow their home market.',
   },
 
   verify: {

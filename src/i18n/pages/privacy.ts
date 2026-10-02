@@ -6,7 +6,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
   fr: [
     {
       label: 'Responsable du traitement',
-      body: `${FOUNDER}, porteur du projet iNOVA BENIN. La société n’étant pas encore immatriculée, c’est lui et non une personne morale qui répond des données traitées ici.`,
+      body: `${FOUNDER}, porteur du projet iNOVA SPACE. La société n’étant pas encore immatriculée, c’est lui et non une personne morale qui répond des données traitées ici.`,
     },
     {
       label: 'Données collectées',
@@ -51,7 +51,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
   en: [
     {
       label: 'Data controller',
-      body: `${FOUNDER}, founder of the iNOVA BENIN project. Since the company is not yet registered, it is he — not a legal entity — answerable for the data processed here.`,
+      body: `${FOUNDER}, founder of the iNOVA SPACE project. Since the company is not yet registered, it is he — not a legal entity — answerable for the data processed here.`,
     },
     {
       label: 'Data collected',

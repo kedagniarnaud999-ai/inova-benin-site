@@ -29,7 +29,6 @@ const fr = {
     read: 'Lire la page',
     back: 'Retour à l’accueil',
     seeProduct: 'Voir le produit',
-    allExperiments: 'Tout le portefeuille',
   },
 
   footer: {
@@ -116,7 +115,6 @@ const en: typeof fr = {
     read: 'Read the page',
     back: 'Back to home',
     seeProduct: 'See the product',
-    allExperiments: 'Full portfolio',
   },
 
   footer: {

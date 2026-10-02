@@ -37,7 +37,7 @@ const fr = {
 
   destination: {
     eyebrow: 'À qui ça va',
-    body: 'Le formulaire et l’e-mail officiel tapent dans la même adresse, celle d’iNOVA BENIN. C’est Jolidon Arnaud KEDAGNI, porteur du projet, qui la lit et traite les demandes. La société est encore en cours de constitution.',
+    body: 'Le formulaire et l’e-mail officiel tapent dans la même adresse, celle d’iNOVA SPACE. C’est Jolidon Arnaud KEDAGNI, porteur du projet, qui la lit et traite les demandes. La société est encore en cours de constitution.',
   },
 
   data: {
@@ -86,7 +86,7 @@ const en: typeof fr = {
 
   destination: {
     eyebrow: 'Where it goes',
-    body: 'The form and the official address feed the same inbox — iNOVA BENIN’s. Jolidon Arnaud KEDAGNI, who carries the project, reads it and handles the requests himself. The company is still being incorporated.',
+    body: 'The form and the official address feed the same inbox — iNOVA SPACE’s. Jolidon Arnaud KEDAGNI, who carries the project, reads it and handles the requests himself. The company is still being incorporated.',
   },
 
   data: {

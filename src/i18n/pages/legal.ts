@@ -46,7 +46,7 @@ export const legal: Record<Locale, LegalContent> = {
       },
       {
         label: 'Forme juridique et état du projet',
-        body: 'iNOVA BENIN est en cours de constitution sous la forme d’une Société par Actions Simplifiée Unipersonnelle (SASU), régie par l’Acte uniforme OHADA relatif au droit des sociétés commerciales. À la date de publication, l’immatriculation n’est pas finalisée : les numéros d’identification qui en découleront n’ont donc pas encore été attribués et ne peuvent pas être mentionnés ici.',
+        body: 'iNOVA SPACE est en cours de constitution sous la forme d’une Société par Actions Simplifiée Unipersonnelle (SASU), régie par l’Acte uniforme OHADA relatif au droit des sociétés commerciales. À la date de publication, l’immatriculation n’est pas finalisée : les numéros d’identification qui en découleront n’ont donc pas encore été attribués et ne peuvent pas être mentionnés ici.',
       },
       {
         label: 'Adresse',
@@ -98,7 +98,7 @@ export const legal: Record<Locale, LegalContent> = {
       },
       {
         label: 'Legal form and state of the project',
-        body: 'iNOVA BENIN is being incorporated as a Société par Actions Simplifiée Unipersonnelle (SASU), governed by the OHADA Uniform Act on commercial companies. At the time of publication the registration is not finalised: the identification numbers that follow from it have not been issued and cannot be stated here.',
+        body: 'iNOVA SPACE is being incorporated as a Société par Actions Simplifiée Unipersonnelle (SASU), governed by the OHADA Uniform Act on commercial companies. At the time of publication the registration is not finalised: the identification numbers that follow from it have not been issued and cannot be stated here.',
       },
       {
         label: 'Address',

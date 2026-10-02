@@ -24,7 +24,7 @@ const fr = {
     eyebrow: 'Ce que le Studio produit',
     title: 'Trois formats, déjà définis',
     intro:
-      'Le Studio n’a pas encore de catalogue publié. Les trois formats ci-dessous sont ceux que le business plan a fixés, et ceux pour lesquels les premiers partenariats sont ouverts.',
+      'Le Studio n’a pas encore de catalogue publié. Les trois formats ci-dessous sont ceux qu’il produit, et ceux pour lesquels les premiers partenariats sont ouverts.',
     items: [
       {
         name: 'Format court',
@@ -67,7 +67,7 @@ const fr = {
     eyebrow: 'Financement',
     title: 'Des partenariats, pas de la publicité display',
     body: 'Partenariats de marque, contenu commandité, sponsoring institutionnel : chaque format peut accueillir une marque ou une institution, à condition de rester aligné avec la promotion d’un entrepreneuriat adapté aux réalités africaines.',
-    risk: 'Le business plan le dit aussi : cette monétisation dépend de l’adhésion effective de sponsors, et n’a pas encore été testée sur le marché béninois.',
+    risk: 'À dire tout de suite : cette monétisation dépend de l’adhésion effective de sponsors, et elle n’a pas encore été testée sur le marché béninois.',
     cta: 'Proposer un partenariat',
   },
 };
@@ -91,7 +91,7 @@ const en: typeof fr = {
     eyebrow: 'What the Studio makes',
     title: 'Three formats, already defined',
     intro:
-      'The Studio has no published catalogue yet. The three formats below are the ones the business plan set, and the ones its first partnerships are opened for.',
+      'The Studio has no published catalogue yet. The three formats below are the ones it produces, and the ones its first partnerships are opened for.',
     items: [
       {
         name: 'Short format',
@@ -133,7 +133,7 @@ const en: typeof fr = {
     eyebrow: 'Funding',
     title: 'Partnerships, not display advertising',
     body: 'Brand partnerships, commissioned content, institutional sponsorship: any format can carry a brand or an institution, as long as it stays aligned with promoting entrepreneurship suited to African realities.',
-    risk: 'The business plan also says this: that monetisation depends on sponsors actually showing up, and has not been tested on the Beninese market yet.',
+    risk: 'To say it plainly: that monetisation depends on sponsors actually showing up, and has not been tested on the Beninese market yet.',
     cta: 'Propose a partnership',
   },
 };
