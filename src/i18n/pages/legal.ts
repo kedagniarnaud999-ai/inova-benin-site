@@ -30,7 +30,7 @@ const VERCEL_LEGAL = 'https://vercel.com/legal';
 export const legal: Record<Locale, LegalContent> = {
   fr: {
     meta: {
-      title: 'Mentions légales — iNOVA BENIN',
+      title: 'Mentions légales — iNOVA SPACE',
       description:
         'Éditeur du site, forme juridique et état de l’immatriculation, hébergement, propriété intellectuelle, responsabilité et accessibilité.',
     },
@@ -42,7 +42,7 @@ export const legal: Record<Locale, LegalContent> = {
     blocks: [
       {
         label: 'Éditeur de la publication',
-        body: `La publication de ce site est assurée par ${FOUNDER}, porteur du projet iNOVA BENIN, qui en est aussi le directeur de la publication.`,
+        body: `La publication de ce site est assurée par ${FOUNDER}, porteur du projet iNOVA SPACE, qui en est aussi le directeur de la publication.`,
       },
       {
         label: 'Forme juridique et état du projet',
@@ -59,7 +59,7 @@ export const legal: Record<Locale, LegalContent> = {
       },
       {
         label: 'Propriété intellectuelle',
-        body: 'Les textes, la structure, l’identité visuelle et les noms de pôles présentés ici sont liés au projet iNOVA BENIN. Leur reproduction à une autre fin que la consultation privée demande une autorisation préalable, qui se sollicite par le formulaire de contact.',
+        body: 'Les textes, la structure, l’identité visuelle et les noms de pôles présentés ici sont liés au projet iNOVA SPACE. Leur reproduction à une autre fin que la consultation privée demande une autorisation préalable, qui se sollicite par le formulaire de contact.',
       },
       {
         label: 'Liens externes',
@@ -82,7 +82,7 @@ export const legal: Record<Locale, LegalContent> = {
 
   en: {
     meta: {
-      title: 'Legal notice — iNOVA BENIN',
+      title: 'Legal notice — iNOVA SPACE',
       description:
         'Site publisher, legal form and incorporation status, hosting, intellectual property, liability and accessibility.',
     },
@@ -94,7 +94,7 @@ export const legal: Record<Locale, LegalContent> = {
     blocks: [
       {
         label: 'Publisher',
-        body: `This site is published by ${FOUNDER}, founder of the iNOVA BENIN project and its publication director.`,
+        body: `This site is published by ${FOUNDER}, founder of the iNOVA SPACE project and its publication director.`,
       },
       {
         label: 'Legal form and state of the project',
@@ -111,7 +111,7 @@ export const legal: Record<Locale, LegalContent> = {
       },
       {
         label: 'Intellectual property',
-        body: 'The text, structure, visual identity and pole names presented here belong to the iNOVA BENIN project. Reproducing them for anything beyond private consultation requires prior permission, requested through the contact form.',
+        body: 'The text, structure, visual identity and pole names presented here belong to the iNOVA SPACE project. Reproducing them for anything beyond private consultation requires prior permission, requested through the contact form.',
       },
       {
         label: 'External links',

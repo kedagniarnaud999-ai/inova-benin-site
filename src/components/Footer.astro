@@ -24,14 +24,14 @@ const nav = [
   <div class="mx-auto max-w-[88rem] px-5 py-16 sm:px-8">
     <div class="grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
       <div>
-        <p class="foot-mark display">iNOVA BENIN</p>
+        <p class="foot-mark display">iNOVA SPACE</p>
         <p class="mt-3 text-[1.05rem] text-chalk/75">{s.tagline}.</p>
         <p class="rhythm label">{s.footer.rhythm}</p>
         <a class="foot-mail" href={`mailto:${EMAIL}`}>{EMAIL}</a>
       </div>
 
       <nav aria-labelledby="f-site">
-        <h2 id="f-site" class="label text-chalk/55">{s.footer.sitemap}</h2>
+        <h2 id="f-site" class="label text-on-ink">{s.footer.sitemap}</h2>
         <ul class="foot-nav">
           {
             nav.map((item) => (
@@ -70,8 +70,8 @@ const nav = [
         <li>
           <a href={url(locale, 'privacy')} class="label link-underline">{s.footer.privacy}</a>
         </li>
-        <li class="label text-chalk/55">
-          © {year} iNOVA BENIN. {s.footer.rights}
+        <li class="label foot-copy text-on-ink">
+          © {year} iNOVA SPACE. {s.footer.rights}
         </li>
       </ul>
     </div>
@@ -88,13 +88,20 @@ const nav = [
   .foot-mark {
     font-size: clamp(1.6rem, 3vw, 2.3rem);
     letter-spacing: -0.02em;
+    text-transform: none;
+  }
+
+  /* La ligne de copyright énonce le nom de la marque : le `i` minuscule n'y est
+     pas décoratif, `.label` ne doit pas le capitiliser. */
+  .foot-copy {
+    text-transform: none;
   }
 
   /* Le refrain du site, répété tel quel : ni reformulé, ni écourté. */
   .rhythm {
     margin-top: 1.6rem;
     padding-top: 1rem;
-    border-top: 1px solid rgb(242 240 234 / 0.16);
+    border-top: 1px solid color-mix(in oklab, var(--color-chalk) 16%, transparent);
     color: var(--color-chalk);
     font-size: 0.78rem;
   }
@@ -134,8 +141,8 @@ const nav = [
   .foot-nav a {
     display: block;
     padding: 0.42rem 0;
-    border-bottom: 1px solid rgb(242 240 234 / 0.1);
-    color: rgb(242 240 234 / 0.88);
+    border-bottom: 1px solid color-mix(in oklab, var(--color-chalk) 10%, transparent);
+    color: color-mix(in oklab, var(--color-chalk) 88%, transparent);
   }
 
   .foot-nav a:hover,
@@ -145,24 +152,24 @@ const nav = [
   }
 
   .foot-who {
-    color: rgb(242 240 234 / 0.5);
+    color: color-mix(in oklab, var(--color-chalk) var(--on-ink-alpha), transparent);
     font-size: 0.82rem;
   }
 
   .foot-base {
     margin-top: 3.5rem;
     padding-top: 1.4rem;
-    border-top: 1px solid rgb(242 240 234 / 0.16);
+    border-top: 1px solid color-mix(in oklab, var(--color-chalk) 16%, transparent);
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
     gap: 0.9rem 2rem;
-    color: rgb(242 240 234 / 0.6);
+    color: color-mix(in oklab, var(--color-chalk) 60%, transparent);
   }
 
   .foot-base a {
-    color: rgb(242 240 234 / 0.75);
+    color: color-mix(in oklab, var(--color-chalk) 75%, transparent);
   }
 
   .foot-base a:hover,

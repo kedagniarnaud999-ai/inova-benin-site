@@ -28,7 +28,7 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
     {
       items.map(({ key, route }, i) => (
         <li class="band-item" data-reveal style={`--d: ${i * 90}ms`}>
-          <a href={url(locale, route)} class="band" data-p={key}>
+          <a href={url(locale, route)} class="band" data-p={key} data-pole={key}>
             <span class="band-side label" aria-hidden="true">
               {p[key].name}
             </span>
@@ -152,8 +152,11 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
   }
 
   .band {
-    --band: var(--color-cobalt);
-    --band-ink: var(--color-cobalt);
+    /* Le pôle se lit dans les rôles posés par [data-pole] sur cette ancre :
+       l'aplat prend la teinte pleine, le texte sa variante valable sur le fond
+       du thème courant. */
+    --band: var(--accent);
+    --band-ink: var(--accent-ink);
     display: flex;
     align-items: stretch;
     min-height: 12rem;
@@ -168,18 +171,6 @@ const items: { key: Pole; route: 'consulting' | 'lab' | 'studio' }[] = [
     .band {
       min-height: 24rem;
     }
-  }
-
-  .band[data-p='lab'] {
-    --band: var(--color-verdigris);
-    --band-ink: var(--color-verdigris);
-  }
-
-  /* L'ocre plein ne contraste que 2,7:1 sur craie : il reste réservé aux
-     aplats, et le texte prend son jumeau foncé. */
-  .band[data-p='studio'] {
-    --band: var(--color-ocre);
-    --band-ink: var(--color-ocre-ink);
   }
 
   .band:hover,

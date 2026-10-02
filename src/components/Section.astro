@@ -26,7 +26,7 @@ const { eyebrow, title, id, tone = 'chalk', size = 'default', class: className }
       (eyebrow || title) && (
         <header class="mb-10">
           {eyebrow && (
-            <p class:list={['label', tone === 'ink' ? 'text-chalk/55' : 'text-muted']}>{eyebrow}</p>
+            <p class:list={['label', tone === 'ink' ? 'text-on-ink' : 'text-muted']}>{eyebrow}</p>
           )}
           {title && (
             <h2

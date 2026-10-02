@@ -1,0 +1,108 @@
+---
+import { t } from '../i18n/ui';
+import type { Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+---
+
+<button
+  type="button"
+  data-theme-toggle
+  class="theme-toggle label border border-rule px-2.5 text-ink transition-colors hover:border-accent-ink hover:text-accent-ink"
+>
+  <span class="sr-only">{s.nav.theme}</span>
+  <span class="tt-opt tt-to-light">
+    <svg class="tt-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+      <circle cx="8" cy="8" r="3.4" stroke-width="1.3" />
+      <path
+        stroke-width="1.3"
+        stroke-linecap="round"
+        d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M12.8 3.2l-1.1 1.1M4.3 11.7l-1.1 1.1"
+      />
+    </svg>
+    <span class="tt-word">{s.nav.themeLight}</span>
+  </span>
+  <span class="tt-opt tt-to-dark">
+    <svg class="tt-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+      <path stroke-width="1.3" stroke-linejoin="round" d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8Z" />
+    </svg>
+    <span class="tt-word">{s.nav.themeDark}</span>
+  </span>
+</button>
+
+<style>
+  .theme-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.1rem;
+    background: transparent;
+  }
+
+  /* La cible atteint 44 px sans que la pastille ne pousse la ligne : l'extension
+     se joue en vertical, dans le vide de la barre, pas dans le `gap` du voisin. */
+  .theme-toggle::after {
+    content: '';
+    position: absolute;
+    inset: -9px 0;
+  }
+
+  .tt-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+  }
+
+  .tt-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  /* Le thème posé dans le HTML est `dark` : on n'affiche donc que l'option qui
+     mène à l'autre bord. Le script ne touche que `data-theme`, jamais le texte. */
+  :root[data-theme='light'] .tt-to-light {
+    display: none;
+  }
+
+  :root:not([data-theme='light']) .tt-to-dark {
+    display: none;
+  }
+
+  /* Sous 400 px, la ligne d'en-tête tient trois pastilles : l'icône suffit.
+     La boîte reste donc à sa largeur d'icône — l'élargir ferait déborder la
+     ligne à 320 px — et la cible de 44 px se gagne sur le `gap` de 12 px, qui
+     ne porte la cible d'aucun voisin. */
+  @media (max-width: 399px) {
+    .tt-word {
+      display: none;
+    }
+
+    .theme-toggle::after {
+      inset: -9px -4px;
+    }
+  }
+</style>
+
+<script>
+  const KEY = 'inova-theme';
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+  if (button) {
+    button.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      // Le stockage peut être refusé : la bascule reste valable pour la page.
+      try {
+        localStorage.setItem(KEY, next);
+      } catch (e) {}
+    });
+  }
+</script>

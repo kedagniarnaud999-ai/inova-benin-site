@@ -1,6 +1,7 @@
 ---
 import { url, type Locale, type Pole, type RouteKey } from '../i18n/config';
 import { t } from '../i18n/ui';
+import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   locale: Locale;
@@ -23,12 +24,12 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
 ---
 
 <header class="head" data-head>
-  <div class="mx-auto flex max-w-[88rem] items-center gap-6 px-5 py-4 sm:px-8">
+  <div class="head-row mx-auto flex max-w-[88rem] items-center gap-6 px-5 py-4 sm:px-8">
     <a
       href={url(locale, 'home')}
-      class="display shrink-0 py-1 text-[1.15rem] leading-none"
+      class="head-brand display shrink-0 py-1 text-[1.15rem] leading-none"
     >
-      iNOVA<span class="text-accent-ink">·</span>BENIN
+      iNOVA<span class="text-accent-ink">·</span>SPACE
     </a>
 
     <nav aria-label={s.nav.main} class="ml-auto hidden lg:block">
@@ -51,9 +52,9 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
                       aria-hidden="true"
                       class:list={[
                         'size-[5px] rounded-full',
-                        item.accent === 'consulting' && 'bg-cobalt',
-                        item.accent === 'lab' && 'bg-verdigris',
-                        item.accent === 'studio' && 'bg-ocre',
+                        item.accent === 'consulting' && 'bg-cobalt dark:bg-cobalt-lift',
+                        item.accent === 'lab' && 'bg-verdigris dark:bg-verdigris-lift',
+                        item.accent === 'studio' && 'bg-ocre dark:bg-ocre-lift',
                       ]}
                     />
                   )}
@@ -66,15 +67,16 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
       </ul>
     </nav>
 
-    <div class="ml-auto flex items-center gap-3 lg:ml-0">
+    <div class="head-actions ml-auto flex items-center gap-3 lg:ml-0">
       <a href={url(locale, 'contact')} class="head-cta btn btn-solid hidden lg:inline-flex">
         {s.nav.build}
       </a>
+      <ThemeToggle {locale} />
       <a
         href={otherHref}
         hreflang={other}
         lang={other}
-        class="label border border-rule px-2.5 py-1.5 text-ink transition-colors hover:border-accent-ink hover:text-accent-ink"
+        class="head-chip label border border-rule px-2.5 py-1.5 text-ink transition-colors hover:border-accent-ink hover:text-accent-ink"
       >
         {other.toUpperCase()}
         <span class="sr-only">· {s.nav.language}</span>
@@ -82,7 +84,7 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
 
       <details class="relative lg:hidden">
         <summary
-          class="label flex cursor-pointer list-none items-center gap-2 border border-rule px-3 py-2 select-none"
+          class="head-chip label flex cursor-pointer list-none items-center gap-2 border border-rule px-3 py-2 select-none"
         >
           {s.nav.menu}
         </summary>
@@ -138,6 +140,11 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
     }
   }
 
+  /* La marque s'écrit avec son `i` minuscule ; `.display` met tout en capitales. */
+  .head-brand {
+    text-transform: none;
+  }
+
   .head-cta {
     padding: 0.55rem 0.95rem;
     font-size: 0.68rem;
@@ -148,6 +155,29 @@ const items: { key: RouteKey; label: string; accent?: Pole }[] = [
     margin-top: 0.5rem;
     padding-top: 0.5rem;
     border-top: 1px solid var(--color-rule);
+  }
+
+  /* Sous 400 px, la ligne porte quatre éléments : marque, bascule de thème,
+     langue, menu. Sans resserrage, la pastille de thème de plus faisait
+     déborder l'en-tête — et la page se mettait à défiler horizontalement sur
+     un écran de 320 px. */
+  @media (max-width: 399px) {
+    .head-row {
+      gap: 0.75rem;
+      padding-inline: 1rem;
+    }
+
+    .head-actions {
+      gap: 0.5rem;
+    }
+
+    .head-brand {
+      font-size: 1.05rem;
+    }
+
+    .head-chip {
+      padding-inline: 0.5rem;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,16 +1,30 @@
 @import "tailwindcss";
 
+/* Le variant `dark` de Tailwind suit notre attribut, pas la préférence système :
+   la bascule de l'en-tête est la seule autorité du thème courant. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* ─── Cotonou Ledger ────────────────────────────────────────────────────────
    Trois pôles, trois couleurs, une seule structure. La couleur n'est pas un
    ornement : elle dit dans quel pôle on se trouve.
 
-   Règle de contraste, à ne pas négocier :
-   • petit texte sur `chalk`  → variante *-ink, jamais la couleur pleine
-   • texte SUR un aplat       → --accent-on (clair pour cobalt/verdigris,
-                                foncé pour ocre : l'ocre est trop luminosaire
-                                pour porter du blanc)
-   • sur fond `ink`           → JAMAIS de texte couleur accent. L'accent y
-                                tient son rôle par aplats, filets et pastilles.
+   Deux thèmes, mêmes rôles. `chalk` désigne la surface où l'on lit, `ink`
+   l'encre qui va dessus : les deux portées échangent leurs valeurs, donc le
+   markup ne se réécrit pas et un bloc `bg-ink text-chalk` reste un bloc
+   inversé dans les deux thèmes. Le thème posé par défaut est celui de la
+   maquette (fond #0C0C0C, accent volt) ; `data-theme="light"` rend le Ledger
+   blanc et bleu.
+
+   Règle de contraste, à ne pas négocier — elle se lit par thème, jamais par
+   couleur :
+   • un accent n'est texte que s'il tient 4,5:1 SUR LE FOND COURANT. Le volt
+     fait 16,22:1 sur #0C0C0C et 1,06:1 sur le blanc : il n'existe qu'en
+     sombre. Le cobalt fait 6,65:1 sur le blanc et 2,58:1 sur #0C0C0C : il
+     n'existe qu'en clair.
+   • donc chaque pôle a deux valeurs : `--accent-ink` pour le texte et les
+     filets (éclaircie en sombre), `--accent-fill` pour les aplats (teinte
+     pleine, avec l'encre du fond d'en face comme texte).
+   • petit texte sur `chalk` → variante *-ink, jamais la couleur pleine.
 
    `static` : les couleurs sont référencées en CSS brut par les portées
    [data-pole], donc Tailwind ne doit éliminer aucune de ces variables.
@@ -27,6 +41,20 @@
   --color-verdigris: #0a6b59;
   --color-ocre: #c2870f;
   --color-ocre-ink: #6e4a05;
+
+  /* Filet et aplats du thème sombre : ce ne sont pas des rôles, ils gardent
+     leur valeur quelle que soit la bascule. */
+  --color-volt: #b8ff3d;
+  --color-surface: #141414;
+  --color-subtle: #1c1c1c;
+  --color-edge: rgba(240, 235, 224, 0.07);
+
+  /* Les teintes pleines du Ledger, éclaircies pour tenir le texte sur #0C0C0C :
+     5,32 (cobalt), 8,79 (verdigris), 10,91 (ocre). Un composant hors page de
+     pôle peut les employer directement quand il repeint lui-même son accent. */
+  --color-cobalt-lift: #4f7dff;
+  --color-verdigris-lift: #2fc3a1;
+  --color-ocre-lift: #f0b93c;
 
   --font-display: "Archivo Variable", "Archivo", ui-sans-serif, sans-serif;
   --font-sans: "Instrument Sans Variable", "Instrument Sans", ui-sans-serif, sans-serif;
@@ -55,35 +83,114 @@
   --color-accent-ink: var(--accent-ink);
   --color-accent-on: var(--accent-on);
   --color-accent-wash: var(--accent-wash);
+  /* Texte atténué sur une surface d'encre : l'alpha est un rôle de thème, parce
+     qu'un voile sombre sur clair rend moins qu'un voile clair sur sombre. */
+  --color-on-ink: color-mix(in oklab, var(--color-chalk) var(--on-ink-alpha), transparent);
 }
 
 :root {
   --accent: var(--color-cobalt);
   --accent-ink: var(--color-cobalt);
-  --accent-on: var(--color-chalk);
+  --accent-on: #f2f0ea;
   --accent-wash: #e7e9f5;
+  --accent-fill: var(--color-cobalt);
+  --accent-fill-on: #f2f0ea;
+  --on-ink-alpha: 55%;
+  /* La teinte d'un pôle pour le thème courant, quand un composant repeint
+     lui-même son accent sans passer par une portée [data-pole]. */
+  --pole-consulting: var(--color-cobalt);
+  --pole-lab: var(--color-verdigris);
+  --pole-studio: var(--color-ocre);
   color-scheme: light;
 }
 
 [data-pole="consulting"] {
   --accent: var(--color-cobalt);
   --accent-ink: var(--color-cobalt);
-  --accent-on: var(--color-chalk);
+  --accent-on: #f2f0ea;
   --accent-wash: #e7e9f5;
+  --accent-fill: var(--color-cobalt);
+  --accent-fill-on: #f2f0ea;
 }
 
 [data-pole="lab"] {
   --accent: var(--color-verdigris);
   --accent-ink: var(--color-verdigris);
-  --accent-on: var(--color-chalk);
+  --accent-on: #f2f0ea;
   --accent-wash: #e3ece8;
+  --accent-fill: var(--color-verdigris);
+  --accent-fill-on: #f2f0ea;
 }
 
 [data-pole="studio"] {
   --accent: var(--color-ocre);
   --accent-ink: var(--color-ocre-ink);
-  --accent-on: var(--color-ink);
+  --accent-on: #f2f0ea;
   --accent-wash: #f5ebd8;
+  --accent-fill: var(--color-ocre-ink);
+  --accent-fill-on: #f2f0ea;
+}
+
+/* ─── Thème sombre (celui de la maquette) ───────────────────────────────────
+   Les valeurs d'aplat et d'encre sont écrites en toutes lettres plutôt que
+   dérivées de `chalk` et `ink` : ces deux rôles s'inversent ici, et un aplat
+   doit garder la teinte du fond d'en FACE, pas la sienne.
+   Filets et aplats du thème : #141414 (surface), #1C1C1C (subtle),
+   rgba(240,235,224,.07) (edge).
+   ─────────────────────────────────────────────────────────────────────── */
+:root[data-theme="dark"] {
+  --color-ink: #f0ebe0;
+  --color-ink-2: #141414;
+  --color-chalk: #0c0c0c;
+  --color-rule: rgba(240, 235, 224, 0.07);
+  --color-muted: #8d9aa3;
+
+  --accent: var(--color-volt);
+  --accent-ink: var(--color-volt);
+  --accent-on: #0c0c0c;
+  --accent-wash: #141414;
+  --accent-fill: var(--color-volt);
+  --accent-fill-on: #0c0c0c;
+  /* 55 % d'encre sur #F0EBE0 ne rendait que 4,1:1 ; 74 % monte à 7,5:1. */
+  --on-ink-alpha: 74%;
+  --pole-consulting: var(--color-cobalt-lift);
+  --pole-lab: var(--color-verdigris-lift);
+  --pole-studio: var(--color-ocre-lift);
+  color-scheme: dark;
+}
+
+/* Deux sélecteurs parce que `data-pole` porte `<html>` sur les pages de pôle
+   et un `<div>` interne sur l'accueil. Les accents éclaircis tiennent le
+   texte sur #0C0C0C : 5,32 (cobalt #4f7dff), 8,79 (verdigris #2fc3a1),
+   10,91 (ocre #f0b93c), 16,22 (volt). */
+[data-theme="dark"][data-pole="consulting"],
+[data-theme="dark"] [data-pole="consulting"] {
+  --accent: var(--color-cobalt);
+  --accent-ink: var(--color-cobalt-lift);
+  --accent-on: #f0ebe0;
+  --accent-wash: #141414;
+  --accent-fill: var(--color-cobalt);
+  --accent-fill-on: #f0ebe0;
+}
+
+[data-theme="dark"][data-pole="lab"],
+[data-theme="dark"] [data-pole="lab"] {
+  --accent: var(--color-verdigris);
+  --accent-ink: var(--color-verdigris-lift);
+  --accent-on: #f0ebe0;
+  --accent-wash: #141414;
+  --accent-fill: var(--color-verdigris);
+  --accent-fill-on: #f0ebe0;
+}
+
+[data-theme="dark"][data-pole="studio"],
+[data-theme="dark"] [data-pole="studio"] {
+  --accent: var(--color-ocre);
+  --accent-ink: var(--color-ocre-lift);
+  --accent-on: #0c0c0c;
+  --accent-wash: #1c1c1c;
+  --accent-fill: var(--color-ocre);
+  --accent-fill-on: #0c0c0c;
 }
 
 @layer base {
@@ -163,8 +270,10 @@
     text-decoration-color: var(--accent-ink);
   }
 
-  /* .btn-solid remplit avec --accent-ink, jamais --accent : l'ocre plein ne
-     porte pas du texte clair (2,7:1), sa variante foncée si (7:1). */
+  /* L'aplat d'un bouton se choisit par la paire `--accent-fill` /
+     `--accent-fill-on`, écrite pôle par pôle et thème par thème. Pas par
+     `chalk` : `chalk` est le fond courant, donc le blanc en clair et le
+     presque-noir en sombre. */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -183,12 +292,13 @@
   }
 
   .btn-solid {
-    background: var(--accent-ink);
-    color: var(--color-chalk);
+    background: var(--accent-fill);
+    color: var(--accent-fill-on);
   }
 
   .btn-solid:hover {
     background: var(--color-ink);
+    color: var(--color-chalk);
   }
 
   .btn-line {

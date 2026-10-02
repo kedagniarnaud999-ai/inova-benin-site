@@ -28,10 +28,16 @@ const strings = t(locale);
 ---
 
 <!doctype html>
-<html lang={locale} data-pole={pole}>
+<html lang={locale} data-pole={pole} data-theme="dark">
   <head>
     <meta charset="utf-8" />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      // La lecture peut lever en navigation privée : le repli est le thème de la maquette.
+      try {
+        if (localStorage.getItem('inova-theme') === 'light') document.documentElement.dataset.theme = 'light';
+      } catch (e) {}
+    </script>
     <Seo title={title} description={description} locale={locale} route={route} />
   </head>
   <body class="flex min-h-screen flex-col">

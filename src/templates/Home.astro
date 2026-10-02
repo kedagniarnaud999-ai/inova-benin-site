@@ -62,7 +62,7 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
   <Section tone="ink" size="wide" class="field conviction">
     <div class="grid gap-10 lg:grid-cols-[1.45fr_1fr] lg:gap-16">
       <div>
-        <p class="label text-chalk/55">{c.conviction.eyebrow}</p>
+        <p class="label text-on-ink">{c.conviction.eyebrow}</p>
         <h2 class="mt-4 max-w-[24ch] text-mega">{c.conviction.title}</h2>
       </div>
       <div class="conviction-body">
@@ -166,7 +166,7 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
   <Section tone="ink" id="ambition" size="wide" class="field ambition">
     <div class="grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:items-center">
       <div>
-        <p class="label text-chalk/55">{c.ambition.eyebrow}</p>
+        <p class="label text-on-ink">{c.ambition.eyebrow}</p>
         <h2 class="mt-3 max-w-[20ch] text-h2">{c.ambition.title}</h2>
         {c.ambition.body.map((line, i) => <p class="ambition-line" data-reveal style={`--d: ${i * 90}ms`}>{line}</p>)}
       </div>
@@ -321,20 +321,20 @@ const linkedin = SOCIAL.find((p) => p.label === 'LinkedIn')?.href;
 
   .ways:has([data-p='lab']:hover),
   .ways:has([data-p='lab']:focus-within) {
-    --accent: var(--color-verdigris);
-    --accent-ink: var(--color-verdigris);
+    --accent: var(--pole-lab);
+    --accent-ink: var(--pole-lab);
   }
 
   .ways:has([data-p='consulting']:hover),
   .ways:has([data-p='consulting']:focus-within) {
-    --accent: var(--color-cobalt);
-    --accent-ink: var(--color-cobalt);
+    --accent: var(--pole-consulting);
+    --accent-ink: var(--pole-consulting);
   }
 
   .ways:has([data-p='studio']:hover),
   .ways:has([data-p='studio']:focus-within) {
-    --accent: var(--color-ocre);
-    --accent-ink: var(--color-ocre-ink);
+    --accent: var(--pole-studio);
+    --accent-ink: var(--pole-studio);
   }
 
   .ways-rule {

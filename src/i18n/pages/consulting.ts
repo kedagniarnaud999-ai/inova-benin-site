@@ -15,7 +15,7 @@ const fr = {
   hero: {
     eyebrow: 'iNOVA Consulting',
     title: 'Le pôle qui paie la structure, pas celui qui la raconte.',
-    lede: 'Consulting est le premier moteur de trésorerie d’iNOVA BENIN : des missions pour des tiers — conception produit, transformation numérique, gestion de projet, formation — pendant que le Lab construit son portefeuille et que le Studio porte la visibilité.',
+    lede: 'Consulting est le premier moteur de trésorerie d’iNOVA SPACE : des missions pour des tiers — conception produit, transformation numérique, gestion de projet, formation — pendant que le Lab construit son portefeuille et que le Studio porte la visibilité.',
     primary: 'Décrire un besoin',
     secondary: 'Voir les trois pôles',
   },
@@ -89,7 +89,7 @@ const en: typeof fr = {
   hero: {
     eyebrow: 'iNOVA Consulting',
     title: 'The pole that pays for the structure, not the one that talks about it.',
-    lede: 'Consulting is iNOVA BENIN’s first cash engine: missions for third parties — product design, digital transformation, project management, training — while the Lab builds its portfolio and the Studio carries the visibility.',
+    lede: 'Consulting is iNOVA SPACE’s first cash engine: missions for third parties — product design, digital transformation, project management, training — while the Lab builds its portfolio and the Studio carries the visibility.',
     primary: 'Describe a need',
     secondary: 'See the three poles',
   },

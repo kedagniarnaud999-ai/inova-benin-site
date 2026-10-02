@@ -7,9 +7,9 @@ import type { Locale } from '../config';
  */
 const fr = {
   meta: {
-    title: 'Page introuvable — iNOVA BENIN',
+    title: 'Page introuvable — iNOVA SPACE',
     description:
-      'Cette adresse ne correspond à aucune page du site iNOVA BENIN. Les entrées réelles : accueil, les trois pôles, le carnet du Lab et le contact.',
+      'Cette adresse ne correspond à aucune page du site iNOVA SPACE. Les entrées réelles : accueil, les trois pôles, le carnet du Lab et le contact.',
   },
   eyebrow: 'Réponse du serveur',
   title: 'Aucune page derrière cette adresse.',
@@ -21,9 +21,9 @@ const fr = {
 
 const en: typeof fr = {
   meta: {
-    title: 'Page not found — iNOVA BENIN',
+    title: 'Page not found — iNOVA SPACE',
     description:
-      'This address does not match any page of the iNOVA BENIN site. The real entries: home, the three poles, the Lab ledger and contact.',
+      'This address does not match any page of the iNOVA SPACE site. The real entries: home, the three poles, the Lab ledger and contact.',
   },
   eyebrow: 'Server response',
   title: 'No page behind this address.',

@@ -1,6 +1,6 @@
-# iNOVA BENIN — site
+# iNOVA SPACE — site
 
-Vitrine statique deux langues (français, anglais) des trois pôles d'iNOVA BENIN : Consulting, Lab, Studio. Le contenu vient du business plan et de la fiche de projet ; rien n'est écrit en dur dans un composant, tout passe par `src/i18n/` et `src/content/`.
+Vitrine statique deux langues (français, anglais) des trois pôles d'iNOVA SPACE : Consulting, Lab, Studio. Le contenu vient du business plan et de la fiche de projet ; rien n'est écrit en dur dans un composant, tout passe par `src/i18n/` et `src/content/`.
 
 ## Stack
 

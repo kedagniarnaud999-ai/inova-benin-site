@@ -19,7 +19,7 @@ import type { Locale } from '../config';
  */
 const fr = {
   meta: {
-    title: 'À propos — iNOVA BENIN, venture builder à Cotonou',
+    title: 'À propos — iNOVA SPACE, venture builder à Cotonou',
     description:
       'Ce que iNOVA construit réellement, où le vérifier, qui porte le projet et quelles compétences le réseau réunit.',
   },
@@ -28,7 +28,7 @@ const fr = {
     eyebrow: 'À propos · Cotonou, Bénin',
     title: 'Ce que nous disons se vérifie.',
     lede: (built: number, live: number) =>
-      `iNOVA BENIN est un venture builder. Ce qu’il avance tient sur ${built} expérimentations construites, dont ${live} ouvertes en ligne : chacune s’ouvre dans un onglet et se juge sans attendre notre parole.`,
+      `iNOVA SPACE est un venture builder. Ce qu’il avance tient sur ${built} expérimentations construites, dont ${live} ouvertes en ligne : chacune s’ouvre dans un onglet et se juge sans attendre notre parole.`,
     stripLabel: 'Le carnet, consultable maintenant',
     ledger: 'Ouvrir tout le carnet',
     intention: 'Notre intention',
@@ -117,7 +117,7 @@ const fr = {
 
 const en: typeof fr = {
   meta: {
-    title: 'About — iNOVA BENIN, a venture builder in Cotonou',
+    title: 'About — iNOVA SPACE, a venture builder in Cotonou',
     description:
       'What iNOVA actually builds, where to check it, who carries the project and which skills the network holds.',
   },
@@ -126,7 +126,7 @@ const en: typeof fr = {
     eyebrow: 'About · Cotonou, Benin',
     title: 'What we say can be checked.',
     lede: (built: number, live: number) =>
-      `iNOVA BENIN is a venture builder. What it claims rests on ${built} experiments built, ${live} of them live right now: each one opens in a tab and judges itself.`,
+      `iNOVA SPACE is a venture builder. What it claims rests on ${built} experiments built, ${live} of them live right now: each one opens in a tab and judges itself.`,
     stripLabel: 'The ledger, open now',
     ledger: 'Open the full ledger',
     intention: 'Our intention',

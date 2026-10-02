@@ -9,7 +9,7 @@ import type { Locale } from '../config';
  */
 const fr = {
   meta: {
-    title: 'Contact — écrire à iNOVA BENIN (Consulting, Lab, Studio)',
+    title: 'Contact — écrire à iNOVA SPACE (Consulting, Lab, Studio)',
     description:
       'Le formulaire du site ou l’e-mail officiel : les deux demandes arrivent au même endroit, chez le porteur du projet.',
   },
@@ -32,7 +32,7 @@ const fr = {
     intro:
       'Le nom et l’e-mail servent à vous répondre. Le pôle est une indication, pas un engagement.',
     unknown: 'Je ne sais pas encore',
-    subject: 'Demande depuis le site iNOVA BENIN',
+    subject: 'Demande depuis le site iNOVA SPACE',
   },
 
   destination: {
@@ -59,7 +59,7 @@ const fr = {
 
 const en: typeof fr = {
   meta: {
-    title: 'Contact — write to iNOVA BENIN (Consulting, Lab, Studio)',
+    title: 'Contact — write to iNOVA SPACE (Consulting, Lab, Studio)',
     description:
       'The form on this site or the official e-mail address: either way the request lands with the founder, in the same inbox.',
   },
@@ -81,7 +81,7 @@ const en: typeof fr = {
     title: 'Say what you need',
     intro: 'Name and e-mail are there so we can answer. The pole is a hint, not a commitment.',
     unknown: 'Not sure yet',
-    subject: 'Request from the iNOVA BENIN website',
+    subject: 'Request from the iNOVA SPACE website',
   },
 
   destination: {

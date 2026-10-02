@@ -29,7 +29,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
     },
     {
       label: 'Sous-traitant',
-      body: 'Les demandes sont transmises par Web3Forms, un service tiers qui relaie le message jusqu’à son destinataire. L’identifiant public du formulaire est lisible dans le code source de la page : c’est le fonctionnement normal de ce service. Le message est remis à l’adresse officielle d’iNOVA BENIN, publiée sur la page Contact et au pied de chaque page. Les origines autorisées à envoyer sont restreintes au domaine du site.',
+      body: 'Les demandes sont transmises par Web3Forms, un service tiers qui relaie le message jusqu’à son destinataire. L’identifiant public du formulaire est lisible dans le code source de la page : c’est le fonctionnement normal de ce service. Le message est remis à l’adresse officielle d’iNOVA SPACE, publiée sur la page Contact et au pied de chaque page. Les origines autorisées à envoyer sont restreintes au domaine du site.',
     },
     {
       label: 'Durée de conservation',
@@ -74,7 +74,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
     },
     {
       label: 'Processor',
-      body: 'Requests are relayed by Web3Forms, a third-party service that forwards the message to its recipient. The form’s public identifier is readable in the page source: that is how the service works. The message is delivered to iNOVA BENIN’s official address, published on the Contact page and in the footer of every page. The origins allowed to submit are restricted to the site’s own domain.',
+      body: 'Requests are relayed by Web3Forms, a third-party service that forwards the message to its recipient. The form’s public identifier is readable in the page source: that is how the service works. The message is delivered to iNOVA SPACE’s official address, published on the Contact page and in the footer of every page. The origins allowed to submit are restricted to the site’s own domain.',
     },
     {
       label: 'Retention',
@@ -103,7 +103,7 @@ const blocks: Record<Locale, LegalBlock[]> = {
 export const privacy: Record<Locale, LegalContent> = {
   fr: {
     meta: {
-      title: 'Confidentialité — iNOVA BENIN',
+      title: 'Confidentialité — iNOVA SPACE',
       description:
         'Ce que le formulaire de contact collecte, pourquoi, qui le relaie, et ce que le site ne fait pas : ni cookie, ni mesure d’audience, ni revente.',
     },
@@ -117,7 +117,7 @@ export const privacy: Record<Locale, LegalContent> = {
 
   en: {
     meta: {
-      title: 'Privacy — iNOVA BENIN',
+      title: 'Privacy — iNOVA SPACE',
       description:
         'What the contact form collects, why, who relays it, and what the site does not do: no cookies, no analytics, no resale.',
     },

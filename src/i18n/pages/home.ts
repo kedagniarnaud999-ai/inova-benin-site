@@ -5,9 +5,9 @@ import type { Locale } from '../config';
 // aux pages de pôle. Aucun client, aucun témoignage, aucun chiffre non sourcé.
 const fr = {
   meta: {
-    title: 'iNOVA BENIN — Building Africa’s Next Ventures',
+    title: 'iNOVA SPACE — Building Africa’s Next Ventures',
     description:
-      'iNOVA BENIN est une venture-building company : nous transformons des problèmes et opportunités africains en produits, projets et entreprises.',
+      'iNOVA SPACE est une venture-building company : nous transformons des problèmes et opportunités africains en produits, projets et entreprises.',
   },
 
   hero: {
@@ -144,9 +144,9 @@ const fr = {
 
 const en: typeof fr = {
   meta: {
-    title: 'iNOVA BENIN — Building Africa’s Next Ventures',
+    title: 'iNOVA SPACE — Building Africa’s Next Ventures',
     description:
-      'iNOVA BENIN is a venture-building company: we turn African problems and opportunities into products, projects and companies.',
+      'iNOVA SPACE is a venture-building company: we turn African problems and opportunities into products, projects and companies.',
   },
 
   hero: {
